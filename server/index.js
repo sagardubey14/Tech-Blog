@@ -1,8 +1,17 @@
-const express = require('express')
-const app = express()
+const express = require('express');
+const authRoute = require('./src/routes/authRoute');
+const app = express();
+const dbConfig = require('./src/config/dbconfig')
 
-app.get('/', function (req, res) {
-  res.send('Hello World')
-})
+app.use(express.json()); // Middleware to parse JSON bodies
+app.use(express.urlencoded({ extended: true })); // Middleware to parse URL-encoded bodies
+dbConfig.connect()
+app.use('/auth', authRoute);
 
-app.listen(3000)
+app.get('/', (req, res) => {
+    res.send('Hello World');
+});
+
+app.listen(3000, () => {
+    console.log('Server is running on port 3000');
+});
