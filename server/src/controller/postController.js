@@ -1,4 +1,5 @@
-const Post = require('../model/postSchema')
+const Post = require('../model/postSchema');
+const Keywords = require('../model/keywordsSchema')
 
 const addPost= async(req, res, next)=>{
     const {keywords, description, code} = req.body;
@@ -11,6 +12,18 @@ const addPost= async(req, res, next)=>{
             likes: 0,
             comments: [],
         });
+        const keys = await Keywords.findById('665ae7089ccff1a8b14f9e40')
+        let words = keys.keywords
+        newPost.keywords.forEach(value => {
+            if (!words.includes(value)) {
+              words.push(value);
+            }
+        });
+        if(!words === keys.keywords){
+            keys.keywords = words
+            await keys.save();   
+        }
+          
         res.status(200).json("Success: post has been added")
     } catch (error) {
         res.send(error)
