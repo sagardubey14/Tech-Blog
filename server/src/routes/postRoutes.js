@@ -1,5 +1,5 @@
 const express = require('express');
-const {addPost, getPosts} = require('../controller/postController')
+const {addPost, getPosts, updateLikes, updateComments} = require('../controller/postController')
 const postRoute = express.Router();
 const jwt = require('jsonwebtoken')
 const secretKey = "SECRETKEY"
@@ -22,6 +22,10 @@ const check =(req, res, next)=>{
 postRoute.post('/add', check, addPost);
 
 postRoute.get('/get', check, getPosts);
+
+postRoute.post('/likes', check, updateLikes);
+
+postRoute.post('/cmnt',check, updateComments)
 
 
 module.exports = postRoute;
