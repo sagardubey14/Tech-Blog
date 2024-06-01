@@ -17,11 +17,15 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    role: {
+    securityQuestion: {
         type: String,
-        enum: ['user', 'admin'],
-        default: 'user',
-        required: true
+        required: true,
+        trim: true
+    },
+    securityAnswer: {
+        type: String,
+        required: true,
+        trim: true
     },
     createdAt: {
         type: Date,

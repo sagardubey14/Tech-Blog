@@ -1,10 +1,11 @@
 const user = require('../model/userSchema');
-const bcrypt = require('bcryptjs')
-
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const secretKey = "SECRETKEY"
 const salt = bcrypt.genSaltSync(10);
 
 const signup = async (req, res, next)=>{
-    const {username, email, password, role} = req.body;
+    const {username, email, password, question, answer} = req.body;
 
     try{
         
@@ -13,7 +14,8 @@ const signup = async (req, res, next)=>{
             username:username,
             email: email,
             password: hash,
-            role: role,
+            securityQuestion: question,
+            securityAnswer: answer,
         });
         res.status(200).json({
             username:username,
@@ -43,10 +45,14 @@ const signin = async (req, res, next)=>{
             })
         }else{
             bcrypt.compareSync(password, existingUser.password);
-            res.status(200).json({
-                username:username,
-                password:password
-            })
+            const user = {
+                username: existingUser.username
+            };
+        
+            const token = jwt.sign(user, secretKey);
+        
+            res.cookie('token', token, { httpOnly: true });
+            res.send('Logged in successfully');
         }
     }
     catch(err){
