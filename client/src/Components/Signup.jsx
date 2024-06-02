@@ -1,0 +1,196 @@
+import { useState } from 'react';
+import { validateEmail, validatePassword } from '../utils/validation';
+
+export default function Signup() {
+  const [termsChecked,setTermsChecked] = useState(false)
+  const [formData, setFormData] = useState({
+    username:'',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  });
+  const [formErrors, setFormErrors] = useState({
+    email: '',
+    password: '',
+    confirmPassword: '',
+    terms:''
+  });
+  
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+
+  const validateForm = () => {
+    const { email, password, confirmPassword } = formData;
+    let isValid = true;
+
+    if (!validateEmail(email)) {
+      setFormErrors((prevErrors) => ({
+        ...prevErrors,
+        email: 'Invalid email address',
+      }));
+      isValid = false;
+    } else {
+      setFormErrors((prevErrors) => ({
+        ...prevErrors,
+        email: '',
+      }));
+    }
+
+    if (!validatePassword(password)) {
+      setFormErrors((prevErrors) => ({
+        ...prevErrors,
+        password: 'Password must be at least 8 characters long',
+      }));
+      isValid = false;
+    } else {
+      setFormErrors((prevErrors) => ({
+        ...prevErrors,
+        password: '',
+      }));
+    }
+
+    if (password !== confirmPassword) {
+      setFormErrors((prevErrors) => ({
+        ...prevErrors,
+        confirmPassword: 'Passwords do not match',
+      }));
+      isValid = false;
+    } else {
+      setFormErrors((prevErrors) => ({
+        ...prevErrors,
+        confirmPassword: '',
+      }));
+    }
+    if(!termsChecked){
+      setFormErrors((prevErrors) => ({
+        ...prevErrors,
+        terms: 'Please agree to the terms and conditions',
+      }));
+      isValid = false;
+    }
+
+    return isValid;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    validateForm()
+  }
+
+	return (
+    <div>
+      <div className="flex flex-col items-center min-h-screen pt-6 sm:justify-center sm:pt-0 bg-gray-50">
+        <div>
+          <a href="/">
+            <h3 className="text-4xl font-bold text-purple-600">Logo</h3>
+          </a>
+        </div>
+        <div className="w-full px-6 py-4 mt-6 overflow-hidden bg-white shadow-md sm:max-w-md sm:rounded-lg">
+          <form>
+            <div>
+              <label
+                htmlFor="name"
+                className="block text-sm font-medium text-gray-700 undefined"
+              >
+                Username
+              </label>
+              <div className="flex flex-col items-start">
+                <input
+                  type="text"
+                  name="username"
+                  value={formData.username}
+                  onChange={handleChange}
+                  className="block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
+            </div>
+            <div className="mt-4">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700 undefined"
+              >
+                Email
+              </label>
+              <div className="flex flex-col items-start">
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  className="block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
+            </div>
+            {formErrors.email && <p className="text-red-500 text-sm mt-1">{formErrors.email}</p>}
+            <div className="mt-4">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-700 undefined"
+              >
+                Password
+              </label>
+              <div className="flex flex-col items-start">
+                <input
+                  type="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  className="block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
+            </div>
+            {formErrors.password && <p className="text-red-500 text-sm mt-1">{formErrors.password}</p>}
+            <div className="mt-4">
+              <label
+                htmlFor="password_confirmation"
+                className="block text-sm font-medium text-gray-700 undefined"
+              >
+                Confirm Password
+              </label>
+              <div className="flex flex-col items-start">
+                <input
+                  type="password"
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                  name="confirmPassword"
+                  className="block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
+            </div>
+            {formErrors.confirmPassword && <p className="text-red-500 text-sm mt-1">{formErrors.confirmPassword}</p>}
+            <div className="flex items-start mt-4 ml-1">
+                <div className="flex items-center h-5">
+                  <input onClick={ (e) => setTermsChecked(e.target.checked)} id="remember" aria-describedby="remember" type="checkbox" className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800" required="" />
+                </div>
+                <div className="ml-3 text-sm">
+                  <label className="text-sm font-medium leading-6 text-gray-700">Terms and conditions</label>
+                </div>          
+            </div>
+            {!termsChecked && <p className="text-red-500 text-sm mt-1">{formErrors.terms}</p>}
+            <div className="flex items-center justify-end mt-4">
+              <a
+                className="text-sm text-gray-600 underline hover:text-gray-900"
+                href="#"
+              >
+                Already registered?
+              </a>
+              <button
+                type="submit"
+                className="inline-flex items-center px-4 py-2 ml-4 text-xs font-semibold tracking-widest text-white uppercase transition duration-150 ease-in-out bg-gray-900 border border-transparent rounded-md active:bg-gray-900 false"
+                onClick={handleSubmit}
+              >
+                Register
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+} 
