@@ -1,4 +1,5 @@
 
+import Signin from "./Components/Signin"
 import Signup from "./Components/Signup"
 
 function App() {
@@ -6,6 +7,7 @@ function App() {
   return (
     <>
       <Signup />
+      <Signin />
     </>
   )
 }

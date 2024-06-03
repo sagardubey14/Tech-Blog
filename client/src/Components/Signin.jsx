@@ -2,19 +2,15 @@ import { useState } from 'react';
 import jspic from '../assets/bxl-javascript.svg'
 import { validateEmail, validatePassword } from '../utils/validation';
 
-export default function Signup() {
-  const [termsChecked,setTermsChecked] = useState(false)
+export default function Signin() {
   const [formData, setFormData] = useState({
     username:'',
     email: '',
     password: '',
-    confirmPassword: '',
   });
   const [formErrors, setFormErrors] = useState({
     email: '',
     password: '',
-    confirmPassword: '',
-    terms:''
   });
   
 
@@ -27,7 +23,7 @@ export default function Signup() {
 
 
   const validateForm = () => {
-    const { email, password, confirmPassword } = formData;
+    const { email, password} = formData;
     let isValid = true;
 
     if (!validateEmail(email)) {
@@ -56,26 +52,6 @@ export default function Signup() {
       }));
     }
 
-    if (password !== confirmPassword) {
-      setFormErrors((prevErrors) => ({
-        ...prevErrors,
-        confirmPassword: 'Passwords do not match',
-      }));
-      isValid = false;
-    } else {
-      setFormErrors((prevErrors) => ({
-        ...prevErrors,
-        confirmPassword: '',
-      }));
-    }
-    if(!termsChecked){
-      setFormErrors((prevErrors) => ({
-        ...prevErrors,
-        terms: 'Please agree to the terms and conditions',
-      }));
-      isValid = false;
-    }
-
     return isValid;
   };
 
@@ -89,6 +65,7 @@ export default function Signup() {
       <div className="flex flex-col items-center min-h-screen pt-6 sm:justify-center sm:pt-0 bg-gray-50">
         <div>
           <img src={jspic} className=' size-20 '/>
+          <h3 className="text-xl ml-3 font-bold text-blue-900">Login</h3>
         </div>
         <div className="w-full px-6 py-4 mt-6 overflow-hidden bg-white shadow-md sm:max-w-md sm:rounded-lg">
           <form>
@@ -145,46 +122,13 @@ export default function Signup() {
               </div>
             </div>
             {formErrors.password && <p className="text-red-500 text-sm mt-1">{formErrors.password}</p>}
-            <div className="mt-4">
-              <label
-                htmlFor="password_confirmation"
-                className="block text-sm font-medium text-gray-700 undefined"
-              >
-                Confirm Password
-              </label>
-              <div className="flex flex-col items-start">
-                <input
-                  type="password"
-                  value={formData.confirmPassword}
-                  onChange={handleChange}
-                  name="confirmPassword"
-                  className="block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
-            {formErrors.confirmPassword && <p className="text-red-500 text-sm mt-1">{formErrors.confirmPassword}</p>}
-            <div className="flex items-start mt-4 ml-1">
-                <div className="flex items-center h-5">
-                  <input onClick={ (e) => setTermsChecked(e.target.checked)} id="remember" aria-describedby="remember" type="checkbox" className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800" required="" />
-                </div>
-                <div className="ml-3 text-sm">
-                  <label className="text-sm font-medium leading-6 text-gray-700">Terms and conditions</label>
-                </div>          
-            </div>
-            {!termsChecked && <p className="text-red-500 text-sm mt-1">{formErrors.terms}</p>}
             <div className="flex items-center justify-end mt-4">
-              <a
-                className="text-sm text-gray-600 underline hover:text-gray-900"
-                href="#"
-              >
-                Already registered?
-              </a>
               <button
                 type="submit"
                 className="inline-flex items-center px-4 py-2 ml-4 text-xs font-semibold tracking-widest text-white uppercase transition duration-150 ease-in-out bg-gray-900 border border-transparent rounded-md active:bg-gray-900 false"
                 onClick={handleSubmit}
               >
-                Register
+                Login
               </button>
             </div>
           </form>
