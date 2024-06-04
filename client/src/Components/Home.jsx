@@ -8,7 +8,6 @@ import Footer from './homeComponents/Footer';
 function Home() {
   return (
     <div className="Home">
-      <Header />
       <Hero />
       <FeaturedSolutions />
       <Categories />
