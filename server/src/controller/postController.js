@@ -2,10 +2,11 @@ const Post = require('../model/postSchema');
 const Keywords = require('../model/keywordsSchema')
 
 const addPost= async(req, res, next)=>{
-    const {keywords, description, code} = req.body;
+    const {keywords, title,description, code} = req.body;
     try {
         const newPost = await Post.create({
             usernameCreatedBy: req.username,
+            title:title,
             keywords: keywords,
             description: description,
             code: code,

@@ -11,6 +11,11 @@ const postSchema = new mongoose.Schema({
         default: ['javascript'],
         trim: true
     },
+    title: {
+        type: String,
+        required: true,
+        trim: true
+    },
     description: {
         type: String,
         required: true,
