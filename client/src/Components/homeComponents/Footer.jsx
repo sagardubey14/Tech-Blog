@@ -1,8 +1,7 @@
-import React from 'react';
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-800 text-white p-4 mt-8 text-center">
+    <footer className="bg-gray-800 text-white p-4 text-center">
       <div className="space-x-4">
         <a href="#" className="hover:underline">Privacy Policy</a>
         <a href="#" className="hover:underline">Terms of Service</a>

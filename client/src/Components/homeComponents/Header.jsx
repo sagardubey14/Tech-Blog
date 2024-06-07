@@ -8,7 +8,7 @@ const Header = () => {
   };
 
   return (
-    <header className="sm:fixed sm:top-0 sm:left-0 sm:right-0 bg-gray-800 text-white p-4 flex flex-wrap justify-between items-center" onMouseLeave={() => setIsDropdownOpen(false)} >
+    <header className="sm:fixed sm:top-0 sm:left-0 sm:right-0 bg-gray-800 text-white p-4 flex flex-wrap justify-between items-center z-auto" onMouseLeave={() => setIsDropdownOpen(false)} >
       <div className="text-xl font-bold">SyntaxScribe</div>
       <nav className="w-full sm:w-auto mt-4 sm:mt-0">
         <ul className="flex flex-col sm:flex-row sm:space-x-4">
