@@ -1,31 +1,14 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const Header = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isHeaderVisible, setIsHeaderVisible] = useState(true);
-  const [prevScrollPos, setPrevScrollPos] = useState(window.pageYOffset);
-  
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollPos = window.pageYOffset;
-      const isVisible = prevScrollPos > currentScrollPos || currentScrollPos < 10;
-      setIsHeaderVisible(isVisible);
-      setPrevScrollPos(currentScrollPos);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [prevScrollPos]);
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
-  
+
   return (
-    <header className={`sm:fixed sm:top-0 sm:left-0 sm:right-0 bg-gray-800 text-white p-4 flex flex-wrap justify-between items-center ${ isHeaderVisible ? '' : '-translate-y-full' }`} onMouseLeave={() => setIsDropdownOpen(false)} >
+    <header className="sm:fixed sm:top-0 sm:left-0 sm:right-0 bg-gray-800 text-white p-4 flex flex-wrap justify-between items-center" onMouseLeave={() => setIsDropdownOpen(false)} >
       <div className="text-xl font-bold">SyntaxScribe</div>
       <nav className="w-full sm:w-auto mt-4 sm:mt-0">
         <ul className="flex flex-col sm:flex-row sm:space-x-4">
