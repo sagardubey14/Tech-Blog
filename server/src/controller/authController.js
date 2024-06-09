@@ -5,7 +5,7 @@ const secretKey = "SECRETKEY"
 const salt = bcrypt.genSaltSync(10);
 
 const signup = async (req, res, next)=>{
-    const {username, email, password, question, answer} = req.body;
+    const {username, email, password, securityQuestion, securityAnswer} = req.body;
 
     try{
         
@@ -14,8 +14,8 @@ const signup = async (req, res, next)=>{
             username:username,
             email: email,
             password: hash,
-            securityQuestion: question,
-            securityAnswer: answer,
+            securityQuestion: securityQuestion,
+            securityAnswer: securityAnswer,
         });
         res.status(200).json({
             username:username,

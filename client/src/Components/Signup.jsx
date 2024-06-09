@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import jspic from '../assets/bxl-javascript.svg'
 import { validateEmail, validatePassword } from '../utils/validation';
+import axios from 'axios'
 
 export default function Signup() {
   const [termsChecked,setTermsChecked] = useState(false)
@@ -9,6 +10,8 @@ export default function Signup() {
     email: '',
     password: '',
     confirmPassword: '',
+    securityQuestion:"What is your pet's name?",
+    securityAnswer:''
   });
   const [formErrors, setFormErrors] = useState({
     email: '',
@@ -81,7 +84,16 @@ export default function Signup() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    validateForm()
+    if(validateForm()){
+      try {
+        console.log(formData);
+        const response = await axios.post('http://localhost:3001/auth/signup' , formData )
+        console.log(response);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    
   }
 
 	return (
@@ -164,6 +176,45 @@ export default function Signup() {
               </div>
             </div>
             {formErrors.confirmPassword && <p className="text-red-500 text-sm mt-1">{formErrors.confirmPassword}</p>}
+            <div className="mt-4">
+              <label
+                htmlFor="security_Question"
+                className="block text-sm font-medium text-gray-700 undefined"
+              >
+                Security Question
+              </label>
+              <div className="flex flex-col items-start pt-2">
+                <select 
+                  name="securityQuestion"
+                  value={formData.securityQuestion}
+                  onChange={handleChange}
+                  className="block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  id="security_question">
+                  <option value="pet_name">What is your pet's name?</option>
+                  <option value="dob">What is your date of birth?</option>
+                  <option value="mother_maiden_name">What is your mother's maiden name?</option>
+                  <option value="first_school">What is the name of your first school?</option>
+                  <option value="favorite_movie">What is your favorite movie?</option>
+                </select>
+              </div>
+            </div>
+            <div className="mt-4">
+              <label
+                htmlFor="security_Answer"
+                className="block text-sm font-medium text-gray-700 undefined"
+              >
+                Security Answer
+              </label>
+              <div className="flex flex-col items-start">
+                <input
+                  type="text"
+                  name="securityAnswer"
+                  value={formData.securityAnswer}
+                  onChange={handleChange}
+                  className="block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
+            </div>
             <div className="flex items-start mt-4 ml-1">
                 <div className="flex items-center h-5">
                   <input onClick={ (e) => setTermsChecked(e.target.checked)} id="remember" aria-describedby="remember" type="checkbox" className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800" required="" />
