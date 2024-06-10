@@ -1,9 +1,11 @@
 import Editor from '@monaco-editor/react';
 import personIcon from '../assets/icons8-person-48.png'
+import { useSelector } from 'react-redux'
 import { useState } from 'react';
 
 
 function Card() {
+  const posts = useSelector(state=>state.posts)
   const [codes, setCodes] = useState([
       `let ans= 5; \nalert(ans)`,
       `let x = 10;\nconsole.log(x);`
@@ -27,21 +29,21 @@ function Card() {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
       {
-        codes.map((code,index)=>
-      <div key={index} className="max-w-sm bg-blue-300 rounded overflow-hidden shadow-lg">
+        posts.map(post=>
+      <div key={post._id} className="max-w-sm bg-blue-300 rounded overflow-hidden shadow-lg">
         <Editor
             className="mt-3"
             height="10vh"
             defaultLanguage="javascript"
-            defaultValue={code}
+            defaultValue={post.code}
             theme='vs-dark'
-            onChange={(newValue) => handleCodeChange(index, newValue)}
+            onChange={(newValue) => handleCodeChange(post._id, newValue)}
         />
         <div className="px-6 py-4">
-        <button onClick={()=>handleExecution(code)} className="inline-block bg-white rounded-full px-3 py-1 text-sm font-semibold text-gray-700">Execute</button>
+        <button onClick={()=>handleExecution(post.code)} className="inline-block bg-white rounded-full px-3 py-1 text-sm font-semibold text-gray-700">Execute</button>
           <div className="font-bold text-xl mb-2">Ttile-1</div>
           <p className="text-gray-700 text-base">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.
+            {post.description}
           </p>
         </div>
         <div className="px-6 pt-4 pb-2">
@@ -52,7 +54,7 @@ function Card() {
         <div className="flex items-center px-6 pt-2 pb-2">
           <img src={personIcon} className="w-8 h-8 rounded-full mr-3" alt="Channel Icon"/>
           <div>
-            <span className="text-gray-700 font-medium">User1</span>
+            <span className="text-gray-700 font-medium">{post.usernameCreatedBy}</span>
             {/* <p className="text-gray-600 text-sm">Channel Name</p> */}
           </div>
         </div>
