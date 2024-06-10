@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import jspic from '../assets/bxl-javascript.svg'
 import { validateEmail, validatePassword } from '../utils/validation';
+import axios from 'axios';
 
 export default function Signin() {
   const [formData, setFormData] = useState({
@@ -57,7 +58,15 @@ export default function Signin() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    validateForm()
+    if(validateForm()){
+      try {
+        console.log(formData);
+        const response = await axios.post('http://localhost:3001/auth/signin' , formData )
+        console.log(response);
+      } catch (error) {
+        console.log(error);
+      }
+    }
   }
 
 	return (

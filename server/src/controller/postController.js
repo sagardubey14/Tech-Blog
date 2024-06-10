@@ -41,6 +41,22 @@ const getPosts= async(req, res, next)=>{
     }
 }
 
+
+const getTrend= async(req, res, next)=>{
+    console.log("call to trend");
+    try {
+        const topPosts = await Post.find()
+                .sort({ likes: -1 })
+                .limit(4)
+                .exec();
+
+        res.send(topPosts);
+    } catch (error) {
+        res.status(500).send({ error: 'Internal server error' });
+    }
+}
+
+
 const updateLikes = async (req, res, next)=>{
     const{id, like} = req.body
     try {
@@ -87,4 +103,4 @@ const updateComments = async (req, res, next)=>{
     }
 }
 
-module.exports = {addPost, getPosts, updateLikes, updateComments}
+module.exports = {addPost, getPosts, updateLikes, updateComments, getTrend}
