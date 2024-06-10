@@ -5,6 +5,7 @@ import Signup from "./Components/Signup"
 import Header from './Components/homeComponents/Header'
 import SearchPage from './Components/SearchPage'
 import Footer from './Components/homeComponents/Footer';
+import UserPosts from './Components/UserPosts'
 
 
 function App() {
@@ -19,7 +20,6 @@ function App() {
         <Route path='/' element={<Home />}/>
       </Routes>
     <Footer />
-    
     </>
   )
 }
