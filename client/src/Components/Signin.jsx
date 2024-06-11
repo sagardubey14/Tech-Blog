@@ -1,9 +1,13 @@
 import { useState } from 'react';
-import jspic from '../assets/bxl-javascript.svg'
-import { validateEmail, validatePassword } from '../utils/validation';
+import jspic from '../assets/SX.png'
+import { validatePassword } from '../utils/validation';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../features/user/userSlice';
+import { Link } from 'react-router-dom';
 
 export default function Signin() {
+  const dispatch = useDispatch()
   const [formData, setFormData] = useState({
     username:'',
     email: '',
@@ -24,21 +28,8 @@ export default function Signin() {
 
 
   const validateForm = () => {
-    const { email, password} = formData;
+    const {password} = formData;
     let isValid = true;
-
-    if (!validateEmail(email)) {
-      setFormErrors((prevErrors) => ({
-        ...prevErrors,
-        email: 'Invalid email address',
-      }));
-      isValid = false;
-    } else {
-      setFormErrors((prevErrors) => ({
-        ...prevErrors,
-        email: '',
-      }));
-    }
 
     if (!validatePassword(password)) {
       setFormErrors((prevErrors) => ({
@@ -62,7 +53,8 @@ export default function Signin() {
       try {
         console.log(formData);
         const response = await axios.post('http://localhost:3001/auth/signin' , formData )
-        console.log(response);
+        console.log(response.data);
+        dispatch(setUser(response.data))
       } catch (error) {
         console.log(error);
       }
@@ -132,6 +124,12 @@ export default function Signin() {
             </div>
             {formErrors.password && <p className="text-red-500 text-sm mt-1">{formErrors.password}</p>}
             <div className="flex items-center justify-end mt-4">
+              <Link
+                className="text-sm text-gray-600 underline hover:text-gray-900"
+                to="/signup"
+              >
+                Not registered?
+              </Link>
               <button
                 type="submit"
                 className="inline-flex items-center px-4 py-2 ml-4 text-xs font-semibold tracking-widest text-white uppercase transition duration-150 ease-in-out bg-gray-900 border border-transparent rounded-md active:bg-gray-900 false"

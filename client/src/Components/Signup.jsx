@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import jspic from '../assets/bxl-javascript.svg'
+import jspic from '../assets/SX.png'
 import { validateEmail, validatePassword } from '../utils/validation';
 import axios from 'axios'
+import { Link } from 'react-router-dom';
 
 export default function Signup() {
   const [termsChecked,setTermsChecked] = useState(false)
@@ -98,7 +99,7 @@ export default function Signup() {
 
 	return (
     <div>
-      <div className="flex flex-col items-center min-h-screen pt-6 sm:justify-center sm:pt-0 bg-gray-50">
+      <div className="flex flex-col items-center min-h-screen pt-6 sm:justify-center sm:pt-4 mt-4 bg-gray-50">
         <div>
           <img src={jspic} className=' size-20 '/>
           <h3 className="text-xl ml-1 font-bold text-blue-900">Sign Up</h3>
@@ -183,18 +184,18 @@ export default function Signup() {
               >
                 Security Question
               </label>
-              <div className="flex flex-col items-start pt-2">
+              <div className="flex flex-col items-start">
                 <select 
                   name="securityQuestion"
                   value={formData.securityQuestion}
                   onChange={handleChange}
                   className="block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   id="security_question">
-                  <option value="pet_name">What is your pet's name?</option>
-                  <option value="dob">What is your date of birth?</option>
-                  <option value="mother_maiden_name">What is your mother's maiden name?</option>
-                  <option value="first_school">What is the name of your first school?</option>
-                  <option value="favorite_movie">What is your favorite movie?</option>
+                  <option value="What is your pet's name?">What is your pet's name?</option>
+                  <option value="What is your date of birth?">What is your date of birth?</option>
+                  <option value="What is your mother's maiden name?">What is your mother's maiden name?</option>
+                  <option value="What is the name of your first school?">What is the name of your first school?</option>
+                  <option value="What is your favorite movie?">What is your favorite movie?</option>
                 </select>
               </div>
             </div>
@@ -225,12 +226,12 @@ export default function Signup() {
             </div>
             {!termsChecked && <p className="text-red-500 text-sm mt-1">{formErrors.terms}</p>}
             <div className="flex items-center justify-end mt-4">
-              <a
+              <Link
                 className="text-sm text-gray-600 underline hover:text-gray-900"
-                href="#"
+                to="/login"
               >
                 Already registered?
-              </a>
+              </Link>
               <button
                 type="submit"
                 className="inline-flex items-center px-4 py-2 ml-4 text-xs font-semibold tracking-widest text-white uppercase transition duration-150 ease-in-out bg-gray-900 border border-transparent rounded-md active:bg-gray-900 false"
