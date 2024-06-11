@@ -50,9 +50,15 @@ const signin = async (req, res, next)=>{
             };
         
             const token = jwt.sign(user, secretKey);
+
+            const userdata = {
+                username:existingUser.username,
+                email:existingUser.email,
+                question:existingUser.securityQuestion,
+            }
         
             res.cookie('token', token, { httpOnly: true });
-            res.send('Logged in successfully');
+            res.send(userdata);
         }
     }
     catch(err){

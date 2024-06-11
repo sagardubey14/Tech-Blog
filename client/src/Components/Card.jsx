@@ -5,7 +5,9 @@ import { useState } from 'react';
 
 
 function Card() {
-  const posts = useSelector(state=>state.posts)
+  const posts = useSelector(state=>state.posts.posts)
+  const user = useSelector(state=>state.user.user)
+  console.log(user);
   const [codes, setCodes] = useState([
       `let ans= 5; \nalert(ans)`,
       `let x = 10;\nconsole.log(x);`
