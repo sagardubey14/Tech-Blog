@@ -5,7 +5,7 @@ import Signup from "./Components/Signup"
 import Header from './Components/homeComponents/Header'
 import SearchPage from './Components/SearchPage'
 import Footer from './Components/homeComponents/Footer';
-import UserPosts from './Components/UserPosts'
+import Profile from './Components/Profile'
 
 
 function App() {
@@ -17,6 +17,7 @@ function App() {
         <Route path='/signup' element={<Signup />}/>
         <Route path='/login' element={<Signin />}/>
         <Route path='/search' element={<SearchPage />}/>
+        <Route path='/profile' element={<Profile />}/>
         <Route path='/' element={<Home />}/>
       </Routes>
     <Footer />

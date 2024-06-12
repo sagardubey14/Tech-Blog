@@ -1,18 +1,18 @@
-
+import logo from '../../assets/HeroLogo.png'
 const Hero = () => {
   return (
     <div>
-      <section className="bg-blue-500 text-white p-10 sm:p-20 sm:pt-48  text-center">
+      <section className="bg-blue-500 text-white p-10 sm:p-20   text-center">
         <h1 className="text-2xl sm:text-4xl font-bold mb-4">
           Find Solutions to Your Coding Queries
         </h1>
-        <div className="w-full sm:w-auto mt-4 sm:mt-0 flex justify-center items-center">
+        <div className="w-full sm:w-auto mt-4 sm:mt-0 flex flex-col sm:flex-row justify-center items-center">
           <input
             type="text"
             placeholder="Search for solutions..."
             className="w-full max-w-[10cm] sm:max-w-xs p-2 rounded flex-grow"
           />
-          <button className="bg-white text-blue-500 py-2 px-4 rounded ml-2">
+          <button className="bg-white text-blue-500 py-2 px-4 mt-2 sm:mt-auto rounded ml-2">
             Search
           </button>
         </div>
@@ -38,8 +38,8 @@ const Hero = () => {
               </a>
             </div>
             <div className="mt-10">
-              {/* <img src="hero-image.png" alt="Hero Image" class="mx-auto rounded-lg shadow-lg"> */}
-              <h3 className="text-xl sm:text-xl ml-3 font-bold text-blue-900">Logo</h3>
+              <img src={logo} alt="Hero Image" className="mx-auto rounded-lg shadow-lg" />
+              {/* <h3 className="text-xl sm:text-xl ml-3 font-bold text-blue-900">Logo</h3> */}
             </div>
           </div>
         </div>

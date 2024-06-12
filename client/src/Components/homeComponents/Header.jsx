@@ -10,6 +10,7 @@ const Header = () => {
   const [prevScrollPos, setPrevScrollPos] = useState(window.pageYOffset);
 
   useEffect(() => {
+    if (window.innerWidth > 768) {
     const handleScroll = () => {
       const currentScrollPos = window.pageYOffset;
       const isVisible = prevScrollPos > currentScrollPos || currentScrollPos < 10;
@@ -22,6 +23,7 @@ const Header = () => {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
+  }
   }, [prevScrollPos]);
 
 
@@ -55,17 +57,17 @@ const Header = () => {
               </ul>
             )}
           </li>
-            <input type="text" placeholder="Search for solutions..." className="w-full sm:w-auto p-2 rounded"/>
+            <input type="text" placeholder="Search for solutions..." className="w-full sm:w-auto p-2 hidden sm:block sm:mt-0 mt-2 rounded"/>
         </ul>
       </nav>
-      <div className="w-full sm:w-auto mt-4 sm:mt-0">
+      <div className="w-full sm:w-auto sm:mt-0">
       {
             
             user.username?
             <>
             <div className="mt-2 sm:mt-0 sm:mr-4"><Link to="/profile" className="hover:underline">Profile</Link></div>
             </>:
-            <div className="grid grid-cols-2 ">
+            <div className="sm:grid sm:grid-cols-2 ">
             <div className="mt-2 sm:mt-0"><Link to="/login" className="hover:underline">Login</Link></div>
             <div className="mt-2 sm:mt-0"><Link to="/signup" className="hover:underline">Sign Up</Link></div>
             </div>
