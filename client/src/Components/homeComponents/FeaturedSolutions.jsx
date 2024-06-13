@@ -12,7 +12,8 @@ const FeaturedSolutions = () => {
       const res = await axios.get('http://localhost:3001/post/trend')
       await dispatch(setTrend(res.data))
     }
-    call();
+    // call();
+    console.log("useeffect");
   },[])
 
 

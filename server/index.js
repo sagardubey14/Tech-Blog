@@ -5,11 +5,24 @@ const app = express();
 const dbConfig = require('./src/config/dbconfig')
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser')
-const cors = require('cors')
+const cors = require('cors');
+const searchRoute = require('./src/routes/searchRoute');
 
 
 
 function check(req,res,next){console.log(req.body); next();}
+const stopwords = ['how', 'to', 'and', 'or'];
+function removeStopwords(req, res, next) {
+    const {query} = req.query;
+
+    const words = query.toLowerCase().split(' ');
+
+    const filteredWords = words.filter(word => !stopwords.includes(word));
+    
+    req.query = filteredWords
+
+    next();
+}
 
 
 app.use(express.json()); // Middleware to parse JSON bodies
@@ -21,11 +34,12 @@ dbConfig.connect()
 
 app.use('/auth', check ,authRoute);
 app.use('/post', postRoute);
+app.use('/search',removeStopwords, searchRoute)
 
 app.get('/', (req, res) => {
     res.send('Hello World');
 });
 
 app.listen(3001, () => {
-    console.log('Server is running on port 3000');
+    console.log('Server is running on port 3001');
 });

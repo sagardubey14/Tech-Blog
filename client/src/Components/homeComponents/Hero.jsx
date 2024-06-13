@@ -1,5 +1,19 @@
+import { useState } from 'react';
 import logo from '../../assets/HeroLogo.png'
+import axios from 'axios';
 const Hero = () => {
+  const [searchQuery, setSearchQuery] = useState("")
+  const handleSearch = async ()=>{
+    try {
+      const response = await axios.get('http://localhost:3001/search/posts', {
+        params: { query: searchQuery }
+      });
+      console.log(response.data); // Handle the response data here
+    } catch (error) {
+      console.error('Error searching:', error);
+    }
+  }
+
   return (
     <div>
       <section className="bg-blue-500 text-white p-10 sm:p-20   text-center">
@@ -10,15 +24,22 @@ const Hero = () => {
           <input
             type="text"
             placeholder="Search for solutions..."
-            className="w-full max-w-[10cm] sm:max-w-xs p-2 rounded flex-grow"
+            className="w-full max-w-[10cm] sm:max-w-xs p-2 rounded flex-grow text-black"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
           />
-          <button className="bg-white text-blue-500 py-2 px-4 mt-2 sm:mt-auto rounded ml-2">
+          <button 
+            className="bg-white text-blue-500 py-2 px-4 mt-2 sm:mt-auto rounded ml-2"
+            onClick={handleSearch}
+          >
             Search
           </button>
         </div>
         <div className="hero-section mt-10  bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-20 sm:py-20">
           <div className="container mx-auto px-4 sm:px-6 text-center">
-            <h1 className="text-2xl sm:text-4xl font-bold mb-4">Write. Share. Inspire.</h1>
+            <h1 className="text-2xl sm:text-4xl font-bold mb-4">
+              Write. Share. Inspire.
+            </h1>
             <p className="text-xl sm:text-xl mb-6">
               SyntaxScribe helps developers and tech enthusiasts create and
               share rich, interactive blog posts with ease.
@@ -38,7 +59,11 @@ const Hero = () => {
               </a>
             </div>
             <div className="mt-10">
-              <img src={logo} alt="Hero Image" className="mx-auto rounded-lg shadow-lg" />
+              <img
+                src={logo}
+                alt="Hero Image"
+                className="mx-auto rounded-lg shadow-lg"
+              />
               {/* <h3 className="text-xl sm:text-xl ml-3 font-bold text-blue-900">Logo</h3> */}
             </div>
           </div>
