@@ -20,7 +20,7 @@ function removeStopwords(req, res, next) {
     const filteredWords = words.filter(word => !stopwords.includes(word));
     
     req.query = filteredWords
-
+    
     next();
 }
 

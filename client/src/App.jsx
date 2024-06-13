@@ -6,6 +6,7 @@ import Header from './Components/homeComponents/Header'
 import SearchPage from './Components/SearchPage'
 import Footer from './Components/homeComponents/Footer';
 import Profile from './Components/Profile'
+import NotFound from './Components/homeComponents/NotFound'
 
 
 function App() {
@@ -18,6 +19,8 @@ function App() {
         <Route path='/login' element={<Signin />}/>
         <Route path='/search' element={<SearchPage />}/>
         <Route path='/profile' element={<Profile />}/>
+        <Route path='/404' element={<NotFound />}/>
+        <Route path='/solution' element={<SearchPage />}/>
         <Route path='/' element={<Home />}/>
       </Routes>
     <Footer />

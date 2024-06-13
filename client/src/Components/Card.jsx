@@ -6,8 +6,12 @@ import { useState } from 'react';
 
 function Card() {
   const posts = useSelector(state=>state.posts.posts)
-  const user = useSelector(state=>state.user.user)
-  console.log(user);
+  const [expandedPostId, setExpandedPostId] = useState(null);
+
+  const handlePostClick = (postId) => {
+    setExpandedPostId(postId === expandedPostId ? null : postId);
+  };
+
   const [codes, setCodes] = useState([
       `let ans= 5; \nalert(ans)`,
       `let x = 10;\nconsole.log(x);`
@@ -29,10 +33,13 @@ function Card() {
   };
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    <div className="flex flex-row">
       {
         posts.map(post=>
-      <div key={post._id} className="max-w-sm bg-blue-300 rounded overflow-hidden shadow-lg">
+      <div key={post._id}
+        className={`max-w-sm bg-blue-300 rounded overflow-hidden shadow-lg `}
+        onClick={()=>handlePostClick(post._id)}
+        >
         <Editor
             className="mt-3"
             height="10vh"
@@ -44,9 +51,9 @@ function Card() {
         <div className="px-6 py-4">
         <button onClick={()=>handleExecution(post.code)} className="inline-block bg-white rounded-full px-3 py-1 text-sm font-semibold text-gray-700">Execute</button>
           <div className="font-bold text-xl mb-2">Ttile-1</div>
-          <p className="text-gray-700 text-base">
+          {/* <p className="text-gray-700 text-base">
             {post.description}
-          </p>
+          </p> */}
         </div>
         <div className="px-6 pt-4 pb-2">
           <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#keywords1</span>

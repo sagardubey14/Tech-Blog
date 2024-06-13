@@ -1,16 +1,29 @@
 import { useState } from 'react';
+import {useNavigate} from 'react-router-dom'
 import logo from '../../assets/HeroLogo.png'
 import axios from 'axios';
+import { useDispatch } from 'react-redux'
+import { setTrend } from '../../features/posts/postSlice'
+
 const Hero = () => {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
   const [searchQuery, setSearchQuery] = useState("")
+
   const handleSearch = async ()=>{
     try {
       const response = await axios.get('http://localhost:3001/search/posts', {
         params: { query: searchQuery }
       });
-      console.log(response.data); // Handle the response data here
+      dispatch(setTrend(response.data));
+      navigate('/solution');
     } catch (error) {
+      if(error.response.status === 404){
+        navigate('/404')
+      }
+      else
       console.error('Error searching:', error);
+
     }
   }
 

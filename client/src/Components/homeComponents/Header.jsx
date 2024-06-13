@@ -83,7 +83,7 @@ const Header = () => {
             className="w-full sm:w-auto p-2 hidden sm:block sm:mt-0 mt-2 rounded"
           />
           <span
-            className="flex items-center whitespace-nowrap rounded px-3 py-1.5 text-center text-base font-normal text-gray-600 dark:text-white [&>svg]:w-5"
+            className="flex items-center whitespace-nowrap rounded px-3 py-1.5 pt-2.5 text-center text-base font-normal text-gray-600 dark:text-white [&>svg]:w-5 hidden sm:block"
             id="basic-addon2"
           >
             <svg
