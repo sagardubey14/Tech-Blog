@@ -11,7 +11,6 @@ const check =(req, res, next)=>{
     }
     try {
         const decoded = jwt.verify(token, secretKey);
-        console.log(decoded);
         req.username = decoded.username;
         next();
     } catch (err) {

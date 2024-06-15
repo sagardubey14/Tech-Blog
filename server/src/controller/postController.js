@@ -15,16 +15,15 @@ const addPost= async(req, res, next)=>{
         });
         const keys = await Keywords.findById('665ae7089ccff1a8b14f9e40')
         let words = keys.keywords
+        console.log(words);
         newPost.keywords.forEach(value => {
             if (!words.includes(value)) {
+                console.log(value);
               words.push(value);
             }
         });
-        if(!words === keys.keywords){
-            keys.keywords = words
-            await keys.save();   
-        }
-          
+        await keys.save();
+        
         res.status(200).json("Success: post has been added")
     } catch (error) {
         res.send(error)

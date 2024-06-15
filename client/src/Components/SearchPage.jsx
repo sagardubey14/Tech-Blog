@@ -1,11 +1,20 @@
-import Card from "./Card"
+import { useSelector } from "react-redux"
+import Post from "./Post"
 
 function SearchPage() {
+  const searchdePosts = useSelector(state=>state.posts.posts)
   return (
-    <div>
-      <section className="bg-blue-500 text-white h-max p-10 pb-10 sm:p-20 sm:pt-36  text-center">     
-        <Card />
-      </section>
+      <div className="px-px md:px-3  bg-slate-500">
+          <div className="flex flex-wrap -mx-px md:-mx-3">
+          {searchdePosts.map(
+            post=><Post key={post._id} 
+              title={post.title}
+              code={post.code}
+              keywords={post.keywords}
+              username={post.usernameCreatedBy}
+            />
+          )}
+      </div>
     </div>
   )
 }

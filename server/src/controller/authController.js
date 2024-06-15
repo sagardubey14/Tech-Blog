@@ -61,7 +61,6 @@ const signin = async (req, res, next)=>{
             }
             try {
                 res.cookie('token', token, { httpOnly: true });
-                console.log(res.cookie.token);
             } catch (error) {
                 console.log(error);
             }

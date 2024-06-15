@@ -6,8 +6,8 @@ const searchPosts = async (req, res, next)=>{
     try {
         const keys = await Keywords.findById('665ae7089ccff1a8b14f9e40')
         const words = keys.keywords
-
-        const presentWords = queri.filter(element => words.some(word => word.toLowerCase() === element.toLowerCase()));
+        const presentWords = queri.filter(element => words.some(word => word.toLowerCase().includes(element.toLowerCase())));
+        console.log(presentWords);
         const posts = await Post.find({ keywords: { 
             $in: presentWords.map(keyword => new RegExp(keyword, 'i')) 
          } });
