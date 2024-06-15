@@ -2,10 +2,11 @@ import { useState } from 'react';
 import {useNavigate} from 'react-router-dom'
 import logo from '../../assets/HeroLogo.png'
 import axios from 'axios';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setTrend } from '../../features/posts/postSlice'
 
 const Hero = () => {
+  const user = useSelector((state) => state.user.user);
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const [searchQuery, setSearchQuery] = useState("")
@@ -48,7 +49,12 @@ const Hero = () => {
             Search
           </button>
         </div>
-        <div className="hero-section mt-10  bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-20 sm:py-20">
+        {
+          user.username ?
+          
+          <div>sagar</div>:
+
+          <div className="hero-section mt-10  bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-20 sm:py-20">
           <div className="container mx-auto px-4 sm:px-6 text-center">
             <h1 className="text-2xl sm:text-4xl font-bold mb-4">
               Write. Share. Inspire.
@@ -77,10 +83,10 @@ const Hero = () => {
                 alt="Hero Image"
                 className="mx-auto rounded-lg shadow-lg"
               />
-              {/* <h3 className="text-xl sm:text-xl ml-3 font-bold text-blue-900">Logo</h3> */}
             </div>
           </div>
         </div>
+        }
       </section>
     </div>
   );

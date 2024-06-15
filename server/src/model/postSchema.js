@@ -8,7 +8,6 @@ const postSchema = new mongoose.Schema({
     },
     keywords: {
         type: [String],
-        default: ['javascript'],
         trim: true
     },
     title: {

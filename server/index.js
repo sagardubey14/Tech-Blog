@@ -9,8 +9,6 @@ const cors = require('cors');
 const searchRoute = require('./src/routes/searchRoute');
 
 
-
-function check(req,res,next){console.log(req.body); next();}
 const stopwords = ['how', 'to', 'and', 'or'];
 function removeStopwords(req, res, next) {
     const {query} = req.query;
@@ -26,13 +24,16 @@ function removeStopwords(req, res, next) {
 
 
 app.use(express.json()); // Middleware to parse JSON bodies
-app.use(cors())
+app.use(cors({
+    origin:'http://localhost:5173',
+    credentials:true
+}))
 app.use(bodyParser.json())
 app.use(express.urlencoded({ extended: true })); // Middleware to parse URL-encoded bodies
 app.use(cookieParser());
 dbConfig.connect()
 
-app.use('/auth', check ,authRoute);
+app.use('/auth', authRoute);
 app.use('/post', postRoute);
 app.use('/search',removeStopwords, searchRoute)
 

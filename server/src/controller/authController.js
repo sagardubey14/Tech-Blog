@@ -55,9 +55,16 @@ const signin = async (req, res, next)=>{
                 username:existingUser.username,
                 email:existingUser.email,
                 question:existingUser.securityQuestion,
+                saved:existingUser.savedPosts,
+                followers:existingUser.followers,
+                following:existingUser.following,
             }
-        
-            res.cookie('token', token, { httpOnly: true });
+            try {
+                res.cookie('token', token, { httpOnly: true });
+                console.log(res.cookie.token);
+            } catch (error) {
+                console.log(error);
+            }
             res.send(userdata);
         }
     }

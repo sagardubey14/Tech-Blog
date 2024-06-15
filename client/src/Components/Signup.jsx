@@ -2,9 +2,10 @@ import { useState } from 'react';
 import jspic from '../assets/SX.png'
 import { validateEmail, validatePassword } from '../utils/validation';
 import axios from 'axios'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Signup() {
+  const navigate = useNavigate()
   const [termsChecked,setTermsChecked] = useState(false)
   const [formData, setFormData] = useState({
     username:'',
@@ -90,6 +91,7 @@ export default function Signup() {
         console.log(formData);
         const response = await axios.post('http://localhost:3001/auth/signup' , formData )
         console.log(response);
+        navigate('/sigin');
       } catch (error) {
         console.log(error);
       }

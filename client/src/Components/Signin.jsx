@@ -4,14 +4,15 @@ import { validatePassword } from '../utils/validation';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../features/user/userSlice';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Signin() {
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const [formData, setFormData] = useState({
-    username:'',
+    username:'sagar_353',
     email: '',
-    password: '',
+    password: 'Sagar123',
   });
   const [formErrors, setFormErrors] = useState({
     email: '',
@@ -52,9 +53,12 @@ export default function Signin() {
     if(validateForm()){
       try {
         console.log(formData);
-        const response = await axios.post('http://localhost:3001/auth/signin' , formData )
-        console.log(response.data);
+        const response = await axios.post('http://localhost:3001/auth/signin' , formData,{
+          withCredentials:true
+        } )
+        console.log(response);
         dispatch(setUser(response.data))
+        navigate('/');
       } catch (error) {
         console.log(error);
       }

@@ -33,7 +33,7 @@ const Header = () => {
 
   return (
     <header
-      className={`sm:fixed sm:top-0 sm:left-0 sm:right-0 bg-black text-white p-4 flex flex-wrap justify-between items-center ${
+      className={`sm:static sm:top-0 sm:left-0 sm:right-0 bg-black text-white p-4 flex flex-wrap justify-between items-center ${
         isHeaderVisible ? "" : "sm:-translate-y-full"
       }`}
       onMouseLeave={() => setIsDropdownOpen(false)}

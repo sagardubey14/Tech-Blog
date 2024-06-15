@@ -34,8 +34,8 @@ const addPost= async(req, res, next)=>{
 const getPosts= async(req, res, next)=>{
 
     try {
-        existingUser = await Post.findOne({usernameCreatedBy: req.username});
-        res.send(existingUser);
+        existingUserPosts = await Post.find({usernameCreatedBy: req.username});
+        res.send(existingUserPosts);
     } catch (error) {
         res.send(error)
     }

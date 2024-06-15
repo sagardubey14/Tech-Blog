@@ -7,6 +7,8 @@ import SearchPage from './Components/SearchPage'
 import Footer from './Components/homeComponents/Footer';
 import Profile from './Components/Profile'
 import NotFound from './Components/homeComponents/NotFound'
+import Post from './Components/Post'
+import AddPost from './Components/AddPost'
 
 
 function App() {
@@ -18,9 +20,11 @@ function App() {
         <Route path='/signup' element={<Signup />}/>
         <Route path='/login' element={<Signin />}/>
         <Route path='/search' element={<SearchPage />}/>
-        <Route path='/profile' element={<Profile />}/>
+        <Route path='/profile/*' element={<Profile />}/>
         <Route path='/404' element={<NotFound />}/>
         <Route path='/solution' element={<SearchPage />}/>
+        <Route path='/post' element={<Post />}/>
+        <Route path='/addpost' element={<AddPost />}/>
         <Route path='/' element={<Home />}/>
       </Routes>
     <Footer />

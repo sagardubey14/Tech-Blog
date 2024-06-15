@@ -1,7 +1,7 @@
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-800 text-white p-4 text-center">
+    <footer className=" bg-gray-800 text-white p-4 text-center inset-x-0 bottom-0">
       <div className="space-x-4">
         <a href="#" className="hover:underline">Privacy Policy</a>
         <a href="#" className="hover:underline">Terms of Service</a>
