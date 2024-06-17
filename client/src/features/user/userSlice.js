@@ -33,6 +33,22 @@ export const userSlice = createSlice({
             };
             console.log(state.user);
         },
+        addToSavedPosts: (state, action) => {
+            console.log(action.payload);
+            const postIdToAdd = action.payload;
+            state.user = {
+                ...state.user,
+                savedPosts: [...state.user.savedPosts, postIdToAdd]
+            };
+            console.log(state.user);
+        },
+        removeFromSavedPosts: (state, action) => {
+            const postIdToRemove = action.payload;
+            state.user = {
+                ...state.user,
+                savedPosts: state.user.savedPosts.filter(postId => postId !== postIdToRemove)
+            };
+        },
         removeFromLikedPosts: (state, action) => {
             const postIdToRemove = action.payload;
             state.user = {
@@ -48,6 +64,6 @@ export const userSlice = createSlice({
 
 })
 
-export const {setUser, addToLikedPosts, removeFromLikedPosts, updateUser, clearUser} = userSlice.actions
+export const {setUser, addToLikedPosts, removeFromLikedPosts, addToSavedPosts, updateUser, clearUser, removeFromSavedPosts} = userSlice.actions
 
 export default userSlice.reducer
