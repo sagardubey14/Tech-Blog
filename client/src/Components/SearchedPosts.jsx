@@ -1,25 +1,23 @@
-import { Editor } from '@monaco-editor/react';
 import personIcon from '../assets/icons8-person-48.png'
 import not_liked from '../assets/not_liked.png'
 import liked from '../assets/liked.png'
 import not_marked from '../assets/not_marked.png'
 import marked from '../assets/marked.png'
-import cmnt from '../assets/cmnt.gif'
 import { Link } from 'react-router-dom';
+import { Light as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { vs2015 } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
 const SearchedPost = ({postId, title, code, username, likes}) => {
   return (
     <div className="md:h-1/3 h-1/3 w-full p-px md:px-3 border-2 md:py-3">
       <div className='md:grid md:grid-cols-3'>
-      {/* <Editor
-            className="mt-3"
-            height="20vh"
-            width="100%"
-            defaultLanguage="javascript"
-            defaultValue={code}
-            theme='vs-dark'
-      /> */}
-      <pre className='bg-black p-4 rounded-lg overflow-auto mb-2'><code className='text-sm text-white'>{code}</code></pre>
+      <div className="bg-black p-4 rounded-lg mb-2">
+      <pre className="max-h-40 overflow-auto">
+        <SyntaxHighlighter language="javascript" style={vs2015}>
+          {code}
+        </SyntaxHighlighter>
+      </pre>
+      </div>
       <div className=' md:col-span-2'>
       <div className="flex justify-center">
       <Link to={`/solution/:${postId}`} className="text-gray-700 font-medium md:text-2xl text-center mt-2">{title}</Link>

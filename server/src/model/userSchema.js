@@ -39,6 +39,14 @@ const userSchema = new mongoose.Schema({
         type:[String],
         default:[]
     },
+    likedPosts:{
+        type:[String],
+        default:[]
+    },
+    savedPosts:{
+        type:[String],
+        default:[]
+    },
     createdAt: {
         type: Date,
         default: Date.now

@@ -1,4 +1,5 @@
-import { Editor } from '@monaco-editor/react';
+import { Light as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { vs2015 } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import personIcon from '../assets/icons8-person-48.png'
 import not_liked from '../assets/not_liked.png'
 import liked from '../assets/liked.png'
@@ -10,15 +11,13 @@ const Post = ({title, code, keywords, username, likes}) => {
   return (
     <div className="md:w-1/3 w-full p-px md:px-3 border-2 md:py-3">
       <span className="text-gray-700 font-medium text-center">{title}</span>
-      {/* <Editor
-            className="mt-3"
-            height="20vh"
-            width="100%"
-            defaultLanguage="javascript"
-            defaultValue={code}
-            theme='vs-dark'
-      /> */}
-      <pre className='bg-gray-100 p-4 rounded-lg overflow-auto mb-2'><code className='text-sm'>{code}</code></pre>
+      <div className="bg-black p-4 rounded-lg mb-2">
+      <pre className="max-h-32 overflow-auto">
+        <SyntaxHighlighter language="javascript" style={vs2015}>
+          {code}
+        </SyntaxHighlighter>
+      </pre>
+      </div>
       <div className="px-6 pt-4 pb-2">
       {
       keywords.map((keys,index) =><span key={index} className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">{keys}</span>)

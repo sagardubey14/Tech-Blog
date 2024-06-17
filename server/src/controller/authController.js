@@ -58,6 +58,8 @@ const signin = async (req, res, next)=>{
                 saved:existingUser.savedPosts,
                 followers:existingUser.followers,
                 following:existingUser.following,
+                likedPost:existingUser.likedPosts,
+                savedPost:existingUser.savedPosts,
             }
             try {
                 res.cookie('token', token, { httpOnly: true });
