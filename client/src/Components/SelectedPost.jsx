@@ -16,6 +16,12 @@ import {
 import CommentSection from "./CommentSection";
 
 function SelectedPost() {
+  const handleScroll = () => {
+    const element = document.getElementById('scrollTarget');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
   const { postId } = useParams();
   const searchdePosts = useSelector((state) => state.posts.posts);
   const user = useSelector((state) => state.user.user);
@@ -28,7 +34,6 @@ function SelectedPost() {
   const [ismarked, setIsMarked] = useState(
     user.savedPosts.includes(selectedPost._id)
   );
-  const [commentOpen, setCommentOpen] = useState(false);
   const dispatch = useDispatch();
 
   const handleLikes = () => {
@@ -52,6 +57,7 @@ function SelectedPost() {
       setIsMarked(true);
     }
   };
+  console.log(selectedPost._id);
 
   return (
     <div>
@@ -102,7 +108,7 @@ function SelectedPost() {
           <div className="flex items-center ml-4">
             <img
               src={cmnt}
-              onClick={() => setCommentOpen((prev) => !prev)}
+              onClick={handleScroll}
               className="w-8 h-8 mr-1"
               alt="Comment Icon"
             />
@@ -116,25 +122,8 @@ function SelectedPost() {
           />
         </div>
       </div>
-      {commentOpen ? <div>Comments123</div> : <></>}
-      
-      {/* <div className="mt-8">
-        <h3 className="text-xl font-bold mb-4">Comments</h3>
-        {selectedPost.comments.map((comment, index) => (
-          <div key={index} className="border-b border-gray-200 py-4">
-            <p className="text-gray-800 font-semibold">{comment.user.name}</p>
-            <p className="text-gray-600">{comment.content}</p>
-            <p className="text-gray-500 text-sm">
-              {new Date(comment.createdAt).toLocaleString()}
-            </p>
-          </div>
-        ))}
-        {selectedPost.comments.length === 0 && (
-          <p className="text-gray-500">No comments yet.</p>
-        )}
-      </div> */}
       </div>
-      <CommentSection />
+      <CommentSection post={selectedPost} userName={user.username} />
     </div>
   );
 }
