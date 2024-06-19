@@ -91,7 +91,7 @@ export default function Signup() {
         console.log(formData);
         const response = await axios.post('http://localhost:3001/auth/signup' , formData )
         console.log(response);
-        navigate('/sigin');
+        navigate('/login');
       } catch (error) {
         console.log(error);
       }

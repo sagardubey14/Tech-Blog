@@ -52,6 +52,34 @@ export const postSlice = createSlice({
                 let output = day + '/' + month + '/' + year;
     
                 postToUpdate.comments.push({
+                    "id":nanoid(),
+                    "username":username,
+                    "comment":comment,
+                    "date": output,
+                    "reply":[],
+                })
+            }
+           
+        },
+        addCommentReply: (state,action)=>{
+            console.log("comment reply",action.payload);
+            const { id, comment, username, cmntId } = action.payload;
+            const postToUpdate = state.posts.find(post => post._id === id);
+            const cmntToAddReply = postToUpdate.comments.find(cmnt=>cmnt.id===cmntId)
+            if (cmntToAddReply) {
+                let dateObj = new Date();
+
+                let month = String(dateObj.getMonth() + 1)
+                    .padStart(2, '0');
+                    
+                let day = String(dateObj.getDate())
+                    .padStart(2, '0');
+    
+                let year = dateObj.getFullYear();
+                let output = day + '/' + month + '/' + year;
+    
+                cmntToAddReply.reply.push({
+                    "id":nanoid(),
                     "username":username,
                     "comment":comment,
                     "date": output,
@@ -63,6 +91,6 @@ export const postSlice = createSlice({
 
 })
 
-export const {addPost, removePost, setTrend, updatePost, addComment} = postSlice.actions
+export const {addPost, removePost, setTrend, updatePost, addComment, addCommentReply} = postSlice.actions
 
 export default postSlice.reducer

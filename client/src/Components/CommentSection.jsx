@@ -1,16 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addComment } from "../features/posts/postSlice";
+import { addComment, addCommentReply } from "../features/posts/postSlice";
 import SelectedPost from "./SelectedPost";
 
 function CommentSection({ post, userName }) {
+  const [reply, setReply] = useState(0);
   const dispatch = useDispatch();
+  const [replyComment, setReplyComment] = useState("");
   const [cmnt, setCmnt] = useState("");
   const handlePostComment = () => {
     dispatch(addComment({ id: post._id, comment: cmnt, username: userName }));
     setCmnt("");
   };
-  console.log(post);
+  const handleReply=(cmntId)=>{
+    dispatch(addCommentReply({ id: post._id, comment: replyComment, username: userName, cmntId: cmntId}));
+    setReplyComment("");
+    setReply(0)
+  }
   return (
     <section
       id="scrollTarget"
@@ -42,8 +48,11 @@ function CommentSection({ post, userName }) {
             Post comment
           </button>
         </div>
-        {post.comments.map((cmnt,index)=>
-          <article key={index} className="p-6 text-base bg-white rounded-lg dark:bg-gray-900">
+        {post.comments.map((cmnt) => (
+          <article
+            key={cmnt.id}
+            className="p-6 text-base bg-white rounded-lg dark:bg-gray-900"
+          >
             <footer className="flex justify-between items-center mb-2">
               <div className="flex items-center">
                 <p className="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold">
@@ -59,31 +68,79 @@ function CommentSection({ post, userName }) {
                 </p>
               </div>
             </footer>
-            <p className="text-gray-500 dark:text-gray-400">
-              {cmnt.comment}
-            </p>
-            <div className="flex items-center mt-4 space-x-4">
-              <button
-                type="button"
-                className="flex items-center text-sm text-gray-500 hover:underline dark:text-gray-400 font-medium"
-              >
-                <svg
-                  className="mr-1.5 w-3.5 h-3.5"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 20 18"
+            <p className="text-gray-500 dark:text-gray-400">{cmnt.comment}</p>
+            {cmnt.id === reply ? (
+              console.log("reply hidden")
+            ) : (
+              <div className="flex items-center mt-4 space-x-4">
+                <button
+                  type="button"
+                  className="flex items-center text-sm text-gray-500 hover:underline dark:text-gray-400 font-medium"
+                  onClick={() => setReply(cmnt.id)}
                 >
-                  <path
-                    stroke="currentColor"
-                    d="M5 5h5M5 8h2m6-3h2m-5 3h6m2-7H2a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h3v5l5-5h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z"
-                  />
-                </svg>
-                Reply
-              </button>
-            </div>
+                  <svg
+                    className="mr-1.5 w-3.5 h-3.5"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 20 18"
+                  >
+                    <path
+                      stroke="currentColor"
+                      d="M5 5h5M5 8h2m6-3h2m-5 3h6m2-7H2a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h3v5l5-5h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z"
+                    />
+                  </svg>
+                  Reply
+                </button>
+              </div>
+            )}
+            {cmnt.id === reply ? (
+              <article className="p-6 mb-3 ml-6 lg:ml-12 text-base bg-white rounded-lg dark:bg-gray-900">
+                <div className="py-2 px-4 bg-white rounded-lg rounded-t-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+                  <label className="sr-only">Your comment</label>
+                  <input
+                    id="comment"
+                    rows="6"
+                    className="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800"
+                    placeholder="Reply to this comment..."
+                    value={replyComment}
+                    onChange={(e)=>setReplyComment(e.target.value)}
+                    required
+                  ></input>
+                </div>
+                <button
+                  onClick={()=>handleReply(cmnt.id)}
+                  className="inline-flex mb-4 items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800"
+                >
+                  Post reply
+                </button>
+                {cmnt.reply.map(reply=>
+                <div key={reply.id} className="ml-4">
+                <footer className="flex justify-between items-center mb-2">
+                  <div className="flex items-center">
+                    <p className="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold">
+                      <img
+                        className="mr-2 w-6 h-6 rounded-full"
+                        src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+                        alt="Jese Leos"
+                      />
+                      {reply.username}
+                    </p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                      <time title="February 12th, 2022">{reply.date}</time>
+                    </p>
+                  </div>
+                </footer>
+                <p className="text-gray-500 dark:text-gray-400 mb-4">
+                  {reply.comment}
+                </p>
+                </div>)}
+              </article>
+            ) : (
+              <></>
+            )}
           </article>
-        )}
+        ))}
       </div>
     </section>
   );

@@ -1,3 +1,5 @@
+import { Light as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { vs2015 } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
@@ -33,27 +35,39 @@ function AddPost({setHello}) {
   const [keywords,setKeywords] = useState("")
   const [title,setTitle] = useState("")
   const [desc,setDesc] = useState("")
-  const [code,setCode] = useState("")
+  const [code, setCode] = useState("");
+
 
   return (
-    <div className='flex items-center justify-aroundlex flex-row'>
-      <div>
-      <h1>Create Post</h1>
-        <label >Keywords (comma separated):</label><br />
-        <input type="text" value={keywords} onChange={(e)=>setKeywords(e.target.value)} /><br />
-        
-        <label >Title:</label><br />
-        <input type="text" value={title} onChange={(e)=>setTitle(e.target.value)} /><br />
-        
-        <label >Description:</label><br />
-        <textarea value={desc} onChange={(e)=>setDesc(e.target.value)}></textarea><br />
-        
-        <label >Code:</label><br />
-        <textarea value={code} onChange={(e)=>setCode(e.target.value)}></textarea><br />
-        
-        <button type="submit" onClick={handleSubmit}>Submit</button>
-    </div>
-    </div>
+    
+<form className="max-w-md mx-auto">
+  <div className="relative z-0 w-full mb-5 group">
+    <input value={title} onChange={(e)=>setTitle(e.target.value)} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+    <label className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Post Title</label>
+  </div>
+  <div className="relative z-0 w-full group">
+    <input value={keywords} onChange={(e)=>setKeywords(e.target.value)} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+    <label className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Keywords</label>
+    <div className="text-sm text-gray-400 mt-1">eg: keywords1, keywords2, keywords3</div>
+  </div>
+  <div className="relative z-0 w-full mb-5 mt-2 group">
+    <textarea value={desc} onChange={(e)=>setDesc(e.target.value)} className="block py-6 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+    <label className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Description</label>
+  </div>
+  <div className="relative z-0 w-full mb-5 group">
+    <textarea value={code} onChange={(e)=>setCode(e.target.value)} id="floating_password" className="block py-6 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+    <label className="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">code</label>
+  </div>
+  <div className="bg-black p-2 rounded-lg mb-1">
+  <div className="text-sm text-gray-400 pb-1">Preview</div>
+      <pre className="max-h-40 overflow-auto">
+        <SyntaxHighlighter language="javascript" style={vs2015}>
+          {code}
+        </SyntaxHighlighter>
+      </pre>
+      </div>
+  <button onClick={handleSubmit} className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Submit</button>
+</form>
   )
 }
 
