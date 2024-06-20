@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 
-function PofileHeader() {
+function PofileHeader({setShowFollowers, setShowFollowing}) {
   const user = useSelector(state=>state.user.user)
   return (
     <div className=' align-middle justify-items-center justify-center'>
@@ -27,7 +28,7 @@ function PofileHeader() {
           </span>
 
           {/* follow button */}
-          <a href="#" className="bg-blue-500 px-2 py-1 text-white font-semibold text-sm rounded block text-center sm:inline-block block">
+          <a className="bg-blue-500 px-2 py-1 text-white font-semibold text-sm rounded block text-center sm:inline-block block">
             Follow
           </a>
         </div>
@@ -39,10 +40,10 @@ function PofileHeader() {
           </li>
 
           <li>
-            <span className="font-semibold">{user.followers.length}</span> followers
+            <span className="font-semibold">{user.followers.length}</span> <button onClick={()=>setShowFollowers(true)}>followers</button>
           </li>
           <li>
-            <span className="font-semibold">{user.following.length}</span> following
+            <span className="font-semibold">{user.following.length}</span> <button onClick={()=>setShowFollowing(true)}>followings</button>
           </li>
         </ul>
 
