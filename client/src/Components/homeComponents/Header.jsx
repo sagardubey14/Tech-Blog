@@ -77,6 +77,11 @@ const Header = () => {
               </ul>
             )}
           </li>
+          <li className="mt-2 sm:mt-2">
+          <Link to="/addpost" className="hover:underline">
+              Create-Post
+            </Link>
+          </li>
           <input
             type="text"
             placeholder="Search for solutions..."

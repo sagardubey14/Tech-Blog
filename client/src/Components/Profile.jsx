@@ -27,12 +27,12 @@ function Profile() {
       <div className="relative min-h-screen">
         {showFollowers && (
           <div className="fixed inset-0 bg-gray-800 bg-opacity-75 z-50 flex items-center justify-center">
-            <Followers />
+            <Followers setShowFollowers={setShowFollowers}/>
           </div>
         )}
         {showFollowing && (
           <div className="fixed inset-0 bg-gray-800 bg-opacity-75 z-50 flex items-center justify-center">
-            <Following />
+            <Following setShowFollowing={setShowFollowing}/>
           </div>
         )}
         {showAddPost && (
@@ -58,8 +58,6 @@ function Profile() {
             </a>
           </li>
         </ul>
-        <button onClick={handleShowFollowers}>show followers</button>
-
         <Routes>
           <Route path="/" element={<UserPosts />} />
           <Route path="/saved" element={<UserPosts />} />
