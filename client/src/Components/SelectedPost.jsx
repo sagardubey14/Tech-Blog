@@ -5,7 +5,7 @@ import not_marked from "../assets/not_marked.png";
 import marked from "../assets/marked.png";
 import cmnt from "../assets/cmnt.gif";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { updatePost } from "../features/posts/postSlice";
 import {
   addToSavedPosts,
@@ -65,9 +65,6 @@ function SelectedPost() {
         <div className="bg-white shadow-md rounded-lg p-8 max-w-3xl w-full">
           <h2 className="text-2xl font-bold mb-4">Here is the selected post</h2>
           <p className="mb-2">
-            <span className="font-bold">Id:</span> {selectedPost._id}
-          </p>
-          <p className="mb-2">
             <span className="font-bold">Title:</span> {selectedPost.title}
           </p>
           <div className="mb-2">
@@ -91,6 +88,9 @@ function SelectedPost() {
           <p className="mb-2">
             <span className="font-bold">Date:</span>{" "}
             {selectedPost.createdAt.slice(0, 10)}
+          </p>
+          <p className="mb-2">
+            <span className="font-bold">Created By:</span><Link to={`/profile/:${selectedPost.usernameCreatedBy}`}> {selectedPost.usernameCreatedBy}</Link>
           </p>
           <p className="mb-2">
             <span className="font-bold">Likes:</span> {selectedPost.likes}

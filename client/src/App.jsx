@@ -10,6 +10,7 @@ import NotFound from "./Components/homeComponents/NotFound";
 import Post from "./Components/Post";
 import AddPost from "./Components/AddPost";
 import SelectedPost from "./Components/SelectedPost";
+import OthersProfile from "./Components/OthersProfile";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/404" element={<NotFound />} />
         <Route path="/solution" element={<SearchPage />} />
         <Route path="/solution/:postId" element={<SelectedPost />} />
+        <Route path="/profile/:user" element={<OthersProfile />}/>
         <Route path="/post" element={<Post />} />
         <Route path="/addpost" element={<AddPost />} />
         <Route path="/" element={<Home />} />

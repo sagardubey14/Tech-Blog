@@ -11,14 +11,14 @@ const searchRoute = require('./src/routes/searchRoute');
 
 const stopwords = ['how', 'to', 'and', 'or'];
 function removeStopwords(req, res, next) {
-    const {query} = req.query;
-
+    const {query,username} = req.query;
+    if(query){
     const words = query.toLowerCase().split(' ');
 
     const filteredWords = words.filter(word => !stopwords.includes(word));
     
     req.query = filteredWords
-    
+    }
     next();
 }
 

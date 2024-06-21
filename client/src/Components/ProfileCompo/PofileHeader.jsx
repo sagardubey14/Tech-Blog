@@ -1,7 +1,10 @@
+import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
-function PofileHeader({setShowFollowers, setShowFollowing}) {
+function PofileHeader({setShowFollowers, setShowFollowing, username}) {
+  // const [user, setUser] = useState({})
+  // username?
   const user = useSelector(state=>state.user.user)
   return (
     <div className=' align-middle justify-items-center justify-center'>

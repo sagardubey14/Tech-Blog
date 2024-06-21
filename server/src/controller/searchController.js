@@ -1,5 +1,6 @@
 const Post = require('../model/postSchema');
 const Keywords = require('../model/keywordsSchema')
+const user = require('../model/userSchema')
 
 const searchPosts = async (req, res, next)=>{
     const queri = req.query
@@ -22,4 +23,29 @@ const searchPosts = async (req, res, next)=>{
     }
 }
 
-module.exports = {searchPosts}
+
+
+const searchUser = async (req, res, next)=>{
+    const {username} = req.query;
+    try{
+        const existingUser = await user.findOne({username: username});
+        if(!existingUser){
+            res.status(404).json({
+             Error:"Username not found"
+            })
+        }else{
+            const userdata = {
+                username:existingUser.username,
+                followers:existingUser.followers,
+                following:existingUser.following,
+            }
+            res.send(userdata);
+        }
+    }
+    catch(err){
+        console.log(err);
+    }
+}
+
+
+module.exports = {searchPosts, searchUser}
