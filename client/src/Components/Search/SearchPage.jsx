@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux"
-import Post from "./Post"
+import Post from "../PostCard/Post"
 import SearchedPost from "./SearchedPosts"
 import { Route, Routes } from "react-router-dom"
 

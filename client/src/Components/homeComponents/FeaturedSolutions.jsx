@@ -1,26 +1,36 @@
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setTrend } from '../../features/posts/postSlice'
-import Card from '../Card';
+
 import axios from 'axios';
+import Post from '../PostCard/Post';
 
 const FeaturedSolutions = () => {
   const dispatch = useDispatch()
+  const posts = useSelector(state=>state.posts.trend)
   
   useEffect(()=>{
     const call = async ()=>{
       const res = await axios.get('http://localhost:3001/post/trend')
-      await dispatch(setTrend(res.data))
+      dispatch(setTrend(res.data))
     }
-    // call();
-    console.log("useeffect");
+    call();
   },[])
 
 
   return (
-    <section className="p-8">
+    <section className="">
       <h2 className="text-2xl font-bold mb-4">Featured Solutions</h2>
-        <Card />
+      <div className='flex flex-row'>
+        {posts.map(
+          post=><Post 
+          key={post._id} 
+          title={post.title}
+          code={post.code}
+          keywords={post.keywords}
+          />
+        )}
+      </div>
     </section>
   );
 };

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addComment, addCommentReply } from "../features/posts/postSlice";
+import { addComment, addCommentReply } from "../../features/posts/postSlice";
 import SelectedPost from "./SelectedPost";
 
 function CommentSection({ post, userName }) {
@@ -70,7 +70,7 @@ function CommentSection({ post, userName }) {
             </footer>
             <p className="text-gray-500 dark:text-gray-400">{cmnt.comment}</p>
             {cmnt.id === reply ? (
-              console.log("reply hidden")
+              <></>
             ) : (
               <div className="flex items-center mt-4 space-x-4">
                 <button

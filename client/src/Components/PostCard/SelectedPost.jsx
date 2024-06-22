@@ -1,18 +1,18 @@
 import { useState } from "react";
-import not_liked from "../assets/not_liked.png";
-import liked from "../assets/liked.png";
-import not_marked from "../assets/not_marked.png";
-import marked from "../assets/marked.png";
-import cmnt from "../assets/cmnt.gif";
+import not_liked from "../../assets/not_liked.png";
+import liked from "../../assets/liked.png";
+import not_marked from "../../assets/not_marked.png";
+import marked from "../../assets/marked.png";
+import cmnt from "../../assets/cmnt.gif";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { updatePost } from "../features/posts/postSlice";
+import { updatePost } from "../../features/posts/postSlice";
 import {
   addToSavedPosts,
   removeFromSavedPosts,
   addToLikedPosts,
   removeFromLikedPosts,
-} from "../features/user/userSlice";
+} from "../../features/user/userSlice";
 import CommentSection from "./CommentSection";
 
 function SelectedPost() {
@@ -48,7 +48,6 @@ function SelectedPost() {
     }
   };
   const handleMark = () => {
-    console.log(ismarked);
     if (ismarked) {
       dispatch(removeFromSavedPosts(selectedPost._id));
       setIsMarked(false);
@@ -57,7 +56,6 @@ function SelectedPost() {
       setIsMarked(true);
     }
   };
-  console.log(selectedPost._id);
 
   return (
     <div>

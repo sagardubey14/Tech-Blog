@@ -1,11 +1,21 @@
 import { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import {addToFollowing, removeFromFollowing} from '../../features/user/userSlice'
+import {addToFollowers, removeFromFollowers} from '../../features/user/otherUserSlice'
 
 function PofileHeader({setShowFollowers, setShowFollowing, username}) {
-  // const [user, setUser] = useState({})
-  // username?
+  const dispatch = useDispatch()
   const user = useSelector(state=>state.user.user)
+  const otherUser = useSelector(state=>state.otheruser.otheruser)
+  function handleFollow(){
+    dispatch(addToFollowers(user.username))
+    dispatch(addToFollowing(otherUser.username))
+  }
+  function handleUnFollow(){
+    dispatch(removeFromFollowers(user.username))
+    dispatch(removeFromFollowing(otherUser.username))
+  }
   return (
     <div className=' align-middle justify-items-center justify-center'>
       <header className="flex flex-wrap items-center p-4 md:py-8">
@@ -22,18 +32,29 @@ function PofileHeader({setShowFollowers, setShowFollowing, username}) {
       <div className="w-8/12 md:w-7/12 ml-4">
         <div className="md:flex md:flex-wrap md:items-center mb-4">
           <h2 className="text-3xl inline-block font-light md:mr-2 mb-2 sm:mb-0">
-            {user.username}
+            {username?
+            otherUser.username:
+            user.username}
           </h2>
 
           {/* badge */}
-          <span className="inline-block fas fa-certificate fa-lg text-blue-500 relative mr-6 text-xl transform -translate-y-2" aria-hidden="true">
-            <i className="fas fa-check text-white text-xs absolute inset-x-0 ml-1 mt-px"></i>
+          <span className="inline-block fas fa-certificate fa-lg text-gray-500 relative mr-6 text-xl transform -translate-y-2" aria-hidden="true">
+            <i className="fas fa-check text-black text-xs absolute inset-x-0 ml-1 mt-px"></i>
           </span>
 
           {/* follow button */}
-          <a className="bg-blue-500 px-2 py-1 text-white font-semibold text-sm rounded block text-center sm:inline-block block">
-            Follow
-          </a>
+          {username?
+            (otherUser.followers.includes(user.username)?
+            <button onClick={handleUnFollow} className=" bg-gray-700 px-2 py-1 text-white font-semibold text-sm rounded block text-center sm:inline-block block">
+              UnFollow
+            </button>:
+            <button onClick={handleFollow} className="bg-blue-500 px-2 py-1 text-white font-semibold text-sm rounded block text-center sm:inline-block block">
+              Follow
+            </button>
+            ):
+            <button onClick={()=>alert("editing is in progress")} className="bg-gray-200 px-2 py-1 text-gray-700 font-semibold text-sm rounded block text-center sm:inline-block block">
+              Edit Profile
+            </button>}
         </div>
 
         {/* post, following, followers list for medium screens */}
@@ -43,10 +64,18 @@ function PofileHeader({setShowFollowers, setShowFollowing, username}) {
           </li>
 
           <li>
-            <span className="font-semibold">{user.followers.length}</span> <button onClick={()=>setShowFollowers(true)}>followers</button>
+            <span className="font-semibold">
+              {username?
+                otherUser.followers.length:
+                user.followers.length}
+              </span> <button onClick={()=>setShowFollowers(true)}>followers</button>
           </li>
           <li>
-            <span className="font-semibold">{user.following.length}</span> <button onClick={()=>setShowFollowing(true)}>followings</button>
+            <span className="font-semibold">
+              {username?
+                otherUser.following.length:
+                user.following.length}
+              </span> <button onClick={()=>setShowFollowing(true)}>followings</button>
           </li>
         </ul>
 

@@ -1,8 +1,8 @@
-import personIcon from '../assets/icons8-person-48.png'
-import not_liked from '../assets/not_liked.png'
-import liked from '../assets/liked.png'
-import not_marked from '../assets/not_marked.png'
-import marked from '../assets/marked.png'
+import personIcon from '../../assets/icons8-person-48.png'
+import not_liked from '../../assets/not_liked.png'
+import liked from '../../assets/liked.png'
+import not_marked from '../../assets/not_marked.png'
+import marked from '../../assets/marked.png'
 import { Link } from 'react-router-dom';
 import { Light as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vs2015 } from 'react-syntax-highlighter/dist/esm/styles/hljs';

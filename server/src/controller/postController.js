@@ -40,6 +40,16 @@ const getPosts= async(req, res, next)=>{
     }
 }
 
+const getOthersPosts= async(req, res, next)=>{
+    const {username} = req.query
+    try {
+        existingUserPosts = await Post.find({usernameCreatedBy: username});
+        res.send(existingUserPosts);
+    } catch (error) {
+        res.send(error)
+    }
+}
+
 
 const getTrend= async(req, res, next)=>{
     console.log("call to trend");
@@ -102,4 +112,4 @@ const updateComments = async (req, res, next)=>{
     }
 }
 
-module.exports = {addPost, getPosts, updateLikes, updateComments, getTrend}
+module.exports = {addPost, getPosts, updateLikes, updateComments, getTrend, getOthersPosts}

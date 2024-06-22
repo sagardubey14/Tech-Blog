@@ -3,15 +3,14 @@ import Home from "./Components/Home";
 import Signin from "./Components/Signin";
 import Signup from "./Components/Signup";
 import Header from "./Components/homeComponents/Header";
-import SearchPage from "./Components/SearchPage";
 import Footer from "./Components/homeComponents/Footer";
-import Profile from "./Components/Profile";
+import Profile from "./Components/ProfileCompo/Profile";
 import NotFound from "./Components/homeComponents/NotFound";
-import Post from "./Components/Post";
-import AddPost from "./Components/AddPost";
-import SelectedPost from "./Components/SelectedPost";
-import OthersProfile from "./Components/OthersProfile";
-
+import OthersProfile from "./Components/OtherUser/OthersProfile";
+import SearchPage from "./Components/Search/SearchPage";
+import Post from "./Components/PostCard/Post";
+import AddPost from "./Components/PostCard/AddPost";
+import SelectedPost from "./Components/PostCard/SelectedPost";
 function App() {
   return (
     <>
@@ -24,7 +23,7 @@ function App() {
         <Route path="/404" element={<NotFound />} />
         <Route path="/solution" element={<SearchPage />} />
         <Route path="/solution/:postId" element={<SelectedPost />} />
-        <Route path="/profile/:user" element={<OthersProfile />}/>
+        <Route path="/profile/:user/*" element={<OthersProfile />}/>
         <Route path="/post" element={<Post />} />
         <Route path="/addpost" element={<AddPost />} />
         <Route path="/" element={<Home />} />

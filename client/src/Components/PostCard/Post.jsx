@@ -1,11 +1,11 @@
 import { Light as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vs2015 } from 'react-syntax-highlighter/dist/esm/styles/hljs';
-import personIcon from '../assets/icons8-person-48.png'
-import not_liked from '../assets/not_liked.png'
-import liked from '../assets/liked.png'
-import not_marked from '../assets/not_marked.png'
-import marked from '../assets/marked.png'
-import cmnt from '../assets/cmnt.gif'
+import personIcon from '../../assets/icons8-person-48.png'
+import not_liked from '../../assets/not_liked.png'
+import liked from '../../assets/liked.png'
+import not_marked from '../../assets/not_marked.png'
+import marked from '../../assets/marked.png'
+import cmnt from '../../assets/cmnt.gif'
 
 const Post = ({title, code, keywords, username, likes}) => {
   return (

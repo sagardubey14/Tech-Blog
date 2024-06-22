@@ -2,6 +2,7 @@ import { createSlice, nanoid } from "@reduxjs/toolkit";
 
 const initialState ={
     posts:[],
+    trend:[],
 }
 
 export const postSlice = createSlice({
@@ -9,6 +10,12 @@ export const postSlice = createSlice({
     initialState,
     reducers:{
         setTrend:(state, action)=>{
+            state.trend = action.payload
+        },
+        setPosts:(state, action)=>{
+            state.posts = action.payload
+        },
+        setOtherPosts:(state, action)=>{
             state.posts = action.payload
         },
         addPost : (state, action)=>{
@@ -28,7 +35,6 @@ export const postSlice = createSlice({
             console.log("remove");
         },
         updatePost: (state,action)=>{
-            console.log("update",action.payload);
             const { id, likes } = action.payload;
             const postToUpdate = state.posts.find(post => post._id === id);
                 if (postToUpdate) {
@@ -36,7 +42,6 @@ export const postSlice = createSlice({
             }
         },
         addComment: (state,action)=>{
-            console.log("comment",action.payload);
             const { id, comment, username } = action.payload;
             const postToUpdate = state.posts.find(post => post._id === id);
             if (postToUpdate) {
@@ -62,7 +67,6 @@ export const postSlice = createSlice({
            
         },
         addCommentReply: (state,action)=>{
-            console.log("comment reply",action.payload);
             const { id, comment, username, cmntId } = action.payload;
             const postToUpdate = state.posts.find(post => post._id === id);
             const cmntToAddReply = postToUpdate.comments.find(cmnt=>cmnt.id===cmntId)
@@ -91,6 +95,6 @@ export const postSlice = createSlice({
 
 })
 
-export const {addPost, removePost, setTrend, updatePost, addComment, addCommentReply} = postSlice.actions
+export const {setPosts, addPost, removePost, setTrend, updatePost, addComment, addCommentReply, setOtherPosts} = postSlice.actions
 
 export default postSlice.reducer

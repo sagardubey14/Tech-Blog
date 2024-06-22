@@ -52,11 +52,9 @@ export default function Signin() {
     e.preventDefault();
     if(validateForm()){
       try {
-        console.log(formData);
         const response = await axios.post('http://localhost:3001/auth/signin' , formData,{
           withCredentials:true
         } )
-        console.log(response);
         dispatch(setUser(response.data))
         navigate('/');
       } catch (error) {

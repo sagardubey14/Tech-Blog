@@ -19,28 +19,23 @@ export const userSlice = createSlice({
     reducers:{
         setUser: (state, action) => {
             state.user = action.payload;
-            console.log(state.user);
         },
         updateUser: (state, action) => {
             state.user = { ...state.user, ...action.payload };
         },
         addToLikedPosts: (state, action) => {
-            console.log(action.payload);
             const postIdToAdd = action.payload;
             state.user = {
                 ...state.user,
                 likedPosts: [...state.user.likedPosts, postIdToAdd]
             };
-            console.log(state.user);
         },
         addToSavedPosts: (state, action) => {
-            console.log(action.payload);
             const postIdToAdd = action.payload;
             state.user = {
                 ...state.user,
                 savedPosts: [...state.user.savedPosts, postIdToAdd]
             };
-            console.log(state.user);
         },
         removeFromSavedPosts: (state, action) => {
             const postIdToRemove = action.payload;
@@ -56,6 +51,27 @@ export const userSlice = createSlice({
                 likedPosts: state.user.likedPosts.filter(postId => postId !== postIdToRemove)
             };
         },
+        addToFollowing: (state, action) => {
+            const userIdToAdd = action.payload;
+            state.user = {
+                ...state.user,
+                following: [...state.user.following, userIdToAdd]
+            };
+        },
+        removeFromFollowing: (state, action) => {
+            const userIdToRemove = action.payload;
+            state.user = {
+                ...state.user,
+                following: state.user.following.filter(userId => userId !== userIdToRemove)
+            };
+        },
+        addToFollowers: (state, action) => {
+            const userIdToAdd = action.payload;
+            state.user = {
+                ...state.user,
+                followers: [...state.user.followers, userIdToAdd]
+            };
+        },
         clearUser: (state) => {
             state.user = initialState.user;
         },
@@ -64,6 +80,6 @@ export const userSlice = createSlice({
 
 })
 
-export const {setUser, addToLikedPosts, removeFromLikedPosts, addToSavedPosts, updateUser, clearUser, removeFromSavedPosts} = userSlice.actions
+export const {setUser, addToLikedPosts, removeFromLikedPosts, addToSavedPosts, updateUser, clearUser, removeFromSavedPosts, addToFollowing, addToFollowers, removeFromFollowing} = userSlice.actions
 
 export default userSlice.reducer
