@@ -14,6 +14,7 @@ import {
   removeFromLikedPosts,
 } from "../../features/user/userSlice";
 import CommentSection from "./CommentSection";
+import axios from "axios";
 
 function SelectedPost() {
   const handleScroll = () => {
@@ -36,24 +37,62 @@ function SelectedPost() {
   );
   const dispatch = useDispatch();
 
-  const handleLikes = () => {
+  const handleLikes = async () => {
     if (isLiked) {
       dispatch(updatePost({ likes: -1, id: selectedPost._id }));
       dispatch(removeFromLikedPosts(selectedPost._id));
       setIsLiked(false);
+      try {
+        const res = await axios.post(
+          "http://localhost:3001/post/likes",
+          { id: selectedPost._id, like: false},
+          { withCredentials: true }
+        );
+        console.log(res);
+      } catch (error) {
+        console.log(error);
+      }
     } else {
       dispatch(updatePost({ likes: 1, id: selectedPost._id }));
       dispatch(addToLikedPosts(selectedPost._id));
       setIsLiked(true);
+      try {
+        const res = await axios.post(
+          "http://localhost:3001/post/likes",
+          { id: selectedPost._id, like: true },
+          { withCredentials: true }
+        );
+        console.log(res);
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
-  const handleMark = () => {
+  const handleMark = async () => {
     if (ismarked) {
       dispatch(removeFromSavedPosts(selectedPost._id));
       setIsMarked(false);
+      try {
+        const res = await axios.post(
+          "http://localhost:3001/post/save",
+          { postId: selectedPost._id, remove: true },
+          { withCredentials: true }
+        );
+      } catch (error) {
+        console.log(error);
+      }
     } else {
       dispatch(addToSavedPosts(selectedPost._id));
       setIsMarked(true);
+      try {
+        const res = await axios.post(
+          "http://localhost:3001/post/save",
+          { postId: selectedPost._id, remove: false },
+          { withCredentials: true }
+        );
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -88,7 +127,11 @@ function SelectedPost() {
             {selectedPost.createdAt.slice(0, 10)}
           </p>
           <p className="mb-2">
-            <span className="font-bold">Created By:</span><Link to={`/profile/:${selectedPost.usernameCreatedBy}`}> {selectedPost.usernameCreatedBy}</Link>
+            <span className="font-bold">Created By:</span>
+            <Link to={`/profile/:${selectedPost.usernameCreatedBy}`}>
+              {" "}
+              {selectedPost.usernameCreatedBy}
+            </Link>
           </p>
           <p className="mb-2">
             <span className="font-bold">Likes:</span> {selectedPost.likes}

@@ -37,34 +37,15 @@ export const postSlice = createSlice({
         updatePost: (state,action)=>{
             const { id, likes } = action.payload;
             const postToUpdate = state.posts.find(post => post._id === id);
-                if (postToUpdate) {
+            if (postToUpdate) {
                 postToUpdate.likes += likes;
             }
         },
         addComment: (state,action)=>{
-            const { id, comment, username } = action.payload;
+            const { id, comment } = action.payload;
             const postToUpdate = state.posts.find(post => post._id === id);
-            if (postToUpdate) {
-                let dateObj = new Date();
-
-                let month = String(dateObj.getMonth() + 1)
-                    .padStart(2, '0');
-                    
-                let day = String(dateObj.getDate())
-                    .padStart(2, '0');
-    
-                let year = dateObj.getFullYear();
-                let output = day + '/' + month + '/' + year;
-    
-                postToUpdate.comments.push({
-                    "id":nanoid(),
-                    "username":username,
-                    "comment":comment,
-                    "date": output,
-                    "reply":[],
-                })
-            }
-           
+            postToUpdate.comments.push(comment)
+            
         },
         addCommentReply: (state,action)=>{
             const { id, comment, username, cmntId } = action.payload;

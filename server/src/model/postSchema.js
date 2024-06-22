@@ -29,22 +29,7 @@ const postSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
-    comments: [{
-        username: {
-            type: String,
-            required: true,
-            trim: true
-        },
-        comment: {
-            type: String,
-            required: true,
-            trim: true
-        },
-        createdAt: {
-            type: Date,
-            default: Date.now
-        }
-    }],
+    comments: [],
     createdAt: {
         type: Date,
         default: Date.now
