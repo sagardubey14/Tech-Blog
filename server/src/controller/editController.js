@@ -1,6 +1,6 @@
 const Post = require('../model/postSchema');
 const Keywords = require('../model/keywordsSchema')
-const user = require('../model/userSchema');
+const User = require('../model/userSchema');
 const bcrypt = require('bcryptjs');
 const secretKey = "SECRETKEY"
 const salt = bcrypt.genSaltSync(10);
@@ -11,7 +11,7 @@ const updateEmail = async (req, res, next)=>{
         const filter = { _id: id };
         const update = {email:newEmail}
 
-        const doc = await user.findOneAndUpdate(filter, update, {
+        const doc = await User.findOneAndUpdate(filter, update, {
         new: true
         });
 
@@ -30,7 +30,7 @@ const updateEmail = async (req, res, next)=>{
 const updatePassword = async(req, res, next)=>{
     const {answer, updatedPass} = req.body
     try {
-        const user = await user.findOne({username:req.username})
+        const user = await User.findOne({username:req.username})
         if (answer === user.securityAnswer) {
             let hash = bcrypt.hashSync(updatedPass, salt);
             user.password = hash;
@@ -78,5 +78,28 @@ const editPosts = async (req, res, next) =>{
     }
 }
 
+const updateFollowers = async (req, res, next)=>{
+    const {otheruser, addFollowers} = req.body
+    try {
+        const user = await User.findOne({username:req.username})
+        const otherUser = await User.findOne({username:otheruser})
+        if(addFollowers){
+            otherUser.followers.push(req.username)
+            user.following.push(otheruser)
+        }
+        else{
+            otherUser.followers = otherUser.followers.filter(userName => userName!== req.username)
+            user.following = user.following.filter(userName => userName!== otheruser)
+        }
+        await otherUser.save();
+        await user.save();
+        res.send("Succes in updating followers")
 
-module.exports = {editPosts, updateEmail, updatePassword};
+    } catch (error) {
+        console.error("Error updating follower:", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+}
+
+
+module.exports = {editPosts, updateEmail, updatePassword, updateFollowers};

@@ -11,10 +11,12 @@ import SearchPage from "./Components/Search/SearchPage";
 import Post from "./Components/PostCard/Post";
 import AddPost from "./Components/PostCard/AddPost";
 import SelectedPost from "./Components/PostCard/SelectedPost";
+import Navbar from './Components/Navbar'
 function App() {
   return (
     <>
-      <Header />
+      {/* <Header /> */}
+      <Navbar />  
       <Routes>
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Signin />} />

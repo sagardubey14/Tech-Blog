@@ -7,6 +7,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser')
 const cors = require('cors');
 const searchRoute = require('./src/routes/searchRoute');
+const updateRoute = require('./src/routes/updateRoute');
 
 
 const stopwords = ['how', 'to', 'and', 'or'];
@@ -35,6 +36,7 @@ dbConfig.connect()
 
 app.use('/auth', authRoute);
 app.use('/post', postRoute);
+app.use('/update', updateRoute);
 app.use('/search',removeStopwords, searchRoute)
 
 app.get('/', (req, res) => {

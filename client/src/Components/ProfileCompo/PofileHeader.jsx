@@ -3,16 +3,37 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import {addToFollowing, removeFromFollowing} from '../../features/user/userSlice'
 import {addToFollowers, removeFromFollowers} from '../../features/user/otherUserSlice'
+import axios from 'axios'
 
 function PofileHeader({setShowFollowers, setShowFollowing, username}) {
   const dispatch = useDispatch()
   const user = useSelector(state=>state.user.user)
   const otherUser = useSelector(state=>state.otheruser.otheruser)
-  function handleFollow(){
+  async function handleFollow(){
+    try {
+      const res = await axios.post(
+        "http://localhost:3001/update/follower",
+        {otheruser:otherUser.username, addFollowers:true},
+        { withCredentials: true }
+      );
+      console.log(res.data);
+    } catch (error) {
+      console.log(error);
+    }
     dispatch(addToFollowers(user.username))
     dispatch(addToFollowing(otherUser.username))
   }
-  function handleUnFollow(){
+  async function handleUnFollow(){
+    try {
+      const res = await axios.post(
+        "http://localhost:3001/update/follower",
+        {otheruser:otherUser.username, addFollowers:false},
+        { withCredentials: true }
+      );
+      console.log(res.data);
+    } catch (error) {
+      console.log(error);
+    }
     dispatch(removeFromFollowers(user.username))
     dispatch(removeFromFollowing(otherUser.username))
   }

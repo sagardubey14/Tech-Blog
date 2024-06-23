@@ -9,7 +9,7 @@ import cmnt from '../../assets/cmnt.gif'
 
 const Post = ({title, code, keywords, username, likes}) => {
   return (
-    <div className="md:w-1/3 w-full p-px md:px-3 border-2 md:py-3">
+    <div className="md:w-1/3 w-full p-px md:px-3 border-2 md:py-3 flex flex-col ">
       <span className="text-gray-700 font-medium text-center">{title}</span>
       <div className="bg-black p-4 rounded-lg mb-2">
       <pre className="max-h-32 overflow-auto">
@@ -18,12 +18,12 @@ const Post = ({title, code, keywords, username, likes}) => {
         </SyntaxHighlighter>
       </pre>
       </div>
-      <div className="px-6 pt-4 pb-2">
+      <div className="px-6 pt-4 pb-2 flex-grow">
       {
       keywords.map((keys,index) =><span key={index} className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">{keys}</span>)
       }
       </div>
-      <div className="flex items-center pl-4">
+      <div className="flex items-center pl-4 mt-auto">
         <div className="flex items-center">
             <img src={not_liked} className="w-8 h-8 rounded-full mr-1" alt="Like Icon"/>
             <p className="mr-3">89</p>
