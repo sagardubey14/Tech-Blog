@@ -1,11 +1,12 @@
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import {addToFollowing, removeFromFollowing} from '../../features/user/userSlice'
 import {addToFollowers, removeFromFollowers} from '../../features/user/otherUserSlice'
 import axios from 'axios'
 
 function PofileHeader({setShowFollowers, setShowFollowing, username}) {
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const user = useSelector(state=>state.user.user)
   const otherUser = useSelector(state=>state.otheruser.otheruser)
@@ -73,14 +74,14 @@ function PofileHeader({setShowFollowers, setShowFollowing, username}) {
               Follow
             </button>
             ):
-            <button onClick={()=>alert("editing is in progress")} className="bg-gray-200 px-2 py-1 text-gray-700 font-semibold text-sm rounded block text-center sm:inline-block block">
+            <button onClick={()=>navigate('/profile/editprofile')} className="bg-gray-200 px-2 py-1 text-gray-700 font-semibold text-sm rounded block text-center sm:inline-block block">
               Edit Profile
             </button>}
         </div>
 
         {/* post, following, followers list for medium screens */}
-        <ul className="hidden md:flex space-x-8 mb-4">
-          <li>
+        <ul className="flex space-x-8 mb-4">
+          <li className='md:block hidden'>
             <span className="font-semibold">0</span> posts
           </li>
 

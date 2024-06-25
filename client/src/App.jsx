@@ -2,7 +2,6 @@ import { Route, Routes } from "react-router-dom";
 import Home from "./Components/Home";
 import Signin from "./Components/Signin";
 import Signup from "./Components/Signup";
-import Header from "./Components/homeComponents/Header";
 import Footer from "./Components/homeComponents/Footer";
 import Profile from "./Components/ProfileCompo/Profile";
 import NotFound from "./Components/homeComponents/NotFound";
@@ -11,17 +10,18 @@ import SearchPage from "./Components/Search/SearchPage";
 import Post from "./Components/PostCard/Post";
 import AddPost from "./Components/PostCard/AddPost";
 import SelectedPost from "./Components/PostCard/SelectedPost";
-import Navbar from './Components/Navbar'
+import Navbar from './Components/homeComponents/Navbar'
+import EditProfile from "./Components/ProfileCompo/EditProfile";
 function App() {
   return (
     <>
-      {/* <Header /> */}
-      <Navbar />  
+      <Navbar />
       <Routes>
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Signin />} />
         <Route path="/search" element={<SearchPage />} />
         <Route path="/profile/*" element={<Profile />} />
+        <Route path="/profile/editprofile" element={<EditProfile />} />
         <Route path="/404" element={<NotFound />} />
         <Route path="/solution" element={<SearchPage />} />
         <Route path="/solution/:postId" element={<SelectedPost />} />

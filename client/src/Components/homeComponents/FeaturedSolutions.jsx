@@ -11,8 +11,10 @@ const FeaturedSolutions = () => {
   
   useEffect(()=>{
     const call = async ()=>{
+      if(posts.length===0){
       const res = await axios.get('http://localhost:3001/post/trend')
       dispatch(setTrend(res.data))
+      }
     }
     call();
   },[])
@@ -21,7 +23,7 @@ const FeaturedSolutions = () => {
   return (
     <section className="">
       <h2 className="text-2xl font-bold mb-4">Featured Solutions</h2>
-      <div className='flex flex-row'>
+      <div className='flex flex-col md:flex-row flex-wrap'>
         {posts.map(
           post=><Post 
           key={post._id} 

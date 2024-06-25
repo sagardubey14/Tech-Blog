@@ -11,7 +11,7 @@ const Post = ({title, code, keywords, username, likes}) => {
   return (
     <div className="md:w-1/3 w-full p-px md:px-3 border-2 md:py-3 flex flex-col ">
       <span className="text-gray-700 font-medium text-center">{title}</span>
-      <div className="bg-black p-4 rounded-lg mb-2">
+      <div className="bg-black p-4 rounded-lg mb-2 h-full">
       <pre className="max-h-32 overflow-auto">
         <SyntaxHighlighter language="javascript" style={vs2015}>
           {code}

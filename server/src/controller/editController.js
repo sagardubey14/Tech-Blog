@@ -8,18 +8,18 @@ const salt = bcrypt.genSaltSync(10);
 const updateEmail = async (req, res, next)=>{
     const {newEmail} = req.body
     try {
-        const filter = { _id: id };
+        const filter = { username: req.username };
         const update = {email:newEmail}
 
-        const doc = await User.findOneAndUpdate(filter, update, {
+        const user = await User.findOneAndUpdate(filter, update, {
         new: true
         });
 
-        if (!doc) {
-            return res.status(404).json({ message: "Post not found" });
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
         }
 
-        res.json({ message: "Email updated successfully", post: doc });
+        res.json({ message: "Email updated successfully", email: newEmail });
 
     } catch (error) {
         console.error("Error updating Email:", error);
@@ -39,6 +39,22 @@ const updatePassword = async(req, res, next)=>{
             return res.status(200).json({ message: "Password updated successfully" });
         } else {
             return res.status(400).json({ message: "Security answer is incorrect" });
+        }
+    } catch (error) {
+        console.error("Error updating Password:", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+}
+
+
+const checkAnswer = async(req, res, next)=>{
+    const {answer} = req.body
+    try {
+        const user = await User.findOne({username:req.username})
+        if (answer === user.securityAnswer) {
+            return res.status(200).json({ message: "Right" });
+        } else {
+            return res.status(400).json({ message: "Wrong" });
         }
     } catch (error) {
         console.error("Error updating Password:", error);
@@ -102,4 +118,4 @@ const updateFollowers = async (req, res, next)=>{
 }
 
 
-module.exports = {editPosts, updateEmail, updatePassword, updateFollowers};
+module.exports = {editPosts, updateEmail, updatePassword, updateFollowers, checkAnswer};

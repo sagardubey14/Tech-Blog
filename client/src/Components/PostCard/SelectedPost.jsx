@@ -128,10 +128,16 @@ function SelectedPost() {
           </p>
           <p className="mb-2">
             <span className="font-bold">Created By:</span>
-            <Link to={`/profile/:${selectedPost.usernameCreatedBy}`}>
+            {user.username === selectedPost.usernameCreatedBy?
+            (<Link to="/profile">
               {" "}
               {selectedPost.usernameCreatedBy}
-            </Link>
+            </Link>):
+            (<Link to={`/profile/:${selectedPost.usernameCreatedBy}`}>
+              {" "}
+              {selectedPost.usernameCreatedBy}
+            </Link>)
+            }
           </p>
           <p className="mb-2">
             <span className="font-bold">Likes:</span> {selectedPost.likes}
