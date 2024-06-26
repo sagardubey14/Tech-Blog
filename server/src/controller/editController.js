@@ -5,14 +5,14 @@ const bcrypt = require('bcryptjs');
 const secretKey = "SECRETKEY"
 const salt = bcrypt.genSaltSync(10);
 
-const updateEmail = async (req, res, next)=>{
-    const {newEmail} = req.body
+const updateEmail = async (req, res, next) => {
+    const { newEmail } = req.body
     try {
         const filter = { username: req.username };
-        const update = {email:newEmail}
+        const update = { email: newEmail }
 
         const user = await User.findOneAndUpdate(filter, update, {
-        new: true
+            new: true
         });
 
         if (!user) {
@@ -27,18 +27,18 @@ const updateEmail = async (req, res, next)=>{
     }
 }
 
-const updatePassword = async(req, res, next)=>{
-    const {answer, updatedPass} = req.body
+const updatePassword = async (req, res, next) => {
+    const { oldPass, newPass } = req.body
     try {
-        const user = await User.findOne({username:req.username})
-        if (answer === user.securityAnswer) {
-            let hash = bcrypt.hashSync(updatedPass, salt);
+        const user = await User.findOne({ username: req.username })
+        if (bcrypt.compareSync(oldPass, user.password)) {
+            let hash = bcrypt.hashSync(newPass, salt);
             user.password = hash;
-            await user.save(); 
-
+            await user.save();
             return res.status(200).json({ message: "Password updated successfully" });
-        } else {
-            return res.status(400).json({ message: "Security answer is incorrect" });
+        }
+        else {
+            return res.status(200).json({ message: "Password was Incorrect" });
         }
     } catch (error) {
         console.error("Error updating Password:", error);
@@ -46,15 +46,29 @@ const updatePassword = async(req, res, next)=>{
     }
 }
 
-
-const checkAnswer = async(req, res, next)=>{
-    const {answer} = req.body
+const setNewPassword = async (req, res, next) => {
+    const { newPass } = req.body
     try {
-        const user = await User.findOne({username:req.username})
+        const user = await User.findOne({ username: req.username })
+        let hash = bcrypt.hashSync(newPass, salt);
+        user.password = hash;
+        await user.save();
+        return res.status(200).json({ message: "Password updated successfully" });
+    } catch (error) {
+        console.error("Error updating Password:", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+}
+
+
+const checkAnswer = async (req, res, next) => {
+    const { answer } = req.body
+    try {
+        const user = await User.findOne({ username: req.username })
         if (answer === user.securityAnswer) {
             return res.status(200).json({ message: "Right" });
         } else {
-            return res.status(400).json({ message: "Wrong" });
+            return res.status(200).json({ message: "Wrong" });
         }
     } catch (error) {
         console.error("Error updating Password:", error);
@@ -62,16 +76,16 @@ const checkAnswer = async(req, res, next)=>{
     }
 }
 
-const editPosts = async (req, res, next) =>{
-    const {id, keywords, description, code} = req.nody
+const editPosts = async (req, res, next) => {
+    const { id, keywords, description, code } = req.nody
     try {
         const filter = { _id: id };
-        const update = {keywords:keywords, description:description, code:code}
+        const update = { keywords: keywords, description: description, code: code }
         const keys = await Keywords.findById('665ae7089ccff1a8b14f9e40')
         const doc = await Post.findOneAndUpdate(filter, update, {
-        new: true
+            new: true
         });
-        
+
         if (!doc) {
             return res.status(404).json({ message: "Post not found" });
         }
@@ -79,12 +93,12 @@ const editPosts = async (req, res, next) =>{
         let words = keys.keywords
         doc.keywords.forEach(value => {
             if (!words.includes(value)) {
-              words.push(value);
+                words.push(value);
             }
         });
-        if(!words === keys.keywords){
+        if (!words === keys.keywords) {
             keys.keywords = words
-            await keys.save();   
+            await keys.save();
         }
 
         res.json({ message: "Post updated successfully", post: doc });
@@ -94,18 +108,18 @@ const editPosts = async (req, res, next) =>{
     }
 }
 
-const updateFollowers = async (req, res, next)=>{
-    const {otheruser, addFollowers} = req.body
+const updateFollowers = async (req, res, next) => {
+    const { otheruser, addFollowers } = req.body
     try {
-        const user = await User.findOne({username:req.username})
-        const otherUser = await User.findOne({username:otheruser})
-        if(addFollowers){
+        const user = await User.findOne({ username: req.username })
+        const otherUser = await User.findOne({ username: otheruser })
+        if (addFollowers) {
             otherUser.followers.push(req.username)
             user.following.push(otheruser)
         }
-        else{
-            otherUser.followers = otherUser.followers.filter(userName => userName!== req.username)
-            user.following = user.following.filter(userName => userName!== otheruser)
+        else {
+            otherUser.followers = otherUser.followers.filter(userName => userName !== req.username)
+            user.following = user.following.filter(userName => userName !== otheruser)
         }
         await otherUser.save();
         await user.save();
@@ -118,4 +132,4 @@ const updateFollowers = async (req, res, next)=>{
 }
 
 
-module.exports = {editPosts, updateEmail, updatePassword, updateFollowers, checkAnswer};
+module.exports = { editPosts, updateEmail, updatePassword, updateFollowers, checkAnswer, setNewPassword };

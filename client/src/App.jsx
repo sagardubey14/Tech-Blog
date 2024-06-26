@@ -10,12 +10,15 @@ import SearchPage from "./Components/Search/SearchPage";
 import Post from "./Components/PostCard/Post";
 import AddPost from "./Components/PostCard/AddPost";
 import SelectedPost from "./Components/PostCard/SelectedPost";
-import Navbar from './Components/homeComponents/Navbar'
+import Navbar from "./Components/homeComponents/Navbar";
 import EditProfile from "./Components/ProfileCompo/EditProfile";
+import { useState } from "react";
+import Notification from "./Components/Notification";
 function App() {
   return (
     <>
       <Navbar />
+      <Notification />
       <Routes>
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Signin />} />
@@ -25,7 +28,7 @@ function App() {
         <Route path="/404" element={<NotFound />} />
         <Route path="/solution" element={<SearchPage />} />
         <Route path="/solution/:postId" element={<SelectedPost />} />
-        <Route path="/profile/:user/*" element={<OthersProfile />}/>
+        <Route path="/profile/other/:user/*" element={<OthersProfile />} />
         <Route path="/post" element={<Post />} />
         <Route path="/addpost" element={<AddPost />} />
         <Route path="/" element={<Home />} />

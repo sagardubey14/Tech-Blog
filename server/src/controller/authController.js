@@ -4,76 +4,80 @@ const jwt = require('jsonwebtoken');
 const secretKey = "SECRETKEY"
 const salt = bcrypt.genSaltSync(10);
 
-const signup = async (req, res, next)=>{
-    const {username, email, password, securityQuestion, securityAnswer} = req.body;
+const signup = async (req, res, next) => {
+    const { username, email, password, securityQuestion, securityAnswer } = req.body;
 
-    try{
-        
+    try {
+
         let hash = bcrypt.hashSync(password, salt);
         const newUser = await user.create({
-            username:username,
+            username: username,
             email: email,
             password: hash,
             securityQuestion: securityQuestion,
             securityAnswer: securityAnswer,
         });
         res.status(200).json({
-            username:username,
-            password:hash
+            username: username,
+            password: hash
         })
     }
-    catch(err){
+    catch (err) {
         console.log(err);
     }
 
 }
 
 
-const signin = async (req, res, next)=>{
-    const {username, email, password} = req.body;
+const signin = async (req, res, next) => {
+    const { username, email, password } = req.body;
 
-    try{
+    try {
         let existingUser;
-        if(email){
-            existingUser = await user.findOne({email: email});
-        }else{
-            existingUser = await user.findOne({username: username});
+        if (email) {
+            existingUser = await user.findOne({ email: email });
+        } else {
+            existingUser = await user.findOne({ username: username });
         }
-        if(!existingUser){
+        if (!existingUser) {
             res.status(404).json({
-             Error:"Username not found"
+                Error: "Username not found"
             })
-        }else{
-            bcrypt.compareSync(password, existingUser.password);
-            const user = {
-                username: existingUser.username
-            };
-        
-            const token = jwt.sign(user, secretKey);
+        } else {
+            if (bcrypt.compareSync(password, existingUser.password)) {
+                const user = {
+                    username: existingUser.username
+                };
 
-            const userdata = {
-                username:existingUser.username,
-                email:existingUser.email,
-                question:existingUser.securityQuestion,
-                saved:existingUser.savedPosts,
-                followers:existingUser.followers,
-                following:existingUser.following,
-                likedPosts:existingUser.likedPosts,
-                savedPosts:existingUser.savedPosts,
+                const token = jwt.sign(user, secretKey);
+
+                const userdata = {
+                    username: existingUser.username,
+                    email: existingUser.email,
+                    question: existingUser.securityQuestion,
+                    saved: existingUser.savedPosts,
+                    followers: existingUser.followers,
+                    following: existingUser.following,
+                    likedPosts: existingUser.likedPosts,
+                    savedPosts: existingUser.savedPosts,
+                }
+                try {
+                    res.cookie('token', token, { httpOnly: true });
+                } catch (error) {
+                    console.log(error);
+                }
+                res.send(userdata);
             }
-            try {
-                res.cookie('token', token, { httpOnly: true });
-            } catch (error) {
-                console.log(error);
+            else {
+                return res.status(200).json({ message: "Password is Incorrect" });
             }
-            res.send(userdata);
         }
     }
-    catch(err){
+    catch (err) {
         console.log(err);
     }
 
 }
 
 
-module.exports = {signup, signin};
+module.exports = { signup, signin };

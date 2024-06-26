@@ -133,7 +133,7 @@ function SelectedPost() {
               {" "}
               {selectedPost.usernameCreatedBy}
             </Link>):
-            (<Link to={`/profile/:${selectedPost.usernameCreatedBy}`}>
+            (<Link to={`/profile/other/:${selectedPost.usernameCreatedBy}`}>
               {" "}
               {selectedPost.usernameCreatedBy}
             </Link>)

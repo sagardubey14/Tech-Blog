@@ -6,6 +6,10 @@ import { useSelector } from "react-redux";
 import { useState } from "react";
 import AddPost from "../PostCard/AddPost";
 import ProfileHeader from "./PofileHeader";
+import SavedPosts from "./SavedPosts";
+
+
+
 
 
 function Profile() {
@@ -56,7 +60,7 @@ function Profile() {
         </ul>
         <Routes>
           <Route path="/" element={<UserPosts />} />
-          <Route path="/saved" element={<UserPosts />} />
+          <Route path="/saved" element={<SavedPosts />} />
         </Routes>
       </div>
     </>

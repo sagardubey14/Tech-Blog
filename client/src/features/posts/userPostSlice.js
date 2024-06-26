@@ -2,6 +2,7 @@ import { createSlice, nanoid } from "@reduxjs/toolkit";
 
 const initialState ={
     userposts:[],
+    savedpost:[],
 }
 
 export const userPostSlice = createSlice({
@@ -10,6 +11,9 @@ export const userPostSlice = createSlice({
     reducers:{
         getPosts:(state, action)=>{
             state.userposts = action.payload
+        },
+        getSavedPosts:(state, action)=>{
+            state.savedpost = action.payload
         },
         addPost : (state, action)=>{
             console.log("add");
