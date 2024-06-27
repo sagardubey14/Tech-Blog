@@ -4,6 +4,7 @@ import { validatePassword } from '../utils/validation';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../features/user/userSlice';
+import {setMsg} from '../features/notifications/noteSlice'
 import { Link, useNavigate } from 'react-router-dom';
 
 export default function Signin() {
@@ -56,6 +57,11 @@ export default function Signin() {
           withCredentials:true
         } )
         dispatch(setUser(response.data))
+        dispatch(setMsg({
+          msg:`Welcome Back ${response.data.username}`,
+          time:5,
+          showMsg:true,
+        }))
         navigate('/');
       } catch (error) {
         console.log(error);

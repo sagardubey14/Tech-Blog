@@ -14,6 +14,8 @@ import Navbar from "./Components/homeComponents/Navbar";
 import EditProfile from "./Components/ProfileCompo/EditProfile";
 import { useState } from "react";
 import Notification from "./Components/Notification";
+import HtmlPreviewer from "./Components/HtmlPreviewer"
+
 function App() {
   return (
     <>
@@ -31,6 +33,7 @@ function App() {
         <Route path="/profile/other/:user/*" element={<OthersProfile />} />
         <Route path="/post" element={<Post />} />
         <Route path="/addpost" element={<AddPost />} />
+        <Route path="/css" element={<HtmlPreviewer />} />
         <Route path="/" element={<Home />} />
         <Route path="/post/:postId" element={<Post />} />
       </Routes>

@@ -3,9 +3,12 @@ import jspic from '../assets/SX.png'
 import { validateEmail, validatePassword } from '../utils/validation';
 import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import {setMsg} from '../features/notifications/noteSlice'
 
 export default function Signup() {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   const [termsChecked,setTermsChecked] = useState(false)
   const [formData, setFormData] = useState({
     username:'',
@@ -91,6 +94,11 @@ export default function Signup() {
         console.log(formData);
         const response = await axios.post('http://localhost:3001/auth/signup' , formData )
         console.log(response);
+        dispatch(setMsg({
+          msg:`Registered Successfully`,
+          time:5,
+          showMsg:true,
+        }))
         navigate('/login');
       } catch (error) {
         console.log(error);

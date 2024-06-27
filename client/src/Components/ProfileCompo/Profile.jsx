@@ -2,7 +2,6 @@ import { Link, Route, Routes } from "react-router-dom";
 import Followers from "./Followers";
 import UserPosts from "./UserPosts";
 import Following from "./Following";
-import { useSelector } from "react-redux";
 import { useState } from "react";
 import AddPost from "../PostCard/AddPost";
 import ProfileHeader from "./PofileHeader";

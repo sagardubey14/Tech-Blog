@@ -3,13 +3,21 @@ import { vs2015 } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import {setMsg} from '../../features/notifications/noteSlice'
 import axios from "axios";
 
 function AddPost({ setHello }) {
   const user = useSelector((state) => state.user.user);
+  const dispatch = useDispatch()
   const navigate = useNavigate();
   useEffect(() => {
     if (user.username === "") {
+      dispatch(setMsg({
+        msg:`Please Login to access`,
+        time:5,
+        showMsg:true,
+      }))
       navigate("/login");
     }
   }, []);

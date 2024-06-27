@@ -68,6 +68,12 @@ const Navbar = () => {
           >
             CSS-Playground
           </Link>
+          <Link
+            to="/addpost"
+            className="hover:underline text-white px-3 py-2 hover:bg-gray-700"
+          >
+            Create-Post
+          </Link>
         </div>
 
         {/* Search bar for mobile */}
@@ -172,6 +178,13 @@ const Navbar = () => {
             className="block text-white px-3 py-2 hover:bg-gray-700"
           >
             CSS-Playground
+          </Link>
+          <Link
+            onClick={() => setIsOpen(false)}
+            to="/addpost"
+            className="block text-white px-3 py-2 hover:bg-gray-700"
+          >
+            Create-Post
           </Link>
           {user.username ? (
             <Link
