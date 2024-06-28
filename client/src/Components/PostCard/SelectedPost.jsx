@@ -45,7 +45,7 @@ function SelectedPost() {
       try {
         const res = await axios.post(
           "http://localhost:3001/post/likes",
-          { id: selectedPost._id, like: false},
+          { id: selectedPost._id, like: false },
           { withCredentials: true }
         );
         console.log(res);
@@ -100,7 +100,23 @@ function SelectedPost() {
     <div>
       <div className="min-h-screen flex flex-col justify-center items-center">
         <div className="bg-white shadow-md rounded-lg p-8 max-w-3xl w-full">
-          <h2 className="text-2xl font-bold mb-4">Here is the selected post</h2>
+          <div className="grid grid-cols-3">
+            <h2 className="text-2xl font-bold mb-4 col-span-2">
+              Here is the selected post
+            </h2>
+            {user.username === selectedPost.usernameCreatedBy ? (
+              <div className="col-span-1 md:flex md:items-center pb-5">
+              <button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600 mb-2 md:mb-0  mr-2 ml-auto">
+                Edit
+              </button>
+              <button className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 focus:outline-none focus:bg-red-600">
+                Delete
+              </button>
+            </div>
+            ) : (
+              <></>
+            )}
+          </div>
           <p className="mb-2">
             <span className="font-bold">Title:</span> {selectedPost.title}
           </p>
@@ -128,16 +144,14 @@ function SelectedPost() {
           </p>
           <p className="mb-2">
             <span className="font-bold">Created By:</span>
-            {user.username === selectedPost.usernameCreatedBy?
-            (<Link to="/profile">
-              {" "}
-              {selectedPost.usernameCreatedBy}
-            </Link>):
-            (<Link to={`/profile/other/:${selectedPost.usernameCreatedBy}`}>
-              {" "}
-              {selectedPost.usernameCreatedBy}
-            </Link>)
-            }
+            {user.username === selectedPost.usernameCreatedBy ? (
+              <Link to="/profile"> {selectedPost.usernameCreatedBy}</Link>
+            ) : (
+              <Link to={`/profile/other/:${selectedPost.usernameCreatedBy}`}>
+                {" "}
+                {selectedPost.usernameCreatedBy}
+              </Link>
+            )}
           </p>
           <p className="mb-2">
             <span className="font-bold">Likes:</span> {selectedPost.likes}

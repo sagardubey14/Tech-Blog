@@ -109,7 +109,7 @@ export default function Signup() {
 
 	return (
     <div>
-      <div className="flex flex-col items-center min-h-screen pt-6 sm:justify-center sm:pt-4 mt-4 bg-gray-50">
+      <div className="flex flex-col items-center min-h-screen pt-6 sm:justify-center sm:pt-4 bg-gray-50">
         <div>
           <img src={jspic} className=' size-20 '/>
           <h3 className="text-xl ml-1 font-bold text-blue-900">Sign Up</h3>

@@ -15,6 +15,8 @@ import EditProfile from "./Components/ProfileCompo/EditProfile";
 import { useState } from "react";
 import Notification from "./Components/Notification";
 import HtmlPreviewer from "./Components/HtmlPreviewer"
+import Alertsss from "./Components/Alertsss";
+import About from './Components/About'
 
 function App() {
   return (
@@ -32,6 +34,8 @@ function App() {
         <Route path="/solution/:postId" element={<SelectedPost />} />
         <Route path="/profile/other/:user/*" element={<OthersProfile />} />
         <Route path="/post" element={<Post />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/alert" element={<Alertsss />} />
         <Route path="/addpost" element={<AddPost />} />
         <Route path="/css" element={<HtmlPreviewer />} />
         <Route path="/" element={<Home />} />

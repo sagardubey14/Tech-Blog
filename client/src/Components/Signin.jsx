@@ -61,6 +61,7 @@ export default function Signin() {
           msg:`Welcome Back ${response.data.username}`,
           time:5,
           showMsg:true,
+          type:1,
         }))
         navigate('/');
       } catch (error) {

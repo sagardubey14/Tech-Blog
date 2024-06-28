@@ -28,6 +28,6 @@ export const userPostSlice = createSlice({
 
 })
 
-export const {addPost, removePost, getPosts} = userPostSlice.actions
+export const {addPost, removePost, getPosts, getSavedPosts} = userPostSlice.actions
 
 export default userPostSlice.reducer

@@ -32,7 +32,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-gray-800 py-4">
+    <nav className="bg-darkBlue text-white py-4">
       <div className="max-w-7xl mx-auto flex justify-between items-center">
         {/* Logo on the left */}
         <div className="flex items-center">
@@ -52,25 +52,25 @@ const Navbar = () => {
         <div className="hidden md:flex flex-grow justify-center">
           <Link
             to="/"
-            className="hover:underline text-white px-3 py-2 hover:bg-gray-700"
+            className=" text-white px-3 py-2 hover:text-gold"
           >
             Home
           </Link>
           <Link
             to="/about"
-            className="hover:underline text-white px-3 py-2 hover:bg-gray-700"
+            className=" text-white px-3 py-2 hover:text-gold"
           >
             About
           </Link>
           <Link
             to="/css"
-            className="hover:underline text-white px-3 py-2 hover:bg-gray-700"
+            className=" text-white px-3 py-2 hover:text-gold"
           >
             CSS-Playground
           </Link>
           <Link
             to="/addpost"
-            className="hover:underline text-white px-3 py-2 hover:bg-gray-700"
+            className=" text-white px-3 py-2 hover:text-gold"
           >
             Create-Post
           </Link>
@@ -108,21 +108,21 @@ const Navbar = () => {
         <div className="hidden md:flex items-center">
           {user.username ? (
             <>
-              <Link to="/profile" className="text-white py-2 hover:bg-gray-700">
+              <Link to="/profile" className="text-white py-2 hover:text-gold">
                 Profile
               </Link>
             </>
           ) : (
             <div className="sm:grid sm:grid-cols-2 ">
               <div className="mt-2 sm:mt-0">
-                <Link to="/login" className="text-white py-2 hover:bg-gray-700">
+                <Link to="/login" className="text-white py-2 hover:text-gold">
                   Login
                 </Link>
               </div>
               <div className="mt-2 sm:mt-0">
                 <Link
                   to="/signup"
-                  className="text-white py-2 hover:bg-gray-700"
+                  className="text-white py-2 hover:text-gold"
                 >
                   Sign Up
                 </Link>
@@ -161,28 +161,28 @@ const Navbar = () => {
           <Link
             to="/"
             onClick={() => setIsOpen(false)}
-            className="block text-white px-3 py-2 hover:bg-gray-700"
+            className="block text-white px-3 py-2 hover:text-gold"
           >
             Home
           </Link>
           <Link
             to="/about"
             onClick={() => setIsOpen(false)}
-            className="block text-white px-3 py-2 hover:bg-gray-700"
+            className="block text-white px-3 py-2 hover:text-gold"
           >
             About
           </Link>
           <Link
             onClick={() => setIsOpen(false)}
             to="/css"
-            className="block text-white px-3 py-2 hover:bg-gray-700"
+            className="block text-white px-3 py-2 hover:text-gold"
           >
             CSS-Playground
           </Link>
           <Link
             onClick={() => setIsOpen(false)}
             to="/addpost"
-            className="block text-white px-3 py-2 hover:bg-gray-700"
+            className="block text-white px-3 py-2 hover:text-gold"
           >
             Create-Post
           </Link>
@@ -190,7 +190,7 @@ const Navbar = () => {
             <Link
               to="/profile"
               onClick={() => setIsOpen(false)}
-              className="block text-white px-3 py-2"
+              className="block text-white px-3 py-2 hover:text-gold"
             >
               Profile
             </Link>
@@ -199,14 +199,14 @@ const Navbar = () => {
               <Link
                 to="/login"
                 onClick={() => setIsOpen(false)}
-                className="block text-white px-3 py-2"
+                className="block text-white px-3 py-2 hover:text-gold"
               >
                 Login
               </Link>
               <Link
                 to="/signup"
                 onClick={() => setIsOpen(false)}
-                className="block text-white px-3 py-2"
+                className="block text-white px-3 py-2 hover:text-gold"
               >
                 Signup
               </Link>

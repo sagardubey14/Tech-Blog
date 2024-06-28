@@ -5,6 +5,7 @@ const initialState ={
         msg:'Message',
         time:5,
         showMsg:false,
+        type:2,
     },
 }
 
@@ -14,7 +15,6 @@ export const noteSlice = createSlice({
     reducers:{
         setMsg: (state, action) => {
             state.message = action.payload;
-            console.log(state.message);
         },
         setTimeLeft: (state, action) => {
             state.message.time = action.payload;

@@ -21,11 +21,11 @@ const FeaturedSolutions = () => {
 
 
   return (
-    <section className="">
-      <h2 className="text-2xl font-bold mb-4">Featured Solutions</h2>
+    <section className="bg-softWhite p-10">
+      <h2 className="text-2xl font-bold mb-4 text-darkBlue">Featured Solutions</h2>
       <div className='flex flex-col md:flex-row flex-wrap'>
         {posts.map(
-          post=><Post 
+          post=><Post className="bg-white p-4 m-2 rounded border border-lightGrey shadow-md"
           key={post._id} 
           title={post.title}
           code={post.code}

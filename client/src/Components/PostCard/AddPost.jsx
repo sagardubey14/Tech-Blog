@@ -48,20 +48,20 @@ function AddPost({ setHello }) {
   const [code, setCode] = useState("");
 
   return (
-    <div className="flex items-center justify-center min-h-screen">
-    <form className="max-w-2xl w-full mx-auto bg-slate-300 shadow-md rounded-lg p-8">
-    <h1 className="mb-4 text-3xl text-center font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-3xl">
+    <div className="flex items-center justify-center min-h-screen mt-5 mb-5 md:mt-0 md:mb-0 bg-gray-100">
+    <form className="max-w-2xl w-full mx-auto bg-slate-300 shadow-md rounded-lg p-8 border-t-4 border-darkBlue">
+    <h1 className="mb-4 text-3xl text-center font-extrabold leading-none tracking-tight text-darkBlue md:text-3xl lg:text-3xl">
         Create Your Post
       </h1>
       <div className="relative z-0 w-full mt-2 mb-5 group">
         <input
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-900 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+          className="block py-2.5 px-0 w-full text-sm text-darkBlue bg-transparent border-0 border-b-2 border-gray-400 appearance-none focus:outline-none focus:ring-0 focus:border-coral peer"
           placeholder=" "
           required
         />
-        <label className="peer-focus:font-medium absolute text-sm text-black duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+        <label className="peer-focus:font-medium absolute text-sm text-darkBlue duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-coral peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
           Post Title
         </label>
       </div>
@@ -69,11 +69,11 @@ function AddPost({ setHello }) {
         <input
           value={keywords}
           onChange={(e) => setKeywords(e.target.value)}
-          className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-900 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+          className="block py-2.5 px-0 w-full text-sm text-darkBlue bg-transparent border-0 border-b-2 border-gray-400 appearance-none focus:outline-none focus:ring-0 focus:border-coral peer"
           placeholder=" "
           required
         />
-        <label className="peer-focus:font-medium absolute text-sm text-black duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+        <label className="peer-focus:font-medium absolute text-sm text-darkBlue duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-coral peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
           Keywords
         </label>
         <div className="text-sm text-gray-700 mt-1">
@@ -84,11 +84,11 @@ function AddPost({ setHello }) {
         <textarea
           value={desc}
           onChange={(e) => setDesc(e.target.value)}
-          className="block py-6 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-900 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+          className="block py-2.5 px-0 w-full text-sm text-darkBlue bg-transparent border-0 border-b-2 border-gray-400 appearance-none focus:outline-none focus:ring-0 focus:border-coral peer"
           placeholder=" "
           required
         />
-        <label className="peer-focus:font-medium absolute text-sm text-black duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+        <label className="peer-focus:font-medium absolute text-sm text-darkBlue duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-coral peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
           Description
         </label>
       </div>
@@ -97,15 +97,15 @@ function AddPost({ setHello }) {
           value={code}
           onChange={(e) => setCode(e.target.value)}
           id="floating_password"
-          className="block py-6 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-900 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+          className="block py-6 px-0 w-full text-sm text-darkBlue bg-transparent border-0 border-b-2 border-gray-400 appearance-none focus:outline-none focus:ring-0 focus:border-coral peer"
           placeholder=" "
           required
         />
-        <label className="peer-focus:font-medium absolute text-sm text-black duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+        <label className="peer-focus:font-medium absolute text-sm text-darkBlue duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-coral peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
           Code
         </label>
       </div>
-      <div className="bg-black p-2 rounded-lg mb-1">
+      <div className="bg-darkBlue p-2 rounded-lg mb-1">
         <div className="text-sm text-gray-400 pb-1">Preview</div>
         <pre className="max-h-40 overflow-auto">
           <SyntaxHighlighter language="javascript" style={vs2015}>
@@ -115,7 +115,7 @@ function AddPost({ setHello }) {
       </div>
       <button
         onClick={handleSubmit}
-        className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+        className="text-white bg-coral hover:bg-darkCoral focus:ring-4 focus:outline-none focus:ring-coral font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
       >
         Submit
       </button>
@@ -125,3 +125,5 @@ function AddPost({ setHello }) {
 }
 
 export default AddPost;
+
+
