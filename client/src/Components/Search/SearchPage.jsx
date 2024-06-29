@@ -4,7 +4,7 @@ import SearchedPost from "./SearchedPosts"
 import { Route, Routes } from "react-router-dom"
 
 function SearchPage() {
-  const searchdePosts = useSelector(state=>state.posts.posts)
+  const searchdePosts = useSelector(state=>state.combined.resultposts)
   return (
     <div className="px-4 md:px-6 min-h-screen bg-darkBlue text-white">
       <p className="text-xl text-coral mb-6">The solutions for your problems are:</p>

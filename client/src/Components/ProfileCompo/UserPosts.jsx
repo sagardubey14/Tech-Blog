@@ -2,22 +2,23 @@ import axios from 'axios'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import {getPosts} from '../../features/posts/userPostSlice'
+import {setUserPosts} from '../../features/posts/combinedPostSlice'
 import { Editor } from '@monaco-editor/react'
 import Post from '../PostCard/Post'
 
 
 function UserPosts() {
   const dispatch = useDispatch()
-  const userposts = useSelector(state=>state.userposts.userposts)
+  const userposts = useSelector(state=>state.combined.userposts)
   useEffect( ()=>{
     const getPost = async ()=>{
-      if(userposts == []){
+      if(userposts.length === 0){
       try {
         const res = await axios.get('http://localhost:3001/post/get',{
           withCredentials:true
         })
         dispatch(getPosts(res.data))
-
+        dispatch(setUserPosts(res.data))
       } catch (error) {
         console.log(error);
       }
@@ -32,10 +33,8 @@ function UserPosts() {
             {userposts.map(
               post=><Post
               key={post._id}
-              postId={post._id}
-              title={post.title}
-              code={post.code}
-              keywords={post.keywords}
+              OnePost={post}
+              name='user'
             />
             )}
           </div>

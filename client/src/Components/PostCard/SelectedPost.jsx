@@ -7,6 +7,7 @@ import cmnt from "../../assets/cmnt.gif";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { updatePost } from "../../features/posts/postSlice";
+import { postLikes } from "../../features/posts/combinedPostSlice";
 import {
   addToSavedPosts,
   removeFromSavedPosts,
@@ -23,22 +24,20 @@ import { vs2015 } from "react-syntax-highlighter/dist/esm/styles/hljs";
 function SelectedPost() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { postId } = useParams();
   const user = useSelector((state) => state.user.user);
-  const searchdePosts = useSelector((state) => state.posts.posts);
   const userPosts = useSelector((state) => state.userposts.userposts);
-  const trendPosts = useSelector((state) => state.posts.trend);
   const [showDeletePopup, setShowDeletePopup] = useState(false);
-  const selectedPost =
-    searchdePosts.find((post) => post._id === postId.slice(1)) ||
-    userPosts.find((post) => post._id === postId.slice(1)) ||
-    trendPosts.find((post) => post._id === postId.slice(1));
-
+  const combineState = useSelector(state=>state.combined)
+  const selectedPost = useSelector(state=>state.combined.selectedpost)
+    // searchdePosts.find((post) => post._id === postId.slice(1)) ||
+    // userPosts.find((post) => post._id === postId.slice(1)) ||
+    // trendPosts.find((post) => post._id === postId.slice(1));
+  
   const [isLiked, setIsLiked] = useState(
-    user.likedPosts.includes(selectedPost._id)
+    user.likedPosts.includes(selectedPost.post._id)
   );
   const [ismarked, setIsMarked] = useState(
-    user.savedPosts.includes(selectedPost._id)
+    user.savedPosts.includes(selectedPost.post._id)
   );
 
   const handleScroll = () => {
@@ -50,13 +49,14 @@ function SelectedPost() {
 
   const handleLikes = async () => {
     if (isLiked) {
-      dispatch(updatePost({ likes: -1, id: selectedPost._id }));
-      dispatch(removeFromLikedPosts(selectedPost._id));
+      dispatch(postLikes({ likes: -1, id:selectedPost.post._id, name:selectedPost.name}));
+      dispatch(removeFromLikedPosts(selectedPost.post._id));
       setIsLiked(false);
+
       try {
         const res = await axios.post(
           "http://localhost:3001/post/likes",
-          { id: selectedPost._id, like: false },
+          { id: selectedPost.post._id, like: false },
           { withCredentials: true }
         );
         console.log(res);
@@ -64,13 +64,13 @@ function SelectedPost() {
         console.log(error);
       }
     } else {
-      dispatch(updatePost({ likes: 1, id: selectedPost._id }));
-      dispatch(addToLikedPosts(selectedPost._id));
+      dispatch(postLikes({ likes: 1, id:selectedPost.post._id, name:selectedPost.name}));
+      dispatch(addToLikedPosts(selectedPost.post._id));
       setIsLiked(true);
       try {
         const res = await axios.post(
           "http://localhost:3001/post/likes",
-          { id: selectedPost._id, like: true },
+          { id: selectedPost.post._id, like: true },
           { withCredentials: true }
         );
         console.log(res);
@@ -78,12 +78,23 @@ function SelectedPost() {
         console.log(error);
       }
     }
+    console.log(combineState);
   };
 
-  const handleConfirmDelete = () => {
+  const handleConfirmDelete = async () => {
     console.log(userPosts);
-    console.log(`Post ${selectedPost._id} deleted`);
-    dispatch(removePost({id:selectedPost._id}))
+    console.log(`Post ${selectedPost.post._id} deleted`);
+    try {
+      const res = await axios.post(
+        "http://localhost:3001/post/delete",
+        { postId: selectedPost.post._id},
+        { withCredentials: true }
+      );
+      console.log(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+    dispatch(removePost({id:selectedPost.post._id}))
     setShowDeletePopup(false);
     console.log(userPosts);
     navigate('/')
@@ -95,24 +106,24 @@ function SelectedPost() {
 
   const handleMark = async () => {
     if (ismarked) {
-      dispatch(removeFromSavedPosts(selectedPost._id));
+      dispatch(removeFromSavedPosts(selectedPost.post._id));
       setIsMarked(false);
       try {
         const res = await axios.post(
           "http://localhost:3001/post/save",
-          { postId: selectedPost._id, remove: true },
+          { postId: selectedPost.post._id, remove: true },
           { withCredentials: true }
         );
       } catch (error) {
         console.log(error);
       }
     } else {
-      dispatch(addToSavedPosts(selectedPost._id));
+      dispatch(addToSavedPosts(selectedPost.post._id));
       setIsMarked(true);
       try {
         const res = await axios.post(
           "http://localhost:3001/post/save",
-          { postId: selectedPost._id, remove: false },
+          { postId: selectedPost.post._id, remove: false },
           { withCredentials: true }
         );
       } catch (error) {
@@ -135,11 +146,11 @@ function SelectedPost() {
             <h2 className="text-2xl font-bold mb-4 col-span-2 text-gray-800">
               Here is the selected post
             </h2>
-            {user.username === selectedPost.usernameCreatedBy ? (
+            {user.username === selectedPost.post.usernameCreatedBy ? (
               <div className="col-span-1 md:flex md:items-center pb-5">
                 <button
                   onClick={() =>
-                    navigate(`/solution/edit/:${selectedPost._id}`)
+                    navigate(`/solution/edit/:${selectedPost.post._id}`)
                   }
                   className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600 mb-2 md:mb-0  mr-2 ml-auto"
                 >
@@ -155,11 +166,11 @@ function SelectedPost() {
             ) : null}
           </div>
           <p className="mb-2 text-gray-800">
-            <span className="font-bold">Title:</span> {selectedPost.title}
+            <span className="font-bold">Title:</span> {selectedPost.post.title}
           </p>
           <div className="mb-2">
             <span className="font-bold text-gray-800">Keywords:</span>
-            {selectedPost.keywords.map((word, index) => (
+            {selectedPost.post.keywords.map((word, index) => (
               <p
                 key={index}
                 className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
@@ -170,37 +181,37 @@ function SelectedPost() {
           </div>
           <p className="mb-2 text-gray-800">
             <span className="font-bold">Description:</span>{" "}
-            {selectedPost.description}
+            {selectedPost.post.description}
           </p>
           <pre className="bg-darkBlue p-4 rounded-lg overflow-auto mb-2">
             <code className="text-sm text-gray-800">
             <SyntaxHighlighter language="javascript" style={vs2015}>
-              {selectedPost.code}
+              {selectedPost.post.code}
             </SyntaxHighlighter>
               </code>
           </pre>
           <p className="mb-2 text-gray-800">
             <span className="font-bold">Date:</span>{" "}
-            {selectedPost.createdAt.slice(0, 10)}
+            {selectedPost.post.createdAt.slice(0, 10)}
           </p>
           <p className="mb-2 text-gray-800">
             <span className="font-bold">Created By:</span>
-            {user.username === selectedPost.usernameCreatedBy ? (
+            {user.username === selectedPost.post.usernameCreatedBy ? (
               <Link to="/profile" className="text-blue-500">
                 {" "}
-                {selectedPost.usernameCreatedBy}
+                {selectedPost.post.usernameCreatedBy}
               </Link>
             ) : (
               <Link
-                to={`/profile/other/:${selectedPost.usernameCreatedBy}`}
+                to={`/profile/other/:${selectedPost.post.usernameCreatedBy}`}
                 className="text-blue-500"
               >
-                {' '+selectedPost.usernameCreatedBy}
+                {' '+selectedPost.post.usernameCreatedBy}
               </Link>
             )}
           </p>
           <p className="mb-2 text-gray-800">
-            <span className="font-bold">Likes:</span> {selectedPost.likes}
+            <span className="font-bold">Likes:</span> {selectedPost.post.likes}
           </p>
           <div className="flex items-center">
             <div className="flex items-center">
@@ -210,7 +221,7 @@ function SelectedPost() {
                 className="w-8 h-8 rounded-full mr-1 cursor-pointer"
                 alt="Like Icon"
               />
-              <p className="mr-3 text-gray-800">{selectedPost.likes}</p>
+              <p className="mr-3 text-gray-800">{selectedPost.post.likes}</p>
             </div>
             <div className="flex items-center ml-4">
               <img
@@ -220,7 +231,7 @@ function SelectedPost() {
                 alt="Comment Icon"
               />
               <p className="mr-3 text-gray-800">
-                {selectedPost.comments.length}
+                {selectedPost.post.comments.length}
               </p>
             </div>
             <img
@@ -233,7 +244,7 @@ function SelectedPost() {
         </div>
       </div>
 
-      <CommentSection post={selectedPost} userName={user.username} />
+      <CommentSection post={selectedPost.post} userName={user.username} />
     </div>
   );
 }

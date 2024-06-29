@@ -41,6 +41,25 @@ const getPosts = async (req, res, next) => {
     }
 }
 
+
+const deletePosts = async (req, res, next) => {
+    const {postId} = req.body
+    try {
+        const post = await Post.findOne({ _id: postId, usernameCreatedBy: req.username });
+        if (!post) {
+            return res.status(404).send({ message: "Post not found or you are not authorized to delete this post." });
+        }
+
+        // Delete the post
+        await Post.findByIdAndDelete(postId);
+
+        res.status(200).send({ message: `Post of id:${postId} Deleted Successfully` });
+    } catch (error) {
+        console.error(err.stack);
+        res.status(500).send({ message: 'Something went wrong!' });
+    }
+}
+
 const getOthersPosts = async (req, res, next) => {
     const { username } = req.query
     try {
@@ -64,11 +83,10 @@ const getSavedPosts = async (req, res, next) => {
 }
 
 const getTrend = async (req, res, next) => {
-    console.log("call to trend");
     try {
         const topPosts = await Post.find()
             .sort({ likes: -1 })
-            .limit(4)
+            .limit(6)
             .exec();
 
         res.send(topPosts);
@@ -194,4 +212,4 @@ const addCommentReply = async (req, res, next) => {
     }
 }
 
-module.exports = { addPost, getPosts, updateLikes, updateComments, getTrend, getOthersPosts, savePost, addCommentReply, getSavedPosts }
+module.exports = { addPost, getPosts, updateLikes, updateComments, getTrend, getOthersPosts, savePost, addCommentReply, getSavedPosts, deletePosts }

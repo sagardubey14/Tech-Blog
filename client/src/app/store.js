@@ -4,6 +4,7 @@ import userReducer from '../features/user/userSlice'
 import userPostsReducer from '../features/posts/userPostSlice'
 import otherUserReducer from '../features/user/otherUserSlice'
 import noteReducer from '../features/notifications/noteSlice'
+import combinedReducer from '../features/posts/combinedPostSlice'
 
 export const store = configureStore({
   reducer: {
@@ -12,5 +13,6 @@ export const store = configureStore({
     userposts:userPostsReducer,
     otheruser:otherUserReducer,
     message:noteReducer,
+    combined:combinedReducer,
   },
 })
