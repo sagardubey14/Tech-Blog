@@ -23,7 +23,7 @@ function SavedPosts() {
   }, []);
   return (
     <div>
-      <div className="px-px md:px-3  bg-slate-500">
+      <div className="px-px md:px-5  bg-softWhite">
           <div className="flex flex-wrap -mx-px md:-mx-3">
             {usersavedposts.map(
               post=><Post

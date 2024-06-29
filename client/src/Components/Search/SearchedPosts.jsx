@@ -9,10 +9,10 @@ import { vs2015 } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
 const SearchedPost = ({postId, title, code, username, likes}) => {
   return (
-    <div className="md:h-1/3 h-1/3 w-full p-px md:px-3 border-2 md:py-3">
+    <div className="md:h-1/3 h-1/3 w-full bg-gradient-to-r from-darkBlue to-coral my-1 p-px md:px-3 border-2 md:py-3">
       <div className='md:grid md:grid-cols-3'>
       <div className="bg-black p-4 rounded-lg mb-2">
-      <pre className="max-h-40 overflow-auto">
+      <pre className="max-h-20 md:max-h-40 overflow-auto md:overflow-auto">
         <SyntaxHighlighter language="javascript" style={vs2015}>
           {code}
         </SyntaxHighlighter>
@@ -20,14 +20,14 @@ const SearchedPost = ({postId, title, code, username, likes}) => {
       </div>
       <div className=' md:col-span-2'>
       <div className="flex justify-center">
-      <Link to={`/solution/:${postId}`} className="text-gray-700 font-medium md:text-2xl text-center mt-2">{title}</Link>
+      <Link to={`/solution/:${postId}`} className="md:text-gray-700 text-white font-medium md:text-2xl text-center mt-2">{title}</Link>
       </div>
       {
         username ? 
         <div className="flex items-center px-2 md:px-6 pt-2 pb-2 md:mt-2">
           <img src={personIcon} className="md:w-14 md:h-14 w-8 h-8 mr-3" alt="Channel Icon"/>
           <div>
-            <span className="text-gray-700 md:text-xl font-medium">{username}</span>
+            <span className=" text-slate-300 md:text-xl font-medium">{username}</span>
             {/* <p className="text-gray-600 text-sm">Channel Name</p> */}
           </div>
         </div>:
@@ -36,7 +36,7 @@ const SearchedPost = ({postId, title, code, username, likes}) => {
       <div className="flex items-center pl-2 md:pl-8 pb-2 md:mt-3">
         <div className="flex items-center">
             <img src={not_liked} className="w-8 h-8 rounded-full mr-1" alt="Like Icon"/>
-            <p className="mr-3">89</p>
+            <p className="mr-3 text-black">{likes}</p>
         </div>
         <img src={not_marked} className="w-8 h-8 rounded-full ml-auto" alt="Not Marked Icon"/>
       </div>

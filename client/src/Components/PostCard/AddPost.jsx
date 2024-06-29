@@ -2,13 +2,22 @@ import { Light as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vs2015 } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import {setMsg} from '../../features/notifications/noteSlice'
+import { updatePost, addPost } from "../../features/posts/userPostSlice";
 import axios from "axios";
 
-function AddPost({ setHello }) {
+function AddPost() {
   const user = useSelector((state) => state.user.user);
+  const searchdePosts = useSelector((state) => state.userposts.userposts);
+  console.log(searchdePosts);
+  const { postId } = useParams();
+  const [keywords, setKeywords] = useState("");
+  const [title, setTitle] = useState("");
+  const [desc, setDesc] = useState("");
+  const [code, setCode] = useState("");
+  const [editPost, setEditPost] = useState({})
   const dispatch = useDispatch()
   const navigate = useNavigate();
   useEffect(() => {
@@ -17,13 +26,40 @@ function AddPost({ setHello }) {
         msg:`Please Login to access`,
         time:5,
         showMsg:true,
+        type:1,
       }))
       navigate("/login");
     }
+    if(postId){
+      const editPost = searchdePosts.find(
+        (post) => post._id === postId.slice(1)
+      );
+      console.log(editPost);
+      setEditPost(editPost)
+      setCode(editPost.code)
+      setDesc(editPost.description)
+      setTitle(editPost.title)
+      const keySentence = editPost.keywords.join(', ');
+      setKeywords(keySentence)
+      }
   }, []);
 
   const handleSubmit = async () => {
     const keys = keywords.split(", ");
+    if(postId){
+      const content = {
+        id: editPost._id,
+        keywords: keys,
+        title: title,
+        description: desc,
+        code: code,
+      };
+      const res = await axios.post("http://localhost:3001/update/post", content, {
+          withCredentials: true,
+        });
+        console.log(res.data);
+        dispatch(updatePost({id:editPost._id,post:res.data.post}))
+    }
     const content = {
       keywords: keys,
       title: title,
@@ -35,21 +71,17 @@ function AddPost({ setHello }) {
       withCredentials: true,
     });
     console.log(res);
-    setHello("hidden");
+    dispatch(addPost(res.data.post))
     setKeywords("");
     setTitle("");
     setDesc("");
     setCode("");
   };
 
-  const [keywords, setKeywords] = useState("");
-  const [title, setTitle] = useState("");
-  const [desc, setDesc] = useState("");
-  const [code, setCode] = useState("");
 
   return (
     <div className="flex items-center justify-center min-h-screen mt-5 mb-5 md:mt-0 md:mb-0 bg-gray-100">
-    <form className="max-w-2xl w-full mx-auto bg-slate-300 shadow-md rounded-lg p-8 border-t-4 border-darkBlue">
+    <div className="max-w-2xl w-full mx-auto bg-slate-300 shadow-md rounded-lg p-8 border-t-4 border-darkBlue">
     <h1 className="mb-4 text-3xl text-center font-extrabold leading-none tracking-tight text-darkBlue md:text-3xl lg:text-3xl">
         Create Your Post
       </h1>
@@ -80,7 +112,7 @@ function AddPost({ setHello }) {
           eg: keywords1, keywords2, keywords3
         </div>
       </div>
-      <div className="relative z-0 w-full mb-5 mt-2 group">
+      <div className="relative z-0 w-full mb-5 mt-3 group">
         <textarea
           value={desc}
           onChange={(e) => setDesc(e.target.value)}
@@ -119,7 +151,7 @@ function AddPost({ setHello }) {
       >
         Submit
       </button>
-    </form>
+    </div>
     </div>
   );
 }

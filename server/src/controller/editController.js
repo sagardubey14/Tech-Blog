@@ -77,10 +77,10 @@ const checkAnswer = async (req, res, next) => {
 }
 
 const editPosts = async (req, res, next) => {
-    const { id, keywords, description, code } = req.nody
+    const { id, title, keywords, description, code } = req.body
     try {
         const filter = { _id: id };
-        const update = { keywords: keywords, description: description, code: code }
+        const update = { title:title, keywords: keywords, description: description, code: code }
         const keys = await Keywords.findById('665ae7089ccff1a8b14f9e40')
         const doc = await Post.findOneAndUpdate(filter, update, {
             new: true

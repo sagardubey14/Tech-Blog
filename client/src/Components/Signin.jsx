@@ -11,9 +11,9 @@ export default function Signin() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const [formData, setFormData] = useState({
-    username:'sagar_353',
+    username:'edge',
     email: '',
-    password: 'Sagar123',
+    password: 'Edge@2477',
   });
   const [formErrors, setFormErrors] = useState({
     email: '',
@@ -72,13 +72,13 @@ export default function Signin() {
 
 	return (
     <div>
-      <div className="flex flex-col items-center min-h-screen pt-6 sm:justify-center sm:pt-0 bg-gray-50">
-        <div>
+      <div className="flex flex-col items-center min-h-screen pt-6 sm:justify-center sm:pt-0 bg-gray-100">
+      <div className='flex flex-col items-center mb-6'>
           <img src={jspic} className=' size-20 '/>
-          <h3 className="text-xl ml-3 font-bold text-blue-900">Login</h3>
+          <h3 className="text-xl font-bold text-darkBlue md:text-3xl lg:text-3xl">Log in</h3>
         </div>
-        <div className="w-full px-6 py-4 mt-6 overflow-hidden bg-white shadow-md sm:max-w-md sm:rounded-lg">
-          <form>
+        <div className="w-full px-6 py-4 mt-6 overflow-hidden bg-slate-300 shadow-md sm:max-w-md sm:rounded-lg">
+          <form className='mt-5'>
             <div>
               <label
                 htmlFor="name"

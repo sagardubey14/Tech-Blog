@@ -25,8 +25,7 @@ const addPost = async (req, res, next) => {
             }
         });
         await keys.save();
-
-        res.status(200).json("Success: post has been added")
+        res.json({message: "Success: post has been added", post: newPost })
     } catch (error) {
         res.send(error)
     }

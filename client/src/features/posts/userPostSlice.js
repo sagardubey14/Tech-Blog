@@ -15,19 +15,24 @@ export const userPostSlice = createSlice({
         getSavedPosts:(state, action)=>{
             state.savedpost = action.payload
         },
+        updatePost:(state, action)=>{
+            const { id, post} = action.payload;
+            const index = state.userposts.findIndex(p => p._id === id);
+            if (index !== -1) {
+                state.userposts[index] = post;
+            }
+        },
         addPost : (state, action)=>{
-            console.log("add");
+            state.userposts.push(action.payload)
         },
-        removePost: ()=>{
-            console.log("remove");
-        },
-        updatePost: ()=>{
-            console.log("update");
+        removePost: (state, action)=>{
+            const { id} = action.payload;
+            state.userposts = state.userposts.filter(p=>p._id !== id)
         },
     }
 
 })
 
-export const {addPost, removePost, getPosts, getSavedPosts} = userPostSlice.actions
+export const {addPost, removePost, getPosts, getSavedPosts, updatePost} = userPostSlice.actions
 
 export default userPostSlice.reducer

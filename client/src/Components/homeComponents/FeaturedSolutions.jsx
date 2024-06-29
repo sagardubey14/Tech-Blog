@@ -27,6 +27,7 @@ const FeaturedSolutions = () => {
         {posts.map(
           post=><Post className="bg-white p-4 m-2 rounded border border-lightGrey shadow-md"
           key={post._id} 
+          postId={post._id}
           title={post.title}
           code={post.code}
           keywords={post.keywords}

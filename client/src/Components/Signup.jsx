@@ -109,12 +109,12 @@ export default function Signup() {
 
 	return (
     <div>
-      <div className="flex flex-col items-center min-h-screen pt-6 sm:justify-center sm:pt-4 bg-gray-50">
-        <div>
+      <div className="flex flex-col items-center min-h-screen pt-6 md:pt-0 md:mt-0 sm:justify-center sm:pt-4 bg-gray-100">
+      <div className='flex flex-col items-center mb-6'>
           <img src={jspic} className=' size-20 '/>
-          <h3 className="text-xl ml-1 font-bold text-blue-900">Sign Up</h3>
+          <h3 className="text-xl font-bold text-darkBlue md:text-3xl lg:text-3xl">Sign up</h3>
         </div>
-        <div className="w-full px-6 py-4 mt-6 overflow-hidden bg-white shadow-md sm:max-w-md sm:rounded-lg">
+        <div className="w-full px-6 py-4 overflow-hidden bg-slate-300 shadow-md sm:max-w-md sm:rounded-lg">
           <form>
             <div>
               <label

@@ -30,11 +30,11 @@ const HtmlPreviewer = () => {
   
 
   return (
-    <div className="flex h-screen bg-gray-900 text-white">
-    <div className="w-1/2 p-4 border-r border-gray-700 relative">
+    <div className="flex flex-col md:flex-row h-screen bg-darkBlue text-white">
+    <div className="w-full h-1/2 md:w-1/2 md:h-auto p-4 border-r border-coral relative">
       <textarea
         ref={textareaRef}
-        className="w-full h-full bg-gray-800 text-white p-4 pl-12 border-none resize-none"
+        className="w-full h-full bg-darkerBlue text-black p-4 pl-12 border-none resize-none placeholder-coral"
         value={html}
         onChange={handleChange}
         placeholder="Write your HTML code here..."
@@ -42,7 +42,7 @@ const HtmlPreviewer = () => {
       />
     </div>
     <div
-      className="w-1/2 p-4 bg-white text-black"
+      className="w-full md:w-1/2 p-4 bg-lightGrey text-darkBlue"
       dangerouslySetInnerHTML={{ __html: html }}
     />
   </div>

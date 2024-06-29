@@ -32,6 +32,7 @@ function App() {
         <Route path="/404" element={<NotFound />} />
         <Route path="/solution" element={<SearchPage />} />
         <Route path="/solution/:postId" element={<SelectedPost />} />
+        <Route path="/solution/edit/:postId" element={<AddPost />} />
         <Route path="/profile/other/:user/*" element={<OthersProfile />} />
         <Route path="/post" element={<Post />} />
         <Route path="/about" element={<About />} />

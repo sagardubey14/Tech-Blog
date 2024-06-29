@@ -122,9 +122,7 @@ function Notification() {
                   className="flex items-center p-4 text-green-800 bg-green-50 dark:text-green-400 dark:bg-gray-800 dark:border-green-800"
                   role="alert"
                 >
-                  <div className="ms-3 text-sm font-medium">
-                    {message.msg}
-                  </div>
+                  <div className="ms-3 text-sm font-medium">{message.msg}</div>
                   <button
                     type="button"
                     onClick={() => dispatch(setShowMsg(false))}

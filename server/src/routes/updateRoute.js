@@ -1,5 +1,5 @@
 const express = require('express');
-const { updateFollowers, updateEmail, checkAnswer, updatePassword, setNewPassword } = require('../controller/editController');
+const { updateFollowers, updateEmail, checkAnswer, updatePassword, setNewPassword, editPosts } = require('../controller/editController');
 const jwt = require('jsonwebtoken')
 const secretKey = "SECRETKEY"
 
@@ -25,6 +25,6 @@ updateRoute.post('/email', check, updateEmail);
 updateRoute.post('/ans', check, checkAnswer);
 updateRoute.post('/pass', check, updatePassword);
 updateRoute.post('/newpass', check, setNewPassword);
-
+updateRoute.post('/post', check, editPosts);
 
 module.exports = updateRoute;

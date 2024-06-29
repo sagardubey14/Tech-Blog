@@ -6,8 +6,8 @@ import { Route, Routes } from "react-router-dom"
 function SearchPage() {
   const searchdePosts = useSelector(state=>state.posts.posts)
   return (
-      <div className="px-px md:px-3 min-h-screen  bg-slate-500">
-        <p className=" text-xl">The solutions for your problems are:</p>
+    <div className="px-4 md:px-6 min-h-screen bg-darkBlue text-white">
+      <p className="text-xl text-coral mb-6">The solutions for your problems are:</p>
           <div className="flex flex-wrap -mx-px md:-mx-3">
           {searchdePosts.map(
             post=><SearchedPost key={post._id} 
@@ -16,6 +16,7 @@ function SearchPage() {
               code={post.code}
               keywords={post.keywords}
               username={post.usernameCreatedBy}
+              likes={post.likes}
             />
           )}
       </div>
