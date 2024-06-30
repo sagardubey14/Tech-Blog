@@ -6,15 +6,13 @@ import marked from "../../assets/marked.png";
 import cmnt from "../../assets/cmnt.gif";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { updatePost } from "../../features/posts/postSlice";
-import { postLikes } from "../../features/posts/combinedPostSlice";
+import { postLikes, removeUserPost } from "../../features/posts/combinedPostSlice";
 import {
   addToSavedPosts,
   removeFromSavedPosts,
   addToLikedPosts,
   removeFromLikedPosts,
 } from "../../features/user/userSlice";
-import { removePost } from "../../features/posts/userPostSlice";
 import CommentSection from "./CommentSection";
 import axios from "axios";
 import DeleteConfirmation from "./DeleteConfirmation";
@@ -25,7 +23,6 @@ function SelectedPost() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
-  const userPosts = useSelector((state) => state.userposts.userposts);
   const [showDeletePopup, setShowDeletePopup] = useState(false);
   const combineState = useSelector(state=>state.combined)
   const selectedPost = useSelector(state=>state.combined.selectedpost)
@@ -82,7 +79,6 @@ function SelectedPost() {
   };
 
   const handleConfirmDelete = async () => {
-    console.log(userPosts);
     console.log(`Post ${selectedPost.post._id} deleted`);
     try {
       const res = await axios.post(
@@ -94,9 +90,8 @@ function SelectedPost() {
     } catch (error) {
       console.log(error);
     }
-    dispatch(removePost({id:selectedPost.post._id}))
+    dispatch(removeUserPost({id:selectedPost.post._id}))
     setShowDeletePopup(false);
-    console.log(userPosts);
     navigate('/')
   };
 

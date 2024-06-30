@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addComment, addCommentReply } from "../../features/posts/postSlice";
-import SelectedPost from "./SelectedPost";
+import { addComment, addCommentReply } from "../../features/posts/combinedPostSlice";
 import axios from "axios";
 
 function CommentSection({ post, userName }) {
@@ -24,17 +23,16 @@ function CommentSection({ post, userName }) {
     try {
       const res = await axios.post("http://localhost:3001/post/cmntreply", {postId:post._id ,comment:replyComment, cmntId:cmntId},{ withCredentials: true })
       console.log(res.data);
+      dispatch(
+        addCommentReply({
+          id: post._id,
+          comment:res.data.comment,
+          cmntId: cmntId,
+        })
+      );
     } catch (error) {
       console.log(error);
     }
-    dispatch(
-      addCommentReply({
-        id: post._id,
-        comment: replyComment,
-        username: userName,
-        cmntId: cmntId,
-      })
-    );
     setReplyComment("");
     setReply(0);
   };

@@ -5,12 +5,12 @@ import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import {setMsg} from '../../features/notifications/noteSlice'
-import { updatePost, addPost } from "../../features/posts/userPostSlice";
+import { updateUserPost, addUserPost } from "../../features/posts/combinedPostSlice";
 import axios from "axios";
 
 function AddPost() {
   const user = useSelector((state) => state.user.user);
-  const searchdePosts = useSelector((state) => state.userposts.userposts);
+  const searchdePosts = useSelector((state) => state.combined.userposts);
   console.log(searchdePosts);
   const { postId } = useParams();
   const [keywords, setKeywords] = useState("");
@@ -58,8 +58,8 @@ function AddPost() {
           withCredentials: true,
         });
         console.log(res.data);
-        dispatch(updatePost({id:editPost._id,post:res.data.post}))
-    }
+        dispatch(updateUserPost({id:editPost._id,post:res.data.post}))
+    }else{
     const content = {
       keywords: keys,
       title: title,
@@ -71,7 +71,8 @@ function AddPost() {
       withCredentials: true,
     });
     console.log(res);
-    dispatch(addPost(res.data.post))
+    dispatch(addUserPost(res.data.post))
+    }
     setKeywords("");
     setTitle("");
     setDesc("");

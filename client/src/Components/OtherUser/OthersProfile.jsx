@@ -31,9 +31,6 @@ function OthersProfile() {
   const [showFollowing, setShowFollowing] = useState(false);
   const [showFollowers, setShowFollowers] = useState(false);
   const [showAddPost, setShowAddPost] = useState(false);
-  const handleShowFollowers = () => {
-    setShowFollowers(true);
-  };
 
   return (
     <>
@@ -68,18 +65,9 @@ function OthersProfile() {
               </Link>
             </div>
           </li>
-          <li className="md:border-t md:border-gray-700">
-            <div className="inline-block p-3" href="#">
-              <i className="far fa-square text-xl md:text-xs"></i>
-              <Link to="/profile/saved" className="hidden md:inline">
-                Saved
-              </Link>
-            </div>
-          </li>
         </ul>
         <Routes>
           <Route path="/" element={<OtherUserPost username={username}/>} />
-          <Route path="/saved" element={<UserPosts />} />
         </Routes>
       </div>
     </>

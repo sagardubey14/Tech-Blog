@@ -25,7 +25,7 @@ const addPost = async (req, res, next) => {
             }
         });
         await keys.save();
-        res.json({message: "Success: post has been added", post: newPost })
+        res.json({ message: "Success: post has been added", post: newPost })
     } catch (error) {
         res.send(error)
     }
@@ -43,7 +43,7 @@ const getPosts = async (req, res, next) => {
 
 
 const deletePosts = async (req, res, next) => {
-    const {postId} = req.body
+    const { postId } = req.body
     try {
         const post = await Post.findOne({ _id: postId, usernameCreatedBy: req.username });
         if (!post) {
@@ -75,7 +75,7 @@ const getSavedPosts = async (req, res, next) => {
     try {
         const foundPosts = await Post.find({ _id: { $in: savedPosts } });
         console.log(foundPosts);
-        res.json({PostsSaved: foundPosts});
+        res.json({ PostsSaved: foundPosts });
     } catch (error) {
         console.error("Error updating likes:", error);
         res.status(500).json({ message: "Internal server error" });
@@ -201,11 +201,13 @@ const addCommentReply = async (req, res, next) => {
                 "date": output,
             }
             cmntToAddReply.reply.push(finalComment)
-            postToUpdate.comments = postToUpdate.comments.filter(cmnt => cmnt.id !== cmntId)
-            postToUpdate.comments.push(cmntToAddReply)
+            const index = postToUpdate.comments.findIndex(cmnt => cmnt.id === cmntId);
+            if (index !== -1) {
+                postToUpdate.comments[index] = cmntToAddReply;
+            }
             await postToUpdate.save();
             console.log(postToUpdate);
-            res.json({ message: "comments updated successfully", comment: finalComment });
+            res.json({ message: "comments updated successfully", comment: cmntToAddReply });
         }
     } catch (error) {
         console.log(error);

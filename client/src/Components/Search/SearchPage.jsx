@@ -12,11 +12,8 @@ function SearchPage() {
           {searchdePosts.map(
             post=><SearchedPost key={post._id} 
               postId={post._id}
-              title={post.title}
-              code={post.code}
-              keywords={post.keywords}
-              username={post.usernameCreatedBy}
-              likes={post.likes}
+              OnePost={post}
+              name='search'
             />
           )}
       </div>

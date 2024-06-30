@@ -1,13 +1,13 @@
 import axios from 'axios'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux"
-import {setOtherPosts} from '../../features/posts/postSlice'
+import {setOtherPosts} from '../../features/posts/combinedPostSlice'
 import Post from '../PostCard/Post'
 
 
 function OtherUserPost({username}) {
   const dispatch = useDispatch()
-  const otherPosts = useSelector(state=>state.posts.posts)
+  const otherPosts = useSelector(state=>state.combined.otheruserposts)
   useEffect( ()=>{
     const getPost = async ()=>{
       try {
@@ -23,14 +23,13 @@ function OtherUserPost({username}) {
   },[])
   return (
     <>
-    <div className="px-px md:px-3  bg-slate-500">
+    <div className="px-px md:px-3 bg-softWhite">
           <div className="flex flex-wrap -mx-px md:-mx-3">
             {otherPosts.map(
               post=><Post
               key={post._id}
-              title={post.title}
-              code={post.code}
-              keywords={post.keywords}
+              OnePost={post}
+              name='other'
             />
             )}
           </div>

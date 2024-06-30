@@ -2,7 +2,7 @@ import { useState } from "react";
 import logo from "../../assets/SX.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setPosts } from "../../features/posts/postSlice";
+import {setSearchedPosts} from '../../features/posts/combinedPostSlice'
 import axios from "axios";
 
 const Navbar = () => {
@@ -17,7 +17,7 @@ const Navbar = () => {
       const response = await axios.get("http://localhost:3001/search/posts", {
         params: { query: searchQuery },
       });
-      dispatch(setPosts(response.data));
+      dispatch(setSearchedPosts(response.data))
       setSearchQuery("");
       navigate("/solution");
     } catch (error) {

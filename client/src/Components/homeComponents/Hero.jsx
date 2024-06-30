@@ -3,7 +3,6 @@ import {useNavigate} from 'react-router-dom'
 import logo from '../../assets/HeroLogo.png'
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux'
-import { setPosts } from '../../features/posts/postSlice'
 import {setSearchedPosts} from '../../features/posts/combinedPostSlice'
 
 const Hero = () => {
@@ -17,7 +16,6 @@ const Hero = () => {
       const response = await axios.get('http://localhost:3001/search/posts', {
         params: { query: searchQuery }
       });
-      dispatch(setPosts(response.data));
       dispatch(setSearchedPosts(response.data))
       navigate('/solution');
     } catch (error) {

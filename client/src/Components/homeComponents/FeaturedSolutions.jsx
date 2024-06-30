@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
-import { setTrend } from '../../features/posts/postSlice'
 import { setTrendPosts } from '../../features/posts/combinedPostSlice';
 
 import axios from 'axios';
@@ -15,7 +14,6 @@ const FeaturedSolutions = () => {
         console.log("caling trend");
       const res = await axios.get('http://localhost:3001/post/trend')
       dispatch(setTrendPosts(res.data))
-      dispatch(setTrend(res.data))
       }
     }
     call();

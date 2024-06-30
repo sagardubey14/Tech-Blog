@@ -7,14 +7,22 @@ import not_marked from '../../assets/not_marked.png'
 import marked from '../../assets/marked.png'
 import cmnt from '../../assets/cmnt.gif'
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setSelectedPost } from '../../features/posts/combinedPostSlice';
+import { useState } from 'react';
 
 const Post = ({OnePost, name}) => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const user = useSelector((state) => state.user.user);
+  const [isLiked, setIsLiked] = useState(
+    user.likedPosts.includes(OnePost._id)
+  );
+  const [ismarked, setIsMarked] = useState(
+    user.savedPosts.includes(OnePost._id)
+  );
+
   const handleSelectedPost=()=>{
-    
     dispatch(setSelectedPost({ name:name, post:OnePost }))
     navigate(`/solution/:${OnePost._id}`)
   }
@@ -38,14 +46,14 @@ const Post = ({OnePost, name}) => {
       </div>
       <div className="flex items-center pl-4 mt-auto">
         <div className="flex items-center">
-          <img src={not_liked} className="w-8 h-8 rounded-full mr-1" alt="Like Icon" />
+          <img src={isLiked ? liked : not_liked} className="w-8 h-8 rounded-full mr-1" alt="Like Icon" />
           <p className="mr-3 text-coral">{OnePost.likes}</p>
         </div>
         <div className="flex items-center ml-4">
           <img src={cmnt} className="w-8 h-8 mr-1" alt="Comment Icon" />
           <p className="mr-3 text-coral">0</p>
         </div>
-        <img src={not_marked} className="w-8 h-8 rounded-full ml-auto" alt="Not Marked Icon" />
+        <img src={ismarked ? marked : not_marked} className="w-8 h-8 rounded-full ml-auto" alt="Not Marked Icon" />
       </div>
 
       {OnePost.usernameCreatedBy ? (

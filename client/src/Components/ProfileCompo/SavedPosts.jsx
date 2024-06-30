@@ -1,7 +1,6 @@
 import axios from "axios";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {getSavedPosts} from '../../features/posts/userPostSlice'
 import {setSavedPosts} from '../../features/posts/combinedPostSlice'
 import Post from "../PostCard/Post";
 
@@ -15,7 +14,6 @@ function SavedPosts() {
         const res = await axios.get("http://localhost:3001/post/savedposts", {
             params:{savedPosts: user.savedPosts},
         });
-        dispatch(getSavedPosts(res.data.PostsSaved))
         dispatch(setSavedPosts(res.data.PostsSaved))
       } catch (error) {
         console.log(error);
