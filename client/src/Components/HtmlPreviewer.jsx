@@ -34,7 +34,7 @@ const HtmlPreviewer = () => {
     <div className="w-full h-1/2 md:w-1/2 md:h-auto p-4 border-r border-coral relative">
       <textarea
         ref={textareaRef}
-        className="w-full h-full bg-darkerBlue text-black p-4 pl-12 border-none resize-none placeholder-coral"
+        className="w-full h-full bg-darkerBlue text-black p-4 md:pl-12 border-none resize-none placeholder-coral"
         value={html}
         onChange={handleChange}
         placeholder="Write your HTML code here..."

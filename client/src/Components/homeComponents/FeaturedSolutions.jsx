@@ -21,7 +21,7 @@ const FeaturedSolutions = () => {
 
 
   return (
-    <section className="bg-softWhite p-10">
+    <section className="bg-softWhite md:p-10 p-4">
       <h2 className="text-2xl font-bold mb-4 text-darkBlue">Featured Solutions</h2>
       <div className='flex flex-col md:flex-row flex-wrap'>
         {trendPost.map(

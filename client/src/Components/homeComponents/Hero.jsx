@@ -30,11 +30,11 @@ const Hero = () => {
 
   return (
     <div>
-      <section className="bg-darkBlue text-white p-10 sm:p-20   text-center">
+      <section className="bg-darkBlue text-white p-5 sm:p-20   text-center">
         <h1 className="text-2xl sm:text-4xl text-white font-bold mb-4">
           Find Solutions to Your Coding Queries
         </h1>
-        <div className="w-full sm:w-auto mt-4 sm:mt-0 flex flex-col sm:flex-row justify-center items-center">
+        <div className=" hidden w-full sm:w-auto mt-4 sm:mt-0 md:flex flex-col sm:flex-row justify-center items-center">
           <input
             type="text"
             placeholder="Search for solutions..."

@@ -40,18 +40,22 @@ const SearchedPost = ({OnePost, name}) => {
       <div className="flex justify-center">
       <div onClick={handleSelectedPost} className="md:text-gray-700 text-white font-medium md:text-2xl text-center mt-2 cursor-pointer">{OnePost.title}</div>
       </div>
+      <div className='hidden md:block px-6 text-xl'>
+        {
+          OnePost.description.substring(0,250)
+        }...
+      </div>
       {
         OnePost.usernameCreatedBy ? 
-        <div className="flex items-center px-2 md:px-6 pt-2 pb-2 md:mt-2">
+        <div className="flex items-center px-2 md:px-6 pt-2 pb-2">
           <img src={personIcon} className="md:w-14 md:h-14 w-8 h-8 mr-3" alt="Channel Icon"/>
           <div>
-            <span className=" text-slate-300 md:text-xl font-medium">{OnePost.usernameCreatedBy}</span>
-            {/* <p className="text-gray-600 text-sm">Channel Name</p> */}
+            <span className=" text-slate-300 md:text-xl font-medium">{OnePost.usernameCreatedBy} - {OnePost.createdAt.slice(0, 10)}</span>
           </div>
         </div>:
         <></>
       }
-      <div className="flex items-center pl-2 md:pl-8 pb-2 md:mt-3">
+      <div className="flex items-center pl-2 md:pl-8 pb-2 md:mt-1">
         <div className="flex items-center">
             <img src={isLiked ? liked : not_liked} className="w-8 h-8 rounded-full mr-1" alt="Like Icon"/>
             <p className="mr-3 text-black">{OnePost.likes}</p>

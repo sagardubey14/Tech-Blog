@@ -7,7 +7,7 @@ function SearchPage() {
   const searchdePosts = useSelector(state=>state.combined.resultposts)
   return (
     <div className="px-4 md:px-6 min-h-screen bg-darkBlue text-white">
-      <p className="text-xl text-coral mb-6">The solutions for your problems are:</p>
+      <p className="text-2xl text-coral mb-6">The solutions for your problems are:</p>
           <div className="flex flex-wrap -mx-px md:-mx-3">
           {searchdePosts.map(
             post=><SearchedPost key={post._id} 

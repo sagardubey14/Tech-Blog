@@ -5,7 +5,7 @@ import not_liked from '../../assets/not_liked.png'
 import liked from '../../assets/liked.png'
 import not_marked from '../../assets/not_marked.png'
 import marked from '../../assets/marked.png'
-import cmnt from '../../assets/cmnt.gif'
+import cmnt from '../../assets/cmnt.png'
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSelectedPost } from '../../features/posts/combinedPostSlice';
