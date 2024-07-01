@@ -45,6 +45,10 @@ function SelectedPost() {
   };
 
   const handleLikes = async () => {
+    if(user.username ===''){
+      navigate('/login')
+      return
+    }
     if (isLiked) {
       dispatch(postLikes({ likes: -1, id:selectedPost.post._id, name:selectedPost.name}));
       dispatch(removeFromLikedPosts(selectedPost.post._id));
@@ -100,6 +104,10 @@ function SelectedPost() {
   };
 
   const handleMark = async () => {
+    if(user.username ===''){
+      navigate('/login')
+      return
+    }
     if (ismarked) {
       dispatch(removeFromSavedPosts(selectedPost.post._id));
       setIsMarked(false);
@@ -191,19 +199,28 @@ function SelectedPost() {
           </p>
           <p className="mb-2 text-gray-800">
             <span className="font-bold">Created By:</span>
-            {user.username === selectedPost.post.usernameCreatedBy ? (
-              <Link to="/profile" className="text-blue-500">
+            {
+              user.username === ''?
+              <Link to="/login" className="text-blue-500">
                 {" "}
                 {selectedPost.post.usernameCreatedBy}
-              </Link>
-            ) : (
-              <Link
-                to={`/profile/other/:${selectedPost.post.usernameCreatedBy}`}
-                className="text-blue-500"
-              >
-                {' '+selectedPost.post.usernameCreatedBy}
-              </Link>
-            )}
+              </Link>:
+              <>
+              {user.username === selectedPost.post.usernameCreatedBy ? (
+                <Link to="/profile" className="text-blue-500">
+                  {" "}
+                  {selectedPost.post.usernameCreatedBy}
+                </Link>
+              ) : (
+                <Link
+                  to={`/profile/other/:${selectedPost.post.usernameCreatedBy}`}
+                  className="text-blue-500"
+                >
+                  {' '+selectedPost.post.usernameCreatedBy}
+                </Link>
+              )}
+              </>
+            }
           </p>
           <p className="mb-2 text-gray-800">
             <span className="font-bold">Likes:</span> {selectedPost.post.likes}

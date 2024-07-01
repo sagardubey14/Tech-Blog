@@ -17,6 +17,8 @@ import Notification from "./Components/Notification";
 import HtmlPreviewer from "./Components/HtmlPreviewer";
 import Alertsss from "./Components/Alertsss";
 import About from "./Components/About";
+import ChatBot from './Components/ChatBot'
+import chat1 from './assets/chatbot2.png'
 
 function App() {
   return (
@@ -43,9 +45,7 @@ function App() {
         <Route path="/post/:postId" element={<Post />} />
       </Routes>
       <Footer />
-      <div className="fixed bottom-0 right-0 m-4 p-4 bg-gray-800 text-white">
-        ChatBot
-      </div>
+      <ChatBot />
     </>
   );
 }

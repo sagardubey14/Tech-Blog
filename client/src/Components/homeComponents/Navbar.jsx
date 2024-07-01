@@ -107,11 +107,18 @@ const Navbar = () => {
 
         <div className="hidden md:flex items-center">
           {user.username ? (
-            <>
+            <div className="sm:grid sm:grid-cols-2 ">
+              <div className="mt-2 sm:mt-0">
               <Link to="/profile" className="text-white py-2 hover:text-gold">
                 Profile
               </Link>
-            </>
+              </div>
+              <div className="mt-2 sm:mt-0">
+              <Link onClick={()=>alert("you are logged out")}  className="text-white py-2 hover:text-gold">
+                Logout
+              </Link>
+              </div>
+            </div>
           ) : (
             <div className="sm:grid sm:grid-cols-2 ">
               <div className="mt-2 sm:mt-0">
@@ -161,7 +168,7 @@ const Navbar = () => {
           <Link
             to="/"
             onClick={() => setIsOpen(false)}
-            className="block text-white px-3 py-2 hover:text-gold"
+            className="block text-white px-3 py-2 border-b-2 border-lightBlue hover:text-gold"
           >
             Home
           </Link>
@@ -175,38 +182,43 @@ const Navbar = () => {
           <Link
             onClick={() => setIsOpen(false)}
             to="/css"
-            className="block text-white px-3 py-2 hover:text-gold"
+            className="block text-white px-3 py-2 border-y-2 border-lightBlue hover:text-gold"
           >
             CSS-Playground
           </Link>
           <Link
             onClick={() => setIsOpen(false)}
             to="/addpost"
-            className="block text-white px-3 py-2 hover:text-gold"
+            className="block text-white px-3 py-2  hover:text-gold"
           >
             Create-Post
           </Link>
           {user.username ? (
+            <div>
             <Link
               to="/profile"
               onClick={() => setIsOpen(false)}
-              className="block text-white px-3 py-2 hover:text-gold"
+              className="block text-white px-3 py-2 border-y-2 border-lightBlue hover:text-gold"
             >
               Profile
             </Link>
+            <Link onClick={()=>alert("you are logged out")}  className="block text-white px-3 py-2 border-b-2 border-lightBlue hover:text-gold">
+                Logout
+              </Link>
+          </div>
           ) : (
             <div>
               <Link
                 to="/login"
                 onClick={() => setIsOpen(false)}
-                className="block text-white px-3 py-2 hover:text-gold"
+                className="block text-white px-3 py-2 border-y-2 border-lightBlue hover:text-gold"
               >
                 Login
               </Link>
               <Link
                 to="/signup"
                 onClick={() => setIsOpen(false)}
-                className="block text-white px-3 py-2 hover:text-gold"
+                className="block text-white px-3 py-2 border-b-2 border-lightBlue hover:text-gold"
               >
                 Signup
               </Link>

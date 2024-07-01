@@ -1,19 +1,32 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addComment, addCommentReply } from "../../features/posts/combinedPostSlice";
+import {
+  addComment,
+  addCommentReply,
+} from "../../features/posts/combinedPostSlice";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function CommentSection({ post, userName }) {
+  const navigate = useNavigate();
   const [reply, setReply] = useState(0);
   const dispatch = useDispatch();
   const [replyComment, setReplyComment] = useState("");
   const [cmnt, setCmnt] = useState("");
 
   const handlePostComment = async () => {
+    if (userName === "") {
+      navigate("/login");
+      return;
+    }
     try {
-      const res = await axios.post("http://localhost:3001/post/cmnt", {postId:post._id ,comment:cmnt},{ withCredentials: true })
+      const res = await axios.post(
+        "http://localhost:3001/post/cmnt",
+        { postId: post._id, comment: cmnt },
+        { withCredentials: true }
+      );
       console.log(res.data);
-      dispatch(addComment({id:post._id, comment:res.data.comment }));
+      dispatch(addComment({ id: post._id, comment: res.data.comment }));
       setCmnt("");
     } catch (error) {
       console.log(error);
@@ -21,12 +34,16 @@ function CommentSection({ post, userName }) {
   };
   const handleReply = async (cmntId) => {
     try {
-      const res = await axios.post("http://localhost:3001/post/cmntreply", {postId:post._id ,comment:replyComment, cmntId:cmntId},{ withCredentials: true })
+      const res = await axios.post(
+        "http://localhost:3001/post/cmntreply",
+        { postId: post._id, comment: replyComment, cmntId: cmntId },
+        { withCredentials: true }
+      );
       console.log(res.data);
       dispatch(
         addCommentReply({
           id: post._id,
-          comment:res.data.comment,
+          comment: res.data.comment,
           cmntId: cmntId,
         })
       );
@@ -47,26 +64,32 @@ function CommentSection({ post, userName }) {
             Discussion ({post.comments.length})
           </h2>
         </div>
-        <div className="mb-6">
-          <div className="py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
-            <label className="sr-only">Your comment</label>
-            <textarea
-              id="comment"
-              rows="6"
-              className="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800"
-              placeholder="Write a comment..."
-              value={cmnt}
-              onChange={(e) => setCmnt(e.target.value)}
-              required
-            ></textarea>
+        {userName === "" ? (
+          <h2 className="text-lg lg:text-xl  text-gray-900 dark:text-white">
+            You Need to login in order to comment
+          </h2>
+        ) : (
+          <div className="mb-6">
+            <div className="py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+              <label className="sr-only">Your comment</label>
+              <textarea
+                id="comment"
+                rows="6"
+                className="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800"
+                placeholder="Write a comment..."
+                value={cmnt}
+                onChange={(e) => setCmnt(e.target.value)}
+                required
+              ></textarea>
+            </div>
+            <button
+              onClick={handlePostComment}
+              className="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800"
+            >
+              Post comment
+            </button>
           </div>
-          <button
-            onClick={handlePostComment}
-            className="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800"
-          >
-            Post comment
-          </button>
-        </div>
+        )}
         {post.comments.map((cmnt) => (
           <article
             key={cmnt.id}
@@ -95,7 +118,7 @@ function CommentSection({ post, userName }) {
                 <button
                   type="button"
                   className="flex items-center text-sm text-gray-500 hover:underline dark:text-gray-400 font-medium"
-                  onClick={() => setReply(cmnt.id)}
+                  onClick={() => userName===''? navigate('/login') : setReply(cmnt.id)}
                 >
                   <svg
                     className="mr-1.5 w-3.5 h-3.5"
