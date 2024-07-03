@@ -4,6 +4,7 @@ import logo from '../../assets/HeroLogo.png'
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux'
 import {setSearchedPosts} from '../../features/posts/combinedPostSlice'
+import { setFailedQuery, setQuery } from '../../features/query/querySlice';
 
 const Hero = () => {
   const user = useSelector((state) => state.user.user);
@@ -12,6 +13,7 @@ const Hero = () => {
   const [searchQuery, setSearchQuery] = useState("")
 
   const handleSearch = async ()=>{
+    dispatch(setQuery(searchQuery))
     try {
       const response = await axios.get('http://localhost:3001/search/posts', {
         params: { query: searchQuery }
@@ -20,6 +22,7 @@ const Hero = () => {
       navigate('/solution');
     } catch (error) {
       if(error.response.status === 404){
+        dispatch(setFailedQuery(searchQuery))
         navigate('/404')
       }
       else

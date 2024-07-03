@@ -5,7 +5,6 @@ const initialState ={
         username:'',
         email:'',
         question:'',
-        saved:[],
         followers:[],
         following:[],
         likedPosts:[],
