@@ -24,10 +24,11 @@ function removeStopwords(req, res, next) {
     next();
 }
 
+const allowedOrigins = process.env.REACT_URL.split(',');
 
 app.use(express.json()); // Middleware to parse JSON bodies
 app.use(cors({
-    origin:process.env.REACT_URL,
+    origin:allowedOrigins,
     credentials:true
 }))
 app.use(bodyParser.json())
