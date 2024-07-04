@@ -68,7 +68,7 @@ const signin = async (req, res, next) => {
                     likedPosts: existingUser.likedPosts,
                     savedPosts: existingUser.savedPosts,
                 }
-                res.cookie('token', token, { httpOnly: true });
+                res.cookie('token', token, { httpOnly: true, sameSite: 'none', secure: true });
                 res.send(userdata);
             }
             else {
