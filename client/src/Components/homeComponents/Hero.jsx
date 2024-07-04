@@ -4,9 +4,13 @@ import logo from '../../assets/HeroLogo.png'
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux'
 import {setSearchedPosts} from '../../features/posts/combinedPostSlice'
-import { setFailedQuery, setQuery } from '../../features/query/querySlice';
+import { setFailedQueries, setQuery } from '../../features/query/querySlice';
+import RotatingStrings from './RotatingStrings';
 
 const Hero = () => {
+  const strings = useSelector(state=>state.query.failedQueries)
+  console.log(strings);
+  const interval = 1500; // 1 second
   const user = useSelector((state) => state.user.user);
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -22,7 +26,6 @@ const Hero = () => {
       navigate('/solution');
     } catch (error) {
       if(error.response.status === 404){
-        dispatch(setFailedQuery(searchQuery))
         navigate('/404')
       }
       else
@@ -55,7 +58,9 @@ const Hero = () => {
         {
           user.username ?
           
-          <div>sagar</div>:
+          <div>
+            <RotatingStrings strings={strings} interval={interval} />
+          </div>:
 
           <div className="hero-section mt-10  bg-gradient-to-r from-darkBlue to-coral text-white py-20 sm:py-20">
           <div className="container mx-auto px-4 sm:px-6 text-center">

@@ -6,12 +6,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import {setMsg} from '../../features/notifications/noteSlice'
 import { updateUserPost, addUserPost } from "../../features/posts/combinedPostSlice";
+import { setSelectedQuery } from "../../features/query/querySlice";
 import axios from "axios";
 
 function AddPost() {
   const user = useSelector((state) => state.user.user);
   const searchdePosts = useSelector((state) => state.combined.userposts);
-  console.log(searchdePosts);
+  const selectedQuery = useSelector(state=>state.query.selectedQuery)
   const { postId } = useParams();
   const [keywords, setKeywords] = useState("");
   const [title, setTitle] = useState("");
@@ -30,6 +31,11 @@ function AddPost() {
       }))
       navigate("/login");
     }
+    if(Object.keys(selectedQuery).length != 0){
+      setTitle(selectedQuery.query);
+      const keySentence = selectedQuery.keywords.join(', ');
+      setKeywords(keySentence)
+    }
     if(postId){
       const editPost = searchdePosts.find(
         (post) => post._id === postId.slice(1)
@@ -41,7 +47,10 @@ function AddPost() {
       setTitle(editPost.title)
       const keySentence = editPost.keywords.join(', ');
       setKeywords(keySentence)
-      }
+    }
+    return () => {
+      dispatch(setSelectedQuery({}));
+    };
   }, []);
 
   const handleSubmit = async () => {

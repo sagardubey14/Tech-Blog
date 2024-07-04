@@ -40,9 +40,15 @@ const signin = async (req, res, next) => {
             existingUser = await user.findOne({ username: username });
         }
         if (!existingUser) {
-            res.status(404).json({
-                Error: "Username not found"
-            })
+            if(email){
+                res.status(404).json({
+                    message: "Email is not Register"
+                })
+            }else{
+                res.status(404).json({
+                    message: "Username not found"
+                })
+            }
         } else {
             if (bcrypt.compareSync(password, existingUser.password)) {
                 const user = {
@@ -69,7 +75,7 @@ const signin = async (req, res, next) => {
                 res.send(userdata);
             }
             else {
-                return res.status(200).json({ message: "Password is Incorrect" });
+                return res.status(500).json({ message: "Password is Incorrect" });
             }
         }
     }

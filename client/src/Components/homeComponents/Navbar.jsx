@@ -2,7 +2,9 @@ import { useState } from "react";
 import logo from "../../assets/SX.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {setSearchedPosts} from '../../features/posts/combinedPostSlice'
+import {setSearchedPosts, clearUserPosts} from '../../features/posts/combinedPostSlice'
+import { setFailedQueries, setQuery } from '../../features/query/querySlice';
+import { clearUser } from "../../features/user/userSlice";
 import axios from "axios";
 
 const Navbar = () => {
@@ -12,7 +14,14 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const [searchQuery, setSearchQuery] = useState("");
 
+  const handleLogout = async ()=>{
+    await dispatch(clearUserPosts())
+    await dispatch(clearUser())
+    navigate('/')
+  }
+
   const handleSearch = async () => {
+    dispatch(setQuery(searchQuery));
     try {
       const response = await axios.get("http://localhost:3001/search/posts", {
         params: { query: searchQuery },
@@ -22,7 +31,8 @@ const Navbar = () => {
       navigate("/solution");
     } catch (error) {
       if (error.response.status === 404) {
-        navigate("/404");
+        dispatch(setFailedQueries(searchQuery));
+        navigate('/404');
       } else console.error("Error searching:", error);
     }
   };
@@ -114,7 +124,7 @@ const Navbar = () => {
               </Link>
               </div>
               <div className="mt-2 sm:mt-0">
-              <Link onClick={()=>alert("you are logged out")}  className="text-white py-2 hover:text-gold">
+              <Link onClick={handleLogout}  className="text-white py-2 hover:text-gold">
                 Logout
               </Link>
               </div>
@@ -139,7 +149,7 @@ const Navbar = () => {
         </div>
 
         {/* Menu icon for mobile */}
-        <div className="flex md:hidden items-center mr-2">
+        <div className=" flex md:hidden items-center mr-2">
           <button
             onClick={toggleMenu}
             className="text-white focus:outline-none"

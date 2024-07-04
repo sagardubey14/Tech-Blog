@@ -28,8 +28,8 @@ function Notification() {
                   <div
                     className="absolute top-0 left-0 h-full bg-blue-800"
                     style={{
-                      transition: `width ${message.time === 5 ? 0 : 1}s linear`,
-                      width: `${(message.time / 5) * 100}%`,
+                      transition: `width ${message.time === 3 ? 0 : 1}s linear`,
+                      width: `${(message.time / 3) * 100}%`,
                     }}
                   ></div>
                 </div>
@@ -70,8 +70,8 @@ function Notification() {
                   <div
                     className="absolute top-0 left-0 h-full bg-red-800"
                     style={{
-                      transition: `width ${message.time === 5 ? 0 : 1}s linear`,
-                      width: `${(message.time / 5) * 100}%`,
+                      transition: `width ${message.time === 3 ? 0 : 1}s linear`,
+                      width: `${(message.time / 3) * 100}%`,
                     }}
                   ></div>
                 </div>
@@ -112,8 +112,8 @@ function Notification() {
                   <div
                     className="absolute top-0 left-0 h-full bg-green-800"
                     style={{
-                      transition: `width ${message.time === 5 ? 0 : 1}s linear`,
-                      width: `${(message.time / 5) * 100}%`,
+                      transition: `width ${message.time === 3 ? 0 : 1}s linear`,
+                      width: `${(message.time / 3) * 100}%`,
                     }}
                   ></div>
                 </div>

@@ -17,6 +17,9 @@ export default {
         grey: '#7D7D7D',
         lightBlue: '#1A4A80', 
       },
+      transitionProperty: {
+        'transform': 'transform',
+      },
     },
   },
   plugins: [],

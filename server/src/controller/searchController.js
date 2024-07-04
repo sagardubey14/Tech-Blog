@@ -3,20 +3,26 @@ const Keywords = require('../model/keywordsSchema')
 const user = require('../model/userSchema')
 
 const searchPosts = async (req, res, next)=>{
-    const queri = req.query
+    const {keys,query} = req.query
+    console.log(keys, query);
     try {
-        const keys = await Keywords.findById('665ae7089ccff1a8b14f9e40')
-        const words = keys.keywords
-        const presentWords = queri.filter(element => words.some(word => word.toLowerCase().includes(element.toLowerCase())));
+        const search = await Keywords.findOne({})
+        const words = search.keywords
+        const presentWords = keys.filter(element => words.some(word => word.toLowerCase().includes(element.toLowerCase())));
         console.log(presentWords);
         const posts = await Post.find({ keywords: { 
             $in: presentWords.map(keyword => new RegExp(keyword, 'i')) 
          } });
+        console.log(posts.length);
+        if(posts.length < 2){
+            search.queries.push({query:query, keywords:keys})
+            search.save()
+        }
         if(posts.length === 0){
             res.status(404).json("Posts not found regarding this keywords")
         }
         else{
-        res.status(200).json(posts)
+            res.status(200).json(posts)
         }
     } catch (error) {
         res.send(error)

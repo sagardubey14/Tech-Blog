@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState ={
     failedQueries:[],
     userQueries:[],
+    selectedQuery:{},
 }
 
 export const querySlice = createSlice({
@@ -12,13 +13,21 @@ export const querySlice = createSlice({
         setQuery:(state, action)=>{
             state.userQueries = action.payload
         },
-        setFailedQuery:(state, action)=>{
-            state.failedQueries.push(action.payload)
+        setFailedQueries: (state, action) => {
+            const newQueries = action.payload;
+            newQueries.forEach(query => {
+              if (!state.failedQueries.includes(query)) {
+                state.failedQueries.push(query);
+              }
+            });
+        },
+        setSelectedQuery:(state, action)=>{
+            state.selectedQuery = action.payload
         },
     }
 
 })
 
-export const {setQuery, setFailedQuery} = querySlice.actions
+export const {setQuery, setFailedQueries, setSelectedQuery} = querySlice.actions
 
 export default querySlice.reducer

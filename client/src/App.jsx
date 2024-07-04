@@ -12,19 +12,19 @@ import AddPost from "./Components/PostCard/AddPost";
 import SelectedPost from "./Components/PostCard/SelectedPost";
 import Navbar from "./Components/homeComponents/Navbar";
 import EditProfile from "./Components/ProfileCompo/EditProfile";
-import { useState } from "react";
 import Notification from "./Components/Notification";
 import HtmlPreviewer from "./Components/HtmlPreviewer";
 import Alertsss from "./Components/Alertsss";
 import About from "./Components/About";
 import ChatBot from './Components/ChatBot'
-import chat1 from './assets/chatbot2.png'
+import ScrollToTop from "./Components/ScrollToTop";
 
 function App() {
   return (
     <>
       <Navbar />
       <Notification />
+      <ScrollToTop />
       <Routes>
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Signin />} />

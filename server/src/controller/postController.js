@@ -89,7 +89,9 @@ const getTrend = async (req, res, next) => {
             .limit(6)
             .exec();
 
-        res.send(topPosts);
+        const search = await Keywords.findOne({})
+        res.send({posts:topPosts, queries:search.queries});
+        
     } catch (error) {
         res.status(500).send({ error: 'Internal server error' });
     }

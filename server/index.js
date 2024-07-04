@@ -10,7 +10,7 @@ const searchRoute = require('./src/routes/searchRoute');
 const updateRoute = require('./src/routes/updateRoute');
 
 
-const stopwords = ['how', 'to', 'and', 'or'];
+const stopwords = ['how', 'to', 'and', 'or', 'javascript', 'in'];
 function removeStopwords(req, res, next) {
     const {query,username} = req.query;
     if(query){
@@ -18,7 +18,7 @@ function removeStopwords(req, res, next) {
 
     const filteredWords = words.filter(word => !stopwords.includes(word));
     
-    req.query = filteredWords
+    req.query = {keys:filteredWords, query:query}
     }
     next();
 }

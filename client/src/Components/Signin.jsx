@@ -59,13 +59,21 @@ export default function Signin() {
         dispatch(setUser(response.data))
         dispatch(setMsg({
           msg:`Welcome Back ${response.data.username}`,
-          time:5,
+          time:3,
           showMsg:true,
-          type:1,
+          type:0,
         }))
         navigate('/');
       } catch (error) {
         console.log(error);
+        {
+          dispatch(setMsg({
+          msg:error.response.data.message,
+          time:3,
+          showMsg:true,
+          type:1,
+        }))
+      }
       }
     }
   }

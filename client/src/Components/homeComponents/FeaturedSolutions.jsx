@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { setTrendPosts } from '../../features/posts/combinedPostSlice';
+import { setFailedQueries } from '../../features/query/querySlice';
 
 import axios from 'axios';
 import Post from '../PostCard/Post';
@@ -12,8 +13,9 @@ const FeaturedSolutions = () => {
     const call = async ()=>{
       if(trendPost.length===0){
         console.log("caling trend");
-      const res = await axios.get('http://localhost:3001/post/trend')
-      dispatch(setTrendPosts(res.data))
+        const res = await axios.get('http://localhost:3001/post/trend')
+        dispatch(setTrendPosts(res.data.posts))
+        dispatch(setFailedQueries(res.data.queries))
       }
     }
     call();

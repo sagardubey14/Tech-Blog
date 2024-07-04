@@ -130,6 +130,10 @@ export const combinedPostSlice = createSlice({
       updateCommentReply(state.resultposts, id, comment, index);
       
     },
+    clearUserPosts:(state)=>{
+      state.userposts = initialState.userposts
+      state.savedposts = initialState.savedposts
+    }
   },
 });
 
@@ -147,6 +151,7 @@ export const {
   postLikes,
   addComment,
   addCommentReply,
+  clearUserPosts,
 } = combinedPostSlice.actions;
 
 export default combinedPostSlice.reducer;
