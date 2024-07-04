@@ -11,9 +11,9 @@ export default function Signin() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const [formData, setFormData] = useState({
-    username:'Edge_14',
+    username:'',
     email: '',
-    password: 'Sagar@2477',
+    password: '',
   });
   const [formErrors, setFormErrors] = useState({
     email: '',
@@ -53,7 +53,7 @@ export default function Signin() {
     e.preventDefault();
     if(validateForm()){
       try {
-        const response = await axios.post('http://localhost:3001/auth/signin' , formData,{
+        const response = await axios.post(`${import.meta.env.VITE_API_URL}/auth/signin` , formData,{
           withCredentials:true
         } )
         dispatch(setUser(response.data))

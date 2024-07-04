@@ -9,7 +9,6 @@ import RotatingStrings from './RotatingStrings';
 
 const Hero = () => {
   const strings = useSelector(state=>state.query.failedQueries)
-  console.log(strings);
   const interval = 1500; // 1 second
   const user = useSelector((state) => state.user.user);
   const navigate = useNavigate()
@@ -19,7 +18,7 @@ const Hero = () => {
   const handleSearch = async ()=>{
     dispatch(setQuery(searchQuery))
     try {
-      const response = await axios.get('http://localhost:3001/search/posts', {
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/search/posts`, {
         params: { query: searchQuery }
       });
       console.log(response);

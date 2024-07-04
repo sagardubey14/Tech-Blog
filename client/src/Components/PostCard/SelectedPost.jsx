@@ -56,7 +56,7 @@ function SelectedPost() {
 
       try {
         const res = await axios.post(
-          "http://localhost:3001/post/likes",
+          `${import.meta.env.VITE_API_URL}/post/likes`,
           { id: selectedPost.post._id, like: false },
           { withCredentials: true }
         );
@@ -70,7 +70,7 @@ function SelectedPost() {
       setIsLiked(true);
       try {
         const res = await axios.post(
-          "http://localhost:3001/post/likes",
+          `${import.meta.env.VITE_API_URL}/post/likes`,
           { id: selectedPost.post._id, like: true },
           { withCredentials: true }
         );
@@ -86,7 +86,7 @@ function SelectedPost() {
     console.log(`Post ${selectedPost.post._id} deleted`);
     try {
       const res = await axios.post(
-        "http://localhost:3001/post/delete",
+        `${import.meta.env.VITE_API_URL}/post/delete`,
         { postId: selectedPost.post._id},
         { withCredentials: true }
       );
@@ -113,7 +113,7 @@ function SelectedPost() {
       setIsMarked(false);
       try {
         const res = await axios.post(
-          "http://localhost:3001/post/save",
+          `${import.meta.env.VITE_API_URL}/post/save`,
           { postId: selectedPost.post._id, remove: true },
           { withCredentials: true }
         );
@@ -125,7 +125,7 @@ function SelectedPost() {
       setIsMarked(true);
       try {
         const res = await axios.post(
-          "http://localhost:3001/post/save",
+          `${import.meta.env.VITE_API_URL}/post/save`,
           { postId: selectedPost.post._id, remove: false },
           { withCredentials: true }
         );

@@ -31,7 +31,7 @@ function EditProfile() {
   const handleNewPassUpdate = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:3001/update/newpass",
+        `${import.meta.env.VITE_API_URL}/update/newpass`,
         {
           newPass: recPass.newPass,
         },
@@ -48,7 +48,7 @@ function EditProfile() {
   const handlePassUpdate = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:3001/update/pass",
+        `${import.meta.env.VITE_API_URL}/update/pass`,
         {
           oldPass: pass.oldPass,
           newPass: pass.newPass,
@@ -66,7 +66,7 @@ function EditProfile() {
     console.log(answer);
     try {
       const response = await axios.post(
-        "http://localhost:3001/update/ans",
+        `${import.meta.env.VITE_API_URL}/update/ans`,
         { answer: answer },
         {
           withCredentials: true,
@@ -89,7 +89,7 @@ function EditProfile() {
   const handleEmailUpdate = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:3001/update/email",
+        `${import.meta.env.VITE_API_URL}/update/email`,
         { newEmail: newEmail },
         {
           withCredentials: true,

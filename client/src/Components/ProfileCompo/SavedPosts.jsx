@@ -11,7 +11,7 @@ function SavedPosts() {
   useEffect(() => {
     const call = async () => {
       try {
-        const res = await axios.get("http://localhost:3001/post/savedposts", {
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/post/savedposts`, {
             params:{savedPosts: user.savedPosts},
         });
         dispatch(setSavedPosts(res.data.PostsSaved))

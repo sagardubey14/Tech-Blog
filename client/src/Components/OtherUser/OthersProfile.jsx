@@ -18,7 +18,7 @@ function OthersProfile() {
   useEffect(()=>{
     const fetchUser = async ()=>{
       try {
-        const response = await axios.get(`http://localhost:3001/search/user`, {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/search/user`, {
           params: { username: username }
         });
         dispatch(setUser(response.data))

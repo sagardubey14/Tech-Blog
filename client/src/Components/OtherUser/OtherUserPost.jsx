@@ -11,7 +11,7 @@ function OtherUserPost({username}) {
   useEffect( ()=>{
     const getPost = async ()=>{
       try {
-        const res = await axios.get('http://localhost:3001/post/getother',{
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/post/getother`,{
             params: { username: username }
         })
         dispatch(setOtherPosts(res.data))

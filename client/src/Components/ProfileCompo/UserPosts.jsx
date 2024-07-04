@@ -2,7 +2,6 @@ import axios from 'axios'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import {setUserPosts} from '../../features/posts/combinedPostSlice'
-import { Editor } from '@monaco-editor/react'
 import Post from '../PostCard/Post'
 
 
@@ -14,7 +13,7 @@ function UserPosts() {
     const getPost = async ()=>{
       if(userposts.length === 0){
       try {
-        const res = await axios.get('http://localhost:3001/post/get',{
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/post/get`,{
           withCredentials:true
         })
         console.log(res);

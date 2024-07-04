@@ -25,7 +25,7 @@ function AddPost() {
     if (user.username === "") {
       dispatch(setMsg({
         msg:`Please Login to access`,
-        time:5,
+        time:3,
         showMsg:true,
         type:1,
       }))
@@ -64,7 +64,7 @@ function AddPost() {
           description: desc,
           code: code,
         };
-        const res = await axios.post("http://localhost:3001/update/post", content, {
+        const res = await axios.post(`${import.meta.env.VITE_API_URL}/update/post`, content, {
             withCredentials: true,
           });
           console.log(res.data);
@@ -77,7 +77,7 @@ function AddPost() {
         code: code,
       };
       console.log(content);
-      const res = await axios.post("http://localhost:3001/post/add", content, {
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}/post/add`, content, {
         withCredentials: true,
       });
       console.log(res);

@@ -23,7 +23,7 @@ const Navbar = () => {
   const handleSearch = async () => {
     dispatch(setQuery(searchQuery));
     try {
-      const response = await axios.get("http://localhost:3001/search/posts", {
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/search/posts`, {
         params: { query: searchQuery },
       });
       dispatch(setSearchedPosts(response.data))

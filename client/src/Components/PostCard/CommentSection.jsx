@@ -21,7 +21,7 @@ function CommentSection({ post, userName }) {
     }
     try {
       const res = await axios.post(
-        "http://localhost:3001/post/cmnt",
+        `${import.meta.env.VITE_API_URL}/post/cmnt`,
         { postId: post._id, comment: cmnt },
         { withCredentials: true }
       );
@@ -35,7 +35,7 @@ function CommentSection({ post, userName }) {
   const handleReply = async (cmntId) => {
     try {
       const res = await axios.post(
-        "http://localhost:3001/post/cmntreply",
+        `${import.meta.env.VITE_API_URL}/post/cmntreply`,
         { postId: post._id, comment: replyComment, cmntId: cmntId },
         { withCredentials: true }
       );

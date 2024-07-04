@@ -13,8 +13,7 @@ const FeaturedSolutions = () => {
     const call = async () => {
       if (trendPost.length === 0) {
         try {
-          console.log("caling trend");
-          const res = await axios.get("http://localhost:3001/post/trend");
+          const res = await axios.get(`${import.meta.env.VITE_API_URL}/post/trend`);
           dispatch(setTrendPosts(res.data.posts));
           dispatch(setFailedQueries(res.data.queries));
         } catch (error) {

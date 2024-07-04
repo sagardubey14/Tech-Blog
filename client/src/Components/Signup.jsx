@@ -92,13 +92,13 @@ export default function Signup() {
     if(validateForm()){
       try {
         console.log(formData);
-        const response = await axios.post('http://localhost:3001/auth/signup' , formData )
+        const response = await axios.post(`${import.meta.env.VITE_API_URL}/auth/signup` , formData )
         console.log(response);
         dispatch(setMsg({
           msg:`Registered Successfully`,
-          time:5,
+          time:3,
           showMsg:true,
-          type:3,
+          type:2,
         }))
         navigate('/login');
       } catch (error) {

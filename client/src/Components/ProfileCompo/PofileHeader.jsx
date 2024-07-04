@@ -13,7 +13,7 @@ function PofileHeader({setShowFollowers, setShowFollowing, username}) {
   async function handleFollow(){
     try {
       const res = await axios.post(
-        "http://localhost:3001/update/follower",
+        `${import.meta.env.VITE_API_URL}/update/follower`,
         {otheruser:otherUser.username, addFollowers:true},
         { withCredentials: true }
       );
@@ -27,7 +27,7 @@ function PofileHeader({setShowFollowers, setShowFollowing, username}) {
   async function handleUnFollow(){
     try {
       const res = await axios.post(
-        "http://localhost:3001/update/follower",
+        `${import.meta.env.VITE_API_URL}/update/follower`,
         {otheruser:otherUser.username, addFollowers:false},
         { withCredentials: true }
       );
