@@ -1,7 +1,7 @@
 const user = require('../model/userSchema');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const secretKey = "SECRETKEY"
+require('dotenv').config();
 const salt = bcrypt.genSaltSync(10);
 
 const signup = async (req, res, next) => {
@@ -24,6 +24,7 @@ const signup = async (req, res, next) => {
     }
     catch (err) {
         console.log(err);
+        res.status(500).json({error:"Internal Server Error"});
     }
 
 }
@@ -55,7 +56,7 @@ const signin = async (req, res, next) => {
                     username: existingUser.username
                 };
 
-                const token = jwt.sign(user, secretKey);
+                const token = jwt.sign(user, process.env.SECRET_KEY);
 
                 const userdata = {
                     username: existingUser.username,
@@ -67,11 +68,7 @@ const signin = async (req, res, next) => {
                     likedPosts: existingUser.likedPosts,
                     savedPosts: existingUser.savedPosts,
                 }
-                try {
-                    res.cookie('token', token, { httpOnly: true });
-                } catch (error) {
-                    console.log(error);
-                }
+                res.cookie('token', token, { httpOnly: true });
                 res.send(userdata);
             }
             else {
@@ -81,6 +78,7 @@ const signin = async (req, res, next) => {
     }
     catch (err) {
         console.log(err);
+        res.status(500).json({error:"Internal Server Error"});
     }
 
 }

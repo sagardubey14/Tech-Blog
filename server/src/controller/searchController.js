@@ -9,11 +9,9 @@ const searchPosts = async (req, res, next)=>{
         const search = await Keywords.findOne({})
         const words = search.keywords
         const presentWords = keys.filter(element => words.some(word => word.toLowerCase().includes(element.toLowerCase())));
-        console.log(presentWords);
         const posts = await Post.find({ keywords: { 
             $in: presentWords.map(keyword => new RegExp(keyword, 'i')) 
          } });
-        console.log(posts.length);
         if(posts.length < 2){
             search.queries.push({query:query, keywords:keys})
             search.save()
@@ -25,7 +23,7 @@ const searchPosts = async (req, res, next)=>{
             res.status(200).json(posts)
         }
     } catch (error) {
-        res.send(error)
+        res.status(500).send({ error: 'Internal server error' });
     }
 }
 
@@ -50,6 +48,7 @@ const searchUser = async (req, res, next)=>{
     }
     catch(err){
         console.log(err);
+        res.status(500).json({error:"Internal Server Error"});
     }
 }
 

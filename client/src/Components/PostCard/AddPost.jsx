@@ -55,37 +55,55 @@ function AddPost() {
 
   const handleSubmit = async () => {
     const keys = keywords.split(", ");
-    if(postId){
+    try {
+      if(postId){
+        const content = {
+          id: editPost._id,
+          keywords: keys,
+          title: title,
+          description: desc,
+          code: code,
+        };
+        const res = await axios.post("http://localhost:3001/update/post", content, {
+            withCredentials: true,
+          });
+          console.log(res.data);
+          dispatch(updateUserPost({id:editPost._id,post:res.data.post}))
+      }else{
       const content = {
-        id: editPost._id,
         keywords: keys,
         title: title,
         description: desc,
         code: code,
       };
-      const res = await axios.post("http://localhost:3001/update/post", content, {
-          withCredentials: true,
-        });
-        console.log(res.data);
-        dispatch(updateUserPost({id:editPost._id,post:res.data.post}))
-    }else{
-    const content = {
-      keywords: keys,
-      title: title,
-      description: desc,
-      code: code,
-    };
-    console.log(content);
-    const res = await axios.post("http://localhost:3001/post/add", content, {
-      withCredentials: true,
-    });
-    console.log(res);
-    dispatch(addUserPost(res.data.post))
+      console.log(content);
+      const res = await axios.post("http://localhost:3001/post/add", content, {
+        withCredentials: true,
+      });
+      console.log(res);
+      dispatch(addUserPost(res.data.post))
+      console.log(searchdePosts);
+      }
+      setKeywords("");
+      setTitle("");
+      setDesc("");
+      setCode("");
+      dispatch(setMsg({
+        msg:`Post created Succesfully`,
+        time:3,
+        showMsg:true,
+        type:2,
+      }))
+    } catch (error) {
+      console.log(error);
+      dispatch(setMsg({
+        msg:`Post creation Failed`,
+        time:3,
+        showMsg:true,
+        type:1,
+      }))
     }
-    setKeywords("");
-    setTitle("");
-    setDesc("");
-    setCode("");
+    
   };
 
 

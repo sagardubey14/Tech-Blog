@@ -1,7 +1,7 @@
 const express = require('express');
 const { updateFollowers, updateEmail, checkAnswer, updatePassword, setNewPassword, editPosts } = require('../controller/editController');
 const jwt = require('jsonwebtoken')
-const secretKey = "SECRETKEY"
+require('dotenv').config();
 
 const updateRoute = express.Router();
 
@@ -12,7 +12,7 @@ const check =(req, res, next)=>{
         return res.status(401).send('Unauthorized');
     }
     try {
-        const decoded = jwt.verify(token, secretKey);
+        const decoded = jwt.verify(token, process.env.SECRET_KEY);
         req.username = decoded.username;
         next();
     } catch (err) {

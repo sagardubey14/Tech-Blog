@@ -2,7 +2,7 @@ const express = require('express');
 const {addPost, getPosts, updateLikes, updateComments, getTrend, getOthersPosts, savePost, addCommentReply, getSavedPosts, deletePosts} = require('../controller/postController')
 const postRoute = express.Router();
 const jwt = require('jsonwebtoken')
-const secretKey = "SECRETKEY"
+require('dotenv').config();
 
 const check =(req, res, next)=>{
     const token = req.cookies.token;
@@ -10,7 +10,7 @@ const check =(req, res, next)=>{
         return res.status(401).send('Unauthorized');
     }
     try {
-        const decoded = jwt.verify(token, secretKey);
+        const decoded = jwt.verify(token, process.env.SECRET_KEY);
         req.username = decoded.username;
         next();
     } catch (err) {

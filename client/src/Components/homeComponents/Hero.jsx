@@ -22,6 +22,7 @@ const Hero = () => {
       const response = await axios.get('http://localhost:3001/search/posts', {
         params: { query: searchQuery }
       });
+      console.log(response);
       dispatch(setSearchedPosts(response.data))
       navigate('/solution');
     } catch (error) {

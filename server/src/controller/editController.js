@@ -2,7 +2,6 @@ const Post = require('../model/postSchema');
 const Keywords = require('../model/keywordsSchema')
 const User = require('../model/userSchema');
 const bcrypt = require('bcryptjs');
-const secretKey = "SECRETKEY"
 const salt = bcrypt.genSaltSync(10);
 
 const updateEmail = async (req, res, next) => {
@@ -81,7 +80,7 @@ const editPosts = async (req, res, next) => {
     try {
         const filter = { _id: id };
         const update = { title:title, keywords: keywords, description: description, code: code }
-        const keys = await Keywords.findById('665ae7089ccff1a8b14f9e40')
+        const keys = await Keywords.findOne({})
         const doc = await Post.findOneAndUpdate(filter, update, {
             new: true
         });

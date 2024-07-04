@@ -8,6 +8,7 @@ const bodyParser = require('body-parser')
 const cors = require('cors');
 const searchRoute = require('./src/routes/searchRoute');
 const updateRoute = require('./src/routes/updateRoute');
+require('dotenv').config();
 
 
 const stopwords = ['how', 'to', 'and', 'or', 'javascript', 'in'];
@@ -26,7 +27,7 @@ function removeStopwords(req, res, next) {
 
 app.use(express.json()); // Middleware to parse JSON bodies
 app.use(cors({
-    origin:'http://localhost:5173',
+    origin:process.env.REACT_URL,
     credentials:true
 }))
 app.use(bodyParser.json())
@@ -43,6 +44,6 @@ app.get('/', (req, res) => {
     res.send('Hello World');
 });
 
-app.listen(3001, () => {
+app.listen(process.env.PORT, () => {
     console.log('Server is running on port 3001');
 });

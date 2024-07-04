@@ -15,12 +15,10 @@ const addPost = async (req, res, next) => {
             likes: 0,
             comments: [],
         });
-        const keys = await Keywords.findById('665ae7089ccff1a8b14f9e40')
+        const keys = await Keywords.findOne({})
         let words = keys.keywords
-        console.log(words);
         newPost.keywords.forEach(value => {
             if (!words.includes(value)) {
-                console.log(value);
                 words.push(value);
             }
         });
@@ -74,7 +72,6 @@ const getSavedPosts = async (req, res, next) => {
     const { savedPosts } = req.query
     try {
         const foundPosts = await Post.find({ _id: { $in: savedPosts } });
-        console.log(foundPosts);
         res.json({ PostsSaved: foundPosts });
     } catch (error) {
         console.error("Error updating likes:", error);
@@ -88,9 +85,15 @@ const getTrend = async (req, res, next) => {
             .sort({ likes: -1 })
             .limit(6)
             .exec();
-
         const search = await Keywords.findOne({})
-        res.send({posts:topPosts, queries:search.queries});
+        if(topPosts.length === 0){
+            res.status(404).send({ message: 'No Post not' });
+        }
+        else if(search === null ){
+            res.send({posts:topPosts});
+        }
+        else
+            res.send({posts:topPosts, queries:search.queries});
         
     } catch (error) {
         res.status(500).send({ error: 'Internal server error' });
@@ -139,7 +142,6 @@ const savePost = async (req, res, next) => {
         }
 
         await user.save();
-        console.log(user);
     } catch (error) {
         console.error("Error Saving post:", error);
         res.status(500).json({ message: "Internal server error" });
@@ -150,7 +152,6 @@ const updateComments = async (req, res, next) => {
     const { comment, postId } = req.body
     try {
         postToUpdate = await Post.findOne({ _id: postId });
-        console.log(postToUpdate);
         if (postToUpdate) {
             let dateObj = new Date();
 
@@ -175,6 +176,7 @@ const updateComments = async (req, res, next) => {
         }
     } catch (error) {
         console.log(error);
+        res.status(500).json({error:"Internal Server Error"});
     }
 }
 
@@ -185,7 +187,6 @@ const addCommentReply = async (req, res, next) => {
         postToUpdate = await Post.findOne({ _id: postId });
         if (postToUpdate) {
             const cmntToAddReply = postToUpdate.comments.find(cmnt => cmnt.id === cmntId)
-            console.log(cmntToAddReply);
             let dateObj = new Date();
 
             let month = String(dateObj.getMonth() + 1)
@@ -208,11 +209,11 @@ const addCommentReply = async (req, res, next) => {
                 postToUpdate.comments[index] = cmntToAddReply;
             }
             await postToUpdate.save();
-            console.log(postToUpdate);
             res.json({ message: "comments updated successfully", comment: cmntToAddReply });
         }
     } catch (error) {
         console.log(error);
+        res.status(500).json({error:"Internal Server Error"});
     }
 }
 

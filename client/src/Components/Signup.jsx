@@ -98,6 +98,7 @@ export default function Signup() {
           msg:`Registered Successfully`,
           time:5,
           showMsg:true,
+          type:3,
         }))
         navigate('/login');
       } catch (error) {
