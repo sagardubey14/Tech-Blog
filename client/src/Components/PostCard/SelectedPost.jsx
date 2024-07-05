@@ -16,8 +16,8 @@ import {
 import CommentSection from "./CommentSection";
 import axios from "axios";
 import DeleteConfirmation from "./DeleteConfirmation";
-import { Light as SyntaxHighlighter } from "react-syntax-highlighter";
-import { vs2015 } from "react-syntax-highlighter/dist/esm/styles/hljs";
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 function SelectedPost() {
   const navigate = useNavigate();
@@ -188,7 +188,7 @@ function SelectedPost() {
           </p>
           <pre className="bg-darkBlue p-4 rounded-lg overflow-auto mb-2">
             <code className="text-sm text-gray-800">
-            <SyntaxHighlighter language="javascript" style={vs2015}>
+            <SyntaxHighlighter language="javascript" style={vscDarkPlus}>
               {selectedPost.post.code}
             </SyntaxHighlighter>
               </code>
