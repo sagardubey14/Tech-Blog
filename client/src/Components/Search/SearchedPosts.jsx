@@ -4,8 +4,8 @@ import liked from '../../assets/liked.png'
 import not_marked from '../../assets/not_marked.png'
 import marked from '../../assets/marked.png'
 import { Link } from 'react-router-dom';
-import { Light as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { vs2015 } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { setSelectedPost } from '../../features/posts/combinedPostSlice';
@@ -31,7 +31,7 @@ const SearchedPost = ({OnePost, name}) => {
   <div className='md:grid md:grid-cols-3'>
     <div className="bg-slate-900 p-4 rounded-lg mb-2">
       <pre className="max-h-20 md:max-h-40 overflow-auto md:overflow-auto">
-        <SyntaxHighlighter language="javascript" style={vs2015}>
+        <SyntaxHighlighter language="javascript" style={vscDarkPlus}>
           {OnePost.code}
         </SyntaxHighlighter>
       </pre>
