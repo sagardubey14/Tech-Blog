@@ -79,9 +79,7 @@ export const combinedPostSlice = createSlice({
       updatePostInArray(state.resultposts, id, post);
     },
     addUserPost: (state, action) => {
-      console.log(action.payload);
       state.userposts.push(action.payload);
-      console.log(state.userposts);
     },
     removeUserPost: (state, action) => {
       const { id } = action.payload;

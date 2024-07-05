@@ -1,5 +1,5 @@
-import { Light as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { vs2015 } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import personIcon from '../../assets/icons8-person-48.png'
 import not_liked from '../../assets/not_liked.png'
 import liked from '../../assets/liked.png'
@@ -32,7 +32,7 @@ const Post = ({OnePost, name}) => {
       <div onClick={handleSelectedPost} className="font-medium text-center text-coral cursor-pointer">{OnePost.title}</div>
       <div className="bg-darkBlue p-4 rounded-lg mb-2 h-full">
         <pre className="max-h-32 overflow-auto">
-          <SyntaxHighlighter language="javascript" style={vs2015}>
+          <SyntaxHighlighter language="javascript" style={vscDarkPlus}>
             {OnePost.code}
           </SyntaxHighlighter>
         </pre>
