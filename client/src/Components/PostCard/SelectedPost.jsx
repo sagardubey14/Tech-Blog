@@ -143,7 +143,7 @@ function SelectedPost() {
           onCancel={handleCancelDelete}
         />
       )}
-      <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100">
+      <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100 p-10">
         <div className="bg-white shadow-md rounded-lg p-8 max-w-3xl w-full">
           <div className="grid grid-cols-3">
             <h2 className="text-2xl font-bold mb-4 col-span-2 text-gray-800">

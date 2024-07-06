@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import {useNavigate} from 'react-router-dom'
 import logo from '../../assets/HeroLogo.png'
+import buttonLoading from '../../assets/button-loading.gif'
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux'
 import {setSearchedPosts} from '../../features/posts/combinedPostSlice'
@@ -13,9 +14,11 @@ const Hero = () => {
   const user = useSelector((state) => state.user.user);
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const [searchQuery, setSearchQuery] = useState("")
+  const [searchQuery, setSearchQuery] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSearch = async ()=>{
+    setLoading(true);
     dispatch(setQuery(searchQuery))
     try {
       const response = await axios.get(`${import.meta.env.VITE_API_URL}/search/posts`, {
@@ -23,8 +26,10 @@ const Hero = () => {
       });
       console.log(response);
       dispatch(setSearchedPosts(response.data))
+      setLoading(false);
       navigate('/solution');
     } catch (error) {
+      setLoading(false);
       if(error.response.status === 404){
         navigate('/404')
       }
@@ -52,7 +57,7 @@ const Hero = () => {
             className="bg-gold text-darkBlue py-2 px-4 mt-2 sm:mt-auto rounded ml-2"
             onClick={handleSearch}
           >
-            Search
+            {loading?<img className='h-6 px-7' src={buttonLoading} />:'Search'}
           </button>
         </div>
         {

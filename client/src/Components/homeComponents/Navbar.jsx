@@ -1,9 +1,13 @@
 import { useState } from "react";
 import logo from "../../assets/SX.png";
+import buttonLoading from "../../assets/button-loading.gif";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {setSearchedPosts, clearUserPosts} from '../../features/posts/combinedPostSlice'
-import { setFailedQueries, setQuery } from '../../features/query/querySlice';
+import {
+  setSearchedPosts,
+  clearUserPosts,
+} from "../../features/posts/combinedPostSlice";
+import { setFailedQueries, setQuery } from "../../features/query/querySlice";
 import { clearUser } from "../../features/user/userSlice";
 import axios from "axios";
 
@@ -13,26 +17,34 @@ const Navbar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [searchQuery, setSearchQuery] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleLogout = async ()=>{
-    await dispatch(clearUserPosts())
-    await dispatch(clearUser())
-    navigate('/')
-  }
+  const handleLogout = async () => {
+    await dispatch(clearUserPosts());
+    await dispatch(clearUser());
+    navigate("/");
+  };
 
   const handleSearch = async () => {
+    document.activeElement.blur();
+    setLoading(true)
     dispatch(setQuery(searchQuery));
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/search/posts`, {
-        params: { query: searchQuery },
-      });
-      dispatch(setSearchedPosts(response.data))
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/search/posts`,
+        {
+          params: { query: searchQuery },
+        }
+      );
+      dispatch(setSearchedPosts(response.data));
+      setLoading(false);
       setSearchQuery("");
       navigate("/solution");
     } catch (error) {
+      setLoading(false);
       if (error.response.status === 404) {
         dispatch(setFailedQueries(searchQuery));
-        navigate('/404');
+        navigate("/404");
       } else console.error("Error searching:", error);
     }
   };
@@ -60,28 +72,16 @@ const Navbar = () => {
 
         {/* Navigation links for desktop */}
         <div className="hidden md:flex flex-grow justify-center">
-          <Link
-            to="/"
-            className=" text-white px-3 py-2 hover:text-gold"
-          >
+          <Link to="/" className=" text-white px-3 py-2 hover:text-gold">
             Home
           </Link>
-          <Link
-            to="/about"
-            className=" text-white px-3 py-2 hover:text-gold"
-          >
+          <Link to="/about" className=" text-white px-3 py-2 hover:text-gold">
             About
           </Link>
-          <Link
-            to="/css"
-            className=" text-white px-3 py-2 hover:text-gold"
-          >
+          <Link to="/css" className=" text-white px-3 py-2 hover:text-gold">
             CSS-Playground
           </Link>
-          <Link
-            to="/addpost"
-            className=" text-white px-3 py-2 hover:text-gold"
-          >
+          <Link to="/addpost" className=" text-white px-3 py-2 hover:text-gold">
             Create-Post
           </Link>
         </div>
@@ -97,19 +97,28 @@ const Navbar = () => {
                 placeholder="Search..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    handleSearch();
+                  }
+                }}
               />
               <button
-                onClick={handleSearch}
+                onClick={loading?null:handleSearch}
                 className="absolute right-0 top-0 mt-2 mr-2"
               >
-                <svg
-                  className="h-4 w-4 text-gray-400 fill-current"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" />
-                </svg>
+                {loading ? (
+                  <img className="h-5 pb-1" src={buttonLoading} />
+                ) : (
+                  <svg
+                    className="h-4 w-4 text-gray-400 fill-current"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" />
+                  </svg>
+                )}
               </button>
             </div>
           </div>
@@ -119,14 +128,17 @@ const Navbar = () => {
           {user.username ? (
             <div className="sm:grid sm:grid-cols-2 ">
               <div className="mt-2 sm:mt-0">
-              <Link to="/profile" className="text-white py-2 hover:text-gold">
-                Profile
-              </Link>
+                <Link to="/profile" className="text-white py-2 hover:text-gold">
+                  Profile
+                </Link>
               </div>
               <div className="mt-2 sm:mt-0">
-              <Link onClick={handleLogout}  className="text-white py-2 hover:text-gold">
-                Logout
-              </Link>
+                <Link
+                  onClick={handleLogout}
+                  className="text-white py-2 hover:text-gold"
+                >
+                  Logout
+                </Link>
               </div>
             </div>
           ) : (
@@ -137,10 +149,7 @@ const Navbar = () => {
                 </Link>
               </div>
               <div className="mt-2 sm:mt-0">
-                <Link
-                  to="/signup"
-                  className="text-white py-2 hover:text-gold"
-                >
+                <Link to="/signup" className="text-white py-2 hover:text-gold">
                   Sign Up
                 </Link>
               </div>
@@ -205,17 +214,20 @@ const Navbar = () => {
           </Link>
           {user.username ? (
             <div>
-            <Link
-              to="/profile"
-              onClick={() => setIsOpen(false)}
-              className="block text-white px-3 py-2 border-y-2 border-lightBlue hover:text-gold"
-            >
-              Profile
-            </Link>
-            <Link onClick={()=>alert("you are logged out")}  className="block text-white px-3 py-2 border-b-2 border-lightBlue hover:text-gold">
+              <Link
+                to="/profile"
+                onClick={() => setIsOpen(false)}
+                className="block text-white px-3 py-2 border-y-2 border-lightBlue hover:text-gold"
+              >
+                Profile
+              </Link>
+              <Link
+                onClick={() => alert("you are logged out")}
+                className="block text-white px-3 py-2 border-b-2 border-lightBlue hover:text-gold"
+              >
                 Logout
               </Link>
-          </div>
+            </div>
           ) : (
             <div>
               <Link

@@ -1,21 +1,24 @@
 import { useState } from 'react';
 import jspic from '../assets/SX.png'
-import { validatePassword } from '../utils/validation';
+import { validatePassword, validateEmail } from '../utils/validation';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../features/user/userSlice';
 import {setMsg} from '../features/notifications/noteSlice'
 import { Link, useNavigate } from 'react-router-dom';
+import buttonLoading from "../assets/button-loading.gif";
 
 export default function Signin() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     username:'',
     email: '',
     password: '',
   });
   const [formErrors, setFormErrors] = useState({
+    username:'',
     email: '',
     password: '',
   });
@@ -30,9 +33,38 @@ export default function Signin() {
 
 
   const validateForm = () => {
-    const {password} = formData;
+    const {password, username, email} = formData;
     let isValid = true;
+    if(username === ''){
+    if (!validateEmail(email)) {
+      setFormErrors((prevErrors) => ({
+        ...prevErrors,
+        email: 'Invalid email address',
+      }));
+      isValid = false;
+    } else {
+      setFormErrors((prevErrors) => ({
+        ...prevErrors,
+        email: '',
+      }));
+    }
+    }
 
+    if(email === ''){
+    if (username === '') {
+      setFormErrors((prevErrors) => ({
+        ...prevErrors,
+        username: 'This field is required',
+      }));
+      isValid = false;
+    } else {
+      setFormErrors((prevErrors) => ({
+        ...prevErrors,
+        username: '',
+      }));
+    }
+    }
+    
     if (!validatePassword(password)) {
       setFormErrors((prevErrors) => ({
         ...prevErrors,
@@ -52,6 +84,7 @@ export default function Signin() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if(validateForm()){
+      setLoading(true);
       try {
         const response = await axios.post(`${import.meta.env.VITE_API_URL}/auth/signin` , formData,{
           withCredentials:true
@@ -63,9 +96,11 @@ export default function Signin() {
           showMsg:true,
           type:0,
         }))
+        setLoading(false);
         navigate('/');
       } catch (error) {
         console.log(error);
+        setLoading(false);
         {
           dispatch(setMsg({
           msg:error.response.data.message,
@@ -104,7 +139,9 @@ export default function Signin() {
                 />
               </div>
             </div>
-            <div className="mt-4">
+            {formErrors.username && <p className="text-red-500 text-sm mt-1">{formErrors.username}</p>}
+            <p className='className="block text-sm mt-1 font-medium text-gray-700 undefined"'>OR</p>
+            <div className="mt-1">
               <label
                 htmlFor="email"
                 className="block text-sm font-medium text-gray-700 undefined"
@@ -152,8 +189,9 @@ export default function Signin() {
                 className="inline-flex items-center px-4 py-2 ml-4 text-xs font-semibold tracking-widest text-white uppercase transition duration-150 ease-in-out bg-gray-900 border border-transparent rounded-md active:bg-gray-900 false"
                 onClick={handleSubmit}
               >
-                Login
+              {loading?<img className='h-4 px-3' src={buttonLoading} />:'Login'}
               </button>
+
             </div>
           </form>
         </div>
