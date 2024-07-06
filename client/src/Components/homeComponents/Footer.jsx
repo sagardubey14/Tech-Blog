@@ -7,7 +7,7 @@ const Footer = () => {
         <a href="#" className="hover:underline hover:text-gold">Terms of Service</a>
       </div>
       <div className="mt-4">
-        <p>Contact us: contact@example.com</p>
+        <p>Contact : sagardubey353@gmail.com</p>
       </div>
       <div className="mt-4">
         <a href="#" className="hover:underline hover:text-gold">Twitter</a> | <a href="#" className="hover:underline hover:text-gold">Facebook</a>
