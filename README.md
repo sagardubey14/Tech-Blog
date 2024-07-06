@@ -4,6 +4,10 @@
 
 SyntaxScribe is a comprehensive MERN stack application with Redux Toolkit for state management. It allows users to explore, publish, and interact with posts about JavaScript syntax, offering a community-driven platform for sharing coding knowledge.
 
+## Project Link
+
+[SyntaxScribe](https://syntaxscribe.netlify.app)
+
 ## Features
 
 ### User Roles
@@ -91,10 +95,6 @@ SyntaxScribe is a comprehensive MERN stack application with Redux Toolkit for st
 - **Publish Posts:** Register or log in to your account to create and manage your posts.
 - **Interact with Posts:** Like, save, comment on posts, and follow other users to stay updated with their content.
 - **CSS Playground:** Navigate to the CSS playground to experiment with Tailwind CSS.
-
-## Project Link
-
-[SyntaxScribe](https://syntaxscribe.netlify.app)
 
 ## Contributing
 
